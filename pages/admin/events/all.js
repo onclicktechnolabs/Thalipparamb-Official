@@ -1,6 +1,33 @@
 import Link from "next/link";
-import { ProgressBar, Col, Row, Card, Table, Image } from "react-bootstrap";
-import ActiveProjectsData from "data/dashboard/ActiveProjectsData";
+import {
+  ProgressBar,
+  Col,
+  Row,
+  Card,
+  Table,
+  Image,
+  Dropdown,
+} from "react-bootstrap";
+const ActiveProjectsData = [
+  {
+    id: 1,
+    projectName: "Enterpreneurship Programme",
+    Date: "3 May, 2023",
+    staus: "Medium",
+    place: "thalipparamb",
+    brandLogo: "/images/brand/dropbox-logo.svg",
+    priorityBadgeBg: "warning",
+  },
+  {
+    id: 2,
+    projectName: "Get healthy in rural areas",
+    Date: "3 May, 2023",
+    staus: "High",
+    place: "Trichambaram",
+    brandLogo: "/images/brand/dropbox-logo.svg",
+    priorityBadgeBg: "danger",
+  },
+];
 
 function allEvents() {
   return (
@@ -24,17 +51,32 @@ function allEvents() {
       <Row className="mt-6 p-2">
         <Col md={12} xs={12}>
           <Card>
-            <Card.Header className="bg-white  py-4">
+            <Card.Header className="bg-white d-flex justify-content-between align-items-center  py-4">
               <h4 className="mb-0">Active Events</h4>
+              <Dropdown>
+                <Dropdown.Toggle
+                  variant="outline-secondary"
+                  id="dropdown-basic"
+                >
+                  Dropdown Button
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#">Action</Dropdown.Item>
+                  <Dropdown.Item href="#">Another action</Dropdown.Item>
+                  <Dropdown.Item href="#">Something else</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </Card.Header>
             <Table responsive className="text-nowrap mb-0">
               <thead className="table-light">
                 <tr>
-                  <th>Project name</th>
-                  <th>Hours</th>
-                  <th>priority</th>
-                  <th>Members</th>
-                  <th>Progress</th>
+                  <th>Title</th>
+                  <th>Place</th>
+
+                  <th>Date</th>
+                  <th>Status</th>
+                  {/* <th>Members</th>
+                  <th>Progress</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -59,43 +101,13 @@ function allEvents() {
                           </div>
                         </div>
                       </td>
-                      <td className="align-middle">{item.hours}</td>
+                      <td className="align-middle">{item.place}</td>
+                      <td className="align-middle">{item.Date}</td>
+
                       <td className="align-middle">
                         <span className={`badge bg-${item.priorityBadgeBg}`}>
-                          {item.priority}
+                          {item.staus}
                         </span>
-                      </td>
-                      <td className="align-middle">
-                        <div className="avatar-group">
-                          {item.members.map((avatar, avatarIndex) => {
-                            return (
-                              <span
-                                className="avatar avatar-sm"
-                                key={avatarIndex}
-                              >
-                                <Image
-                                  alt="avatar"
-                                  src={avatar.image}
-                                  className="rounded-circle"
-                                />
-                              </span>
-                            );
-                          })}
-                          <span className="avatar avatar-sm avatar-primary">
-                            <span className="avatar-initials rounded-circle fs-6">
-                              +5
-                            </span>
-                          </span>
-                        </div>
-                      </td>
-                      <td className="align-middle text-dark">
-                        <div className="float-start me-3">{item.progress}%</div>
-                        <div className="mt-2">
-                          <ProgressBar
-                            now={item.progress}
-                            style={{ height: "5px" }}
-                          />
-                        </div>
                       </td>
                     </tr>
                   );

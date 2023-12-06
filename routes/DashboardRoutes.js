@@ -41,7 +41,7 @@ export const DashboardMenu = [
     icon: "calendar",
     children: [
       { id: uuid(), link: "/admin/events/all", name: "All Events" },
-      { id: uuid(), link: "/admin/events/new", name: "Add Events" },
+      { id: uuid(), link: "/admin/events/new", name: "New Events" },
     ],
   },
   {
@@ -50,7 +50,7 @@ export const DashboardMenu = [
     icon: "users",
     children: [
       { id: uuid(), link: "/admin/users/all", name: "All Users" },
-      { id: uuid(), link: "/admin/users/new", name: "Add Users" },
+      { id: uuid(), link: "/admin/users/new", name: "New Users" },
     ],
   },
   {
@@ -59,7 +59,7 @@ export const DashboardMenu = [
     icon: "mail",
     children: [
       { id: uuid(), link: "/admin/complaints/all", name: "All Complaints" },
-      { id: uuid(), link: "/admin/complaints/new", name: "Add Complaints" },
+      { id: uuid(), link: "/admin/complaints/new", name: "New Complaints" },
     ],
   },
   {
@@ -68,7 +68,7 @@ export const DashboardMenu = [
     icon: "smile-heart",
     children: [
       { id: uuid(), link: "/admin/happiness/all", name: "All Happiness" },
-      { id: uuid(), link: "/admin/happiness/new", name: "Add Happiness" },
+      { id: uuid(), link: "/admin/happiness/new", name: "New Happiness" },
     ],
   },
   {
@@ -77,7 +77,7 @@ export const DashboardMenu = [
     icon: "laptop",
     children: [
       { id: uuid(), link: "/admin/employees/all", name: "All Employees" },
-      { id: uuid(), link: "/admin/employees/new", name: "Add Employees" },
+      { id: uuid(), link: "/admin/employees/new", name: "New Employ" },
     ],
   },
   {
@@ -86,18 +86,18 @@ export const DashboardMenu = [
     icon: "book",
     children: [
       { id: uuid(), link: "/admin/news/all", name: "All News" },
-      { id: uuid(), link: "/admin/news/new", name: "Add News" },
+      { id: uuid(), link: "/admin/news/new", name: "Create News" },
     ],
   },
-  // {
-  //   id: uuid(),
-  //   title: "News",
-  //   icon: "browser",
-  //   children: [
-  //     { id: uuid(), link: "/admin/news/all", name: "All News" },
-  //     { id: uuid(), link: "/admin/news/new", name: "Add News" },
-  //   ],
-  // },
+  {
+    id: uuid(),
+    title: "Tourism",
+    icon: "travel",
+    children: [
+      { id: uuid(), link: "/admin/tourism/all", name: "Tourism Lists" },
+      { id: uuid(), link: "/admin/tourism/new", name: "New Tourism" },
+    ],
+  },
   {
     id: uuid(),
     title: "Wellness",

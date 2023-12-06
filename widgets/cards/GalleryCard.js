@@ -5,38 +5,14 @@ import "slick-carousel/slick/slick-theme.css";
 
 function GalleryCard() {
   const imageGallery = [
-    {
-      categoryTitle: "KIDS",
-      categoryLink: "/",
-    },
-    {
-      categoryTitle: "WOMEN",
-      categoryLink: "/",
-    },
-    {
-      categoryTitle: "MEN",
-      categoryLink: "/",
-    },
-    {
-      categoryTitle: "MEN",
-      categoryLink: "/",
-    },
-    {
-      categoryTitle: "MEN",
-      categoryLink: "/",
-    },
-    {
-      categoryTitle: "MEN",
-      categoryLink: "/",
-    },
-    {
-      categoryTitle: "MEN",
-      categoryLink: "/",
-    },
-    {
-      categoryTitle: "MEN",
-      categoryLink: "/",
-    },
+    { id: "1", categoryTitle: "KIDS", categoryLink: "/" },
+    { id: "2", categoryTitle: "WOMEN", categoryLink: "/" },
+    { id: "3", categoryTitle: "MEN", categoryLink: "/" },
+    { id: "4", categoryTitle: "MEN", categoryLink: "/" },
+    { id: "5", categoryTitle: "MEN", categoryLink: "/" },
+    { id: "6", categoryTitle: "MEN", categoryLink: "/" },
+    { id: "7", categoryTitle: "MEN", categoryLink: "/" },
+    { id: "8", categoryTitle: "MEN", categoryLink: "/" },
   ];
 
   let settings = {
@@ -81,7 +57,7 @@ function GalleryCard() {
     <Slider {...settings} className="d-flex  w-100 ">
       {imageGallery?.map((item, index) => (
         <div className="px-3">
-          <Card key={index}>
+          <Card key={item.id}>
             <Card>
               <Image
                 src="https://plus.unsplash.com/premium_photo-1667354155834-eb14918fb4a3?q=80&w=1452&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"

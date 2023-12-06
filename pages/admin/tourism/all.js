@@ -1,36 +1,33 @@
 import Link from "next/link";
-import { ProgressBar, Col, Row, Card, Table, Image } from "react-bootstrap";
+import {
+  ProgressBar,
+  Col,
+  Row,
+  Card,
+  Table,
+  Image,
+  Button,
+} from "react-bootstrap";
+import { ShoppingBag, Trash2 } from "react-feather";
 
 const ActiveProjectsData = [
   {
     id: 1,
-    title: "Flower show",
-    mobile: "9523457800",
-    email: "sampleEmail@gmail.com",
-    address: "user Address",
-    // Date: "3 May, 2023",
-    // staus: "Medium",
+    title: "Parasshinikadav Snake Park",
+    PostedOn: "3 May, 2023",
     brandLogo: "/images/brand/dropbox-logo.svg",
-    priorityBadgeBg: "danger",
-    Description:
-      "Renowned music bands to make the festival nights musical and thrill the hearts of the revelers",
+    place: "thalipparamb",
   },
   {
-    id: 2,
-    title: "Amusement park",
-    mobile: "9523457800",
-    email: "sampleEmail@gmail.com",
-    address: "user Address",
-    Date: "3 May, 2023",
-    staus: "Medium",
+    id: 1,
+    title: "Parasshinikadav Muthappan Temple",
+    PostedOn: "3 May, 2023",
     brandLogo: "/images/brand/dropbox-logo.svg",
-    priorityBadgeBg: "warning",
-    Description:
-      "Renowned music bands to make the festival nights musical and thrill the hearts of the revelers",
+    place: "thalipparamb",
   },
 ];
 
-function Happiness() {
+function Tourism() {
   return (
     <>
       <Col lg={12} md={12} xs={12} className="mt-6">
@@ -38,11 +35,11 @@ function Happiness() {
         <div>
           <div className="d-flex justify-content-between align-items-center p-4">
             <div className="mb-2 mb-lg-0">
-              <h3 className="mb-0  text-dark">Happiness</h3>
+              <h3 className="mb-0  text-dark">Tourism</h3>
             </div>
             <div>
-              <Link href="/admin/happiness/new" className="btn btn-white">
-                Create New Happiness
+              <Link href="/admin/Tourism/new" className="btn btn-white">
+                Create New Tourism
               </Link>
             </div>
           </div>
@@ -53,14 +50,16 @@ function Happiness() {
         <Col md={12} xs={12}>
           <Card>
             <Card.Header className="bg-white  py-4">
-              <h4 className="mb-0">Happiness</h4>
+              <h4 className="mb-0">Tourism</h4>
             </Card.Header>
             <Table responsive className="text-nowrap mb-0">
               <thead className="table-light">
                 <tr>
                   <th>Image</th>
                   <th>Title</th>
-                  <th>Description</th>
+                  <th>Place</th>
+                  <th>Posted On</th>
+                  <th>Options</th>
                 </tr>
               </thead>
               <tbody>
@@ -78,24 +77,21 @@ function Happiness() {
                           </div>
                         </div>
                       </td>
+                      <td className="align-middle">{item.title}</td>
+                      <td className="align-middle">{item.place}</td>
+                      <td className="align-middle">{item.PostedOn}</td>
 
                       <td className="align-middle">
-                        <div className="d-flex align-items-start">
-                          <div className="ms-3 lh-1">
-                            <h5 className=" mb-1">
-                              <Link href="#" className="text-inherit">
-                                {item.title}
-                              </Link>
-                            </h5>
-                          </div>
+                        <div className="w-50 gap-2 d-flex justify-content-between align-items-center">
+                          <Button variant="primary">
+                            <ShoppingBag size="18px" />
+                            Edit
+                          </Button>
+                          <Button variant="danger" className="px-2">
+                            <Trash2 size="18px" />
+                            Delete
+                          </Button>
                         </div>
-                      </td>
-                      <td className="align-middle">{item.Description}</td>
-
-                      <td className="align-middle">
-                        <span className={`badge bg-${item.priorityBadgeBg}`}>
-                          {item.priority}
-                        </span>
                       </td>
                     </tr>
                   );
@@ -104,7 +100,7 @@ function Happiness() {
             </Table>
             <Card.Footer className="bg-white text-center">
               <Link href="#" className="link-primary">
-                View All Happiness
+                View All Tourism
               </Link>
             </Card.Footer>
           </Card>
@@ -114,4 +110,4 @@ function Happiness() {
   );
 }
 
-export default Happiness;
+export default Tourism;

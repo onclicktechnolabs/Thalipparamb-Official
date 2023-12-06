@@ -1,6 +1,27 @@
 import Link from "next/link";
-import { ProgressBar, Col, Row, Card, Table, Image } from "react-bootstrap";
-import ActiveProjectsData from "data/dashboard/ActiveProjectsData";
+import {
+  ProgressBar,
+  Col,
+  Row,
+  Card,
+  Table,
+  Image,
+  Button,
+} from "react-bootstrap";
+import { ShoppingBag, Trash2 } from "react-feather";
+
+const ActiveProjectsData = [
+  {
+    id: 1,
+    news: "New Year Eve 2024 With Nature",
+    Date: "3 May, 2023",
+  },
+  {
+    id: 1,
+    news: "Chefouse Foodstar - Snack Making Competition",
+    Date: "3 May, 2023",
+  },
+];
 
 function News() {
   return (
@@ -10,11 +31,11 @@ function News() {
         <div>
           <div className="d-flex justify-content-between align-items-center p-4">
             <div className="mb-2 mb-lg-0">
-              <h3 className="mb-0  text-dark">Events</h3>
+              <h3 className="mb-0  text-dark">News</h3>
             </div>
             <div>
               <Link href="/admin/news/new" className="btn btn-white">
-                Create New Events
+                Create News
               </Link>
             </div>
           </div>
@@ -25,76 +46,32 @@ function News() {
         <Col md={12} xs={12}>
           <Card>
             <Card.Header className="bg-white  py-4">
-              <h4 className="mb-0">Active Events</h4>
+              <h4 className="mb-0">News</h4>
             </Card.Header>
             <Table responsive className="text-nowrap mb-0">
               <thead className="table-light">
                 <tr>
-                  <th>Project name</th>
-                  <th>Hours</th>
-                  <th>priority</th>
-                  <th>Members</th>
-                  <th>Progress</th>
+                  <th>News</th>
+                  <th>Date</th>
+                  <th>Options</th>
                 </tr>
               </thead>
               <tbody>
                 {ActiveProjectsData.map((item, index) => {
                   return (
                     <tr key={index}>
+                      <td className="align-middle">{item.news}</td>
+                      <td className="align-middle">{item.Date}</td>
                       <td className="align-middle">
-                        <div className="d-flex align-items-center">
-                          <div>
-                            <div
-                              className={`icon-shape icon-md border p-4 rounded-1 ${item.brandLogoBg}`}
-                            >
-                              <Image src={item.brandLogo} alt="" />
-                            </div>
-                          </div>
-                          <div className="ms-3 lh-1">
-                            <h5 className=" mb-1">
-                              <Link href="#" className="text-inherit">
-                                {item.projectName}
-                              </Link>
-                            </h5>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="align-middle">{item.hours}</td>
-                      <td className="align-middle">
-                        <span className={`badge bg-${item.priorityBadgeBg}`}>
-                          {item.priority}
-                        </span>
-                      </td>
-                      <td className="align-middle">
-                        <div className="avatar-group">
-                          {item.members.map((avatar, avatarIndex) => {
-                            return (
-                              <span
-                                className="avatar avatar-sm"
-                                key={avatarIndex}
-                              >
-                                <Image
-                                  alt="avatar"
-                                  src={avatar.image}
-                                  className="rounded-circle"
-                                />
-                              </span>
-                            );
-                          })}
-                          <span className="avatar avatar-sm avatar-primary">
-                            <span className="avatar-initials rounded-circle fs-6">
-                              +5
-                            </span>
-                          </span>
-                        </div>
-                      </td>
-                      <td className="align-middle text-dark">
-                        <div className="float-start me-3">{item.progress}%</div>
-                        <div className="mt-2">
-                          <ProgressBar
-                            now={item.progress}
-                            style={{ height: "5px" }}
-                          />
+                        <div className="w-50 gap-2 d-flex justify-content-between align-items-center">
+                          <Button variant="primary">
+                            <ShoppingBag size="18px" />
+                            Edit
+                          </Button>
+                          <Button variant="danger" className="px-2">
+                            <Trash2 size="18px" />
+                            Delete
+                          </Button>
                         </div>
                       </td>
                     </tr>
@@ -104,7 +81,7 @@ function News() {
             </Table>
             <Card.Footer className="bg-white text-center">
               <Link href="#" className="link-primary">
-                View All Events
+                View All News
               </Link>
             </Card.Footer>
           </Card>

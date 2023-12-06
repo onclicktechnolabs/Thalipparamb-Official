@@ -1,6 +1,38 @@
 import Link from "next/link";
 import { ProgressBar, Col, Row, Card, Table, Image } from "react-bootstrap";
-import ActiveProjectsData from "data/dashboard/ActiveProjectsData";
+
+const ActiveProjectsData = [
+  {
+    id: 1,
+    title: "Enterpreneurship Programme",
+    name: "Hashim",
+    role: "Happiness",
+    mobile: "9523457800",
+    email: "sampleEmail@gmail.com",
+    address: "user Address",
+    // Date: "3 May, 2023",
+    // staus: "Medium",
+    brandLogo: "/images/brand/dropbox-logo.svg",
+    priorityBadgeBg: "danger",
+    Description:
+      "Renowned music bands to make the festival nights musical and thrill the hearts of the revelers",
+  },
+  {
+    id: 2,
+    title: "Get healthy in rural areas",
+    name: "Noushad",
+    role: "Tourism	",
+    mobile: "9523457800",
+    email: "sampleEmail@gmail.com",
+    address: "user Address",
+    Date: "3 May, 2023",
+    staus: "Medium",
+    brandLogo: "/images/brand/dropbox-logo.svg",
+    priorityBadgeBg: "warning",
+    Description:
+      "Renowned music bands to make the festival nights musical and thrill the hearts of the revelers",
+  },
+];
 
 function Employees() {
   return (
@@ -10,11 +42,11 @@ function Employees() {
         <div>
           <div className="d-flex justify-content-between align-items-center p-4">
             <div className="mb-2 mb-lg-0">
-              <h3 className="mb-0  text-dark">Events</h3>
+              <h3 className="mb-0  text-dark">Employees</h3>
             </div>
             <div>
               <Link href="/admin/employees/new" className="btn btn-white">
-                Create New Events
+                Create New Employ
               </Link>
             </div>
           </div>
@@ -25,47 +57,32 @@ function Employees() {
         <Col md={12} xs={12}>
           <Card>
             <Card.Header className="bg-white  py-4">
-              <h4 className="mb-0">Active Events</h4>
+              <h4 className="mb-0">Employees</h4>
             </Card.Header>
             <Table responsive className="text-nowrap mb-0">
               <thead className="table-light">
                 <tr>
-                  <th>Project name</th>
-                  <th>Hours</th>
-                  <th>priority</th>
-                  <th>Members</th>
-                  <th>Progress</th>
+                  <th>Name</th>
+                  <th>Mobile Number</th>
+                  <th>Email</th>
+                  <th>role</th>
                 </tr>
               </thead>
               <tbody>
                 {ActiveProjectsData.map((item, index) => {
                   return (
                     <tr key={index}>
-                      <td className="align-middle">
-                        <div className="d-flex align-items-center">
-                          <div>
-                            <div
-                              className={`icon-shape icon-md border p-4 rounded-1 ${item.brandLogoBg}`}
-                            >
-                              <Image src={item.brandLogo} alt="" />
-                            </div>
-                          </div>
-                          <div className="ms-3 lh-1">
-                            <h5 className=" mb-1">
-                              <Link href="#" className="text-inherit">
-                                {item.projectName}
-                              </Link>
-                            </h5>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="align-middle">{item.hours}</td>
-                      <td className="align-middle">
+                      <td className="align-middle">{item.name}</td>
+                      <td className="align-middle">{item.mobile}</td>
+                      <td className="align-middle">{item.email}</td>
+                      <td className="align-middle">{item.role}</td>
+
+                      {/* <td className="align-middle">
                         <span className={`badge bg-${item.priorityBadgeBg}`}>
                           {item.priority}
                         </span>
-                      </td>
-                      <td className="align-middle">
+                      </td> */}
+                      {/* <td className="align-middle">
                         <div className="avatar-group">
                           {item.members.map((avatar, avatarIndex) => {
                             return (
@@ -87,16 +104,7 @@ function Employees() {
                             </span>
                           </span>
                         </div>
-                      </td>
-                      <td className="align-middle text-dark">
-                        <div className="float-start me-3">{item.progress}%</div>
-                        <div className="mt-2">
-                          <ProgressBar
-                            now={item.progress}
-                            style={{ height: "5px" }}
-                          />
-                        </div>
-                      </td>
+                      </td> */}
                     </tr>
                   );
                 })}
@@ -104,7 +112,7 @@ function Employees() {
             </Table>
             <Card.Footer className="bg-white text-center">
               <Link href="#" className="link-primary">
-                View All Events
+                View All Employees
               </Link>
             </Card.Footer>
           </Card>
