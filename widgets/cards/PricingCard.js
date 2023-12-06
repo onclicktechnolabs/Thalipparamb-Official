@@ -1,48 +1,28 @@
 // import node module libraries
-import { ListGroup, Card } from 'react-bootstrap';
-import Link from 'next/link';
+import { ListGroup, Card, Image } from "react-bootstrap";
+import Link from "next/link";
+import { Justify } from "react-bootstrap-icons";
 
 const PricingCard = ({ content }) => {
-    let plan = content[0];
-    return (
-        <Card>
-            <Card.Body className="p-6 border-bottom mb-4">
-                {/* text */}
-                <h2 className="mb-3">{plan.plantitle}</h2>
-                <p className="mb-0" dangerouslySetInnerHTML={{ __html: plan.description }}></p>
-                {/* price */}
-                <div className="d-flex align-items-end mt-6 mb-3">
-                    <h1 className="fw-bold me-1 mb-0">${plan.monthly} </h1>
-                    <p className="mb-0">/mo</p>
-                </div>
-                <Link href="#" className={`btn btn-${plan.buttonClass ? plan.buttonClass : 'outline-primary'
-                    }`}>
-                    {plan.buttonText}
-                </Link>
-            </Card.Body>
-            <Card.Body>
-                <p className="mb-0">{plan.featureHeading}</p>
-                <ListGroup bsPrefix="list-unstyled" className="mt-4 mb-0">
-                    {plan.features.map((item, index) => {
-                        return (
-                            <ListGroup.Item
-                                key={index}
-                                className="mb-1"
-                                bsPrefix="list-item"
-                            >
-                                <span className="text-success me-2">
-                                    <i className="far fa-check-circle"></i>
-                                </span>
-                                <span
-                                    dangerouslySetInnerHTML={{ __html: item.feature }}
-                                ></span>
-                            </ListGroup.Item>
-                        );
-                    })}
-                </ListGroup>
-            </Card.Body>
-        </Card>
-    )
-}
+  return (
+    <Card>
+      <Card>
+        <Image
+          className="d-block w-100 h-100 object-fit-fill"
+          src="https://images.unsplash.com/photo-1699164802258-19f3d460a0d7?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          alt="Second slide"
+        />
+      </Card>
+      <Card.Body className="d-flex flex-column justify-content-between align-items-center">
+        <h3 className="mb-3">Title</h3>
+        <p className="mb-0" style={{ textAlign: "justify" }}>
+          International film festival with favorite films and classic visual
+          experiences of film lovers traveling with the movements of world
+          cinema.
+        </p>
+      </Card.Body>
+    </Card>
+  );
+};
 
-export default PricingCard
+export default PricingCard;
