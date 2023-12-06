@@ -23,7 +23,7 @@ import { DashboardMenu } from "routes/DashboardRoutes";
 const NavbarVertical = (props) => {
   const location = useRouter();
 
-  const CustomToggle = ({ children, eventKey, icon }) => {
+  const CustomToggle = ({ children, eventKey, icon, link }) => {
     const { activeEventKey } = useContext(AccordionContext);
     const decoratedOnClick = useAccordionButton(eventKey, () =>
       console.log("totally custom!")
@@ -32,7 +32,7 @@ const NavbarVertical = (props) => {
     return (
       <li className="nav-item">
         <Link
-          href="#"
+          href={link}
           className="nav-link "
           onClick={decoratedOnClick}
           data-bs-toggle="collapse"
@@ -124,7 +124,11 @@ const NavbarVertical = (props) => {
                 return (
                   <Fragment key={index}>
                     {/* main menu / root menu level / root items */}
-                    <CustomToggle eventKey={index} icon={menu.icon}>
+                    <CustomToggle
+                      eventKey={index}
+                      icon={menu.icon}
+                      link={menu.children[0].link}
+                    >
                       {menu.title}
                       {menu.badge ? (
                         <Badge
@@ -157,6 +161,7 @@ const NavbarVertical = (props) => {
                                 as="li"
                                 bsPrefix="nav-item"
                                 key={menuLevel1Index}
+                                onClick={router.push()}
                               >
                                 {/* first level menu started  */}
                                 <Accordion
@@ -171,7 +176,7 @@ const NavbarVertical = (props) => {
                                         bg={
                                           menuLevel1Item.badgecolor
                                             ? menuLevel1Item.badgecolor
-                                            : "primary"
+                                            : "secondary" //
                                         }
                                       >
                                         {menuLevel1Item.badge}

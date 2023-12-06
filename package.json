@@ -14,6 +14,7 @@
     "bootstrap": "^5.2.3",
     "eslint": "8.37.0",
     "eslint-config-next": "13.2.4",
+    "firebase": "^10.7.1",
     "next": "13.2.4",
     "next-seo": "^5.15.0",
     "node-sass": "^7.0.3",
@@ -27,10 +28,12 @@
     "react-dropzone": "^14.2.3",
     "react-feather": "^2.0.10",
     "react-responsive": "^9.0.2",
+    "react-slick": "^0.29.0",
     "sass": "^1.60.0",
     "sass-loader": "^13.2.2",
     "simplebar": "^6.2.4",
     "simplebar-react": "^3.2.3",
+    "slick-carousel": "^1.8.1",
     "uuid": "^9.0.0"
   }
 }

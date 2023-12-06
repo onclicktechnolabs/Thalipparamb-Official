@@ -1,36 +1,36 @@
-// import node module libraries
-import { Container } from 'react-bootstrap';
+// // import node module libraries
+// import { Container } from 'react-bootstrap';
 
-// import widget as custom components
-import { PageHeading } from 'widgets'
+// // import widget as custom components
+// import { PageHeading } from 'widgets'
 
-// import sub components
-import { Notifications, DeleteAccount, GeneralSetting, EmailSetting, Preferences } from 'sub-components'
+// // import sub components
+// import { Notifications, DeleteAccount, GeneralSetting, EmailSetting, Preferences } from 'sub-components'
 
-const Settings = () => {
-  return (
-    <Container fluid className="p-6">
+// const Settings = () => {
+//   return (
+//     <Container fluid className="p-6">
 
-      {/* Page Heading */}
-      <PageHeading heading="General" />
+//       {/* Page Heading */}
+//       <PageHeading heading="General" />
 
-      {/* General Settings */}
-      <GeneralSetting />
+//       {/* General Settings */}
+//       <GeneralSetting />
 
-      {/* Email Settings */}
-      <EmailSetting />
+//       {/* Email Settings */}
+//       <EmailSetting />
 
-      {/* Settings for Preferences */}
-      <Preferences />
+//       {/* Settings for Preferences */}
+//       <Preferences />
 
-      {/* Settings for Notifications */}
-      <Notifications />
+//       {/* Settings for Notifications */}
+//       <Notifications />
 
-      {/* Delete Your Account */}
-      <DeleteAccount />
+//       {/* Delete Your Account */}
+//       <DeleteAccount />
 
-    </Container>
-  )
-}
+//     </Container>
+//   )
+// }
 
-export default Settings
+// export default Settings

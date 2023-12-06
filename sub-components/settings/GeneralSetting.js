@@ -1,10 +1,12 @@
 // import node module libraries
+import { useState } from "react";
 import { Col, Row, Form, Card, Button, Image } from "react-bootstrap";
 
 // import widget as custom components
 import { FormSelect, DropFiles } from "widgets";
 
 const GeneralSetting = () => {
+  const [files, setFiles] = useState([]);
   const countryOptions = [
     { value: "India", label: "India" },
     { value: "US", label: "US" },
@@ -70,7 +72,7 @@ const GeneralSetting = () => {
                     action="#"
                     className="dropzone mb-3 py-10 border-dashed"
                   >
-                    <DropFiles />
+                    <DropFiles files={files} setFiles={setFiles} />
                   </Form>
                   <Button variant="outline-white" type="submit">
                     Change{" "}
