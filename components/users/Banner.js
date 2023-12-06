@@ -3,7 +3,7 @@ import { Carousel, Image } from "react-bootstrap";
 
 function Banner() {
   return (
-    <Carousel indicators={false} className="">
+    <Carousel indicators={false} className="mt-2">
       <Carousel.Item style={{ height: "500px" }}>
         <Image
           className="d-block w-100 h-100 object-fit-fill"

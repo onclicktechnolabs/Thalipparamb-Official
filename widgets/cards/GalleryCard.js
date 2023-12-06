@@ -16,6 +16,7 @@ function GalleryCard() {
   ];
 
   let settings = {
+    arrows: false,
     dots: false,
     infinite: true,
     slidesToShow: 4,

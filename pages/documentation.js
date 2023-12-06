@@ -1,6 +1,7 @@
 // import node module libraries
-import { Fragment } from 'react';
-import { Card, Col, Row, Container } from 'react-bootstrap';
+import Link from "next/link";
+import { Fragment } from "react";
+import { Card, Col, Row, Container } from "react-bootstrap";
 
 const Documentation = () => {
   return (
@@ -11,7 +12,8 @@ const Documentation = () => {
             <div className="mb-3 mb-md-0">
               <h1 className="mb-0 h2 fw-bold">Dash UI NextJS</h1>
               <p className="mb-0">
-                Welcome to the Dash UI NextJS version of the original Dash UI theme.
+                Welcome to the Dash UI NextJS version of the original Dash UI
+                theme.
               </p>
             </div>
           </div>
@@ -29,57 +31,59 @@ const Documentation = () => {
               </p>
 
               <p>
-                Dash UI Kit is built with the most popular front-end framework{' '}
-                <a
+                Dash UI Kit is built with the most popular front-end framework{" "}
+                <Link
                   href="https://react-bootstrap.github.io/"
                   target="_blank"
                   rel="noreferrer"
                 >
                   ReactJS Bootstrap
-                </a>{' '}
+                </Link>{" "}
                 with react-scripts.
               </p>
               <p>
-                This doc will guide you to understand how Dash UI-NextJS theme is
-                organized, basics of how to customize, and how to compile from
-                the source code if you want.
+                This doc will guide you to understand how Dash UI-NextJS theme
+                is organized, basics of how to customize, and how to compile
+                from the source code if you want.
               </p>
 
               <hr className="mb-5 mt-5" />
 
               <h2 className="mb-0 fw-bold">Running in Local environment</h2>
-              <p>This project is scaffolded using npx create-next-app@latest.</p>
+              <p>
+                This project is scaffolded using npx create-next-app@latest.
+              </p>
 
               <ol>
                 <li>
                   <h4 className="mb-0 fw-bold">Requirements Node.js</h4>
                   <p>
-                    Before proceeding you&apos;ll need to have the latest stable{' '}
-                    <a
+                    Before proceeding you&apos;ll need to have the latest stable{" "}
+                    <Link
                       href="https://nodejs.org/en/download/"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      {' '}
+                      {" "}
                       nodejs.
-                    </a>{' '}
+                    </Link>{" "}
                     Install <code>Node.js</code> or already have it installed on
                     your machine move to next step.
                   </p>
                 </li>
                 <li>
-                  {' '}
+                  {" "}
                   <h4 className="mb-0 fw-bold">Install Dash UI NextJS</h4>
                   <p>
-                    Open the <span>dashui-free-nextjs-admin-template </span>directory with your cmd
-                    or terminal. Open the project folder and install its
-                    dependencies.{' '}
+                    Open the <span>dashui-free-nextjs-admin-template </span>
+                    directory with your cmd or terminal. Open the project folder
+                    and install its dependencies.{" "}
                   </p>
                   <pre className="prism-code language-jsx mb-2 bg-dark text-white fs-5">
-                    cd dashui-free-nextjs-admin-template{' '}
+                    cd dashui-free-nextjs-admin-template{" "}
                   </pre>
                   <pre className="prism-code language-jsx mb-2  bg-dark text-white fs-5">
-                    npm install{' '}
+                    npm install{" "}
                   </pre>
                   <p>
                     This command will download all the necessary dependencies
@@ -89,19 +93,26 @@ const Documentation = () => {
                 <li>
                   <h4 className="mb-0 fw-bold">Start</h4>
                   <p>
-                    Run <code>npm run dev</code> or <code>yarn dev</code> or <code>pnpm dev</code> to start the development server on http://localhost:3000
+                    Run <code>npm run dev</code> or <code>yarn dev</code> or{" "}
+                    <code>pnpm dev</code> to start the development server on
+                    http://localhost:3000
                   </p>
                   <p>
-                    Visit <code><a
-                      href="http://localhost:3000"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      http://localhost:3000{' '}
-                    </a></code> to view your application
+                    Visit{" "}
+                    <code>
+                      <Link
+                        href="http://localhost:3000"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        http://localhost:3000{" "}
+                      </Link>
+                    </code>{" "}
+                    to view your application
                   </p>
                   <p>
-                    Edit <code>pages/index.js</code> and see the updated result in your browser
+                    Edit <code>pages/index.js</code> and see the updated result
+                    in your browser
                   </p>
                   <pre className="prism-code language-jsx  bg-dark text-white fs-5">
                     npm run dev
@@ -125,7 +136,13 @@ const Documentation = () => {
                 </li>
                 <li>
                   <div className="">
-                    <p> This output is generated inside the <code>.next</code> folder:</p>
+                    <p>
+                      {" "}
+                      This output is generated inside the <code>
+                        .next
+                      </code>{" "}
+                      folder:
+                    </p>
                     <pre className="prism-code language-jsx  bg-dark text-white fs-5 mb-2">
                       npm run start
                     </pre>
@@ -141,9 +158,9 @@ const Documentation = () => {
 
               <h2 className="mb-0 fw-bold">File Structure:</h2>
               <p>
-                Inside the zip-file you&apos;ll find the following directories and
-                files. Both compiled and minified distrubution files, as well as
-                the source files are included in the package.
+                Inside the zip-file you&apos;ll find the following directories
+                and files. Both compiled and minified distrubution files, as
+                well as the source files are included in the package.
               </p>
 
               <code>

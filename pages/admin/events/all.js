@@ -58,7 +58,7 @@ function allEvents() {
                   variant="outline-secondary"
                   id="dropdown-basic"
                 >
-                  Dropdown Button
+                  Filter By
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item href="#">Action</Dropdown.Item>
