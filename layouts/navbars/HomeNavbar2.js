@@ -14,7 +14,10 @@ function HomeNavbar2() {
   };
   const isMobile = useMediaQuery({ maxWidth: 615 });
   return (
-    <Navbar expand="lg" className=" bg-white box-shadow border-bottom">
+    <Navbar
+      expand="lg"
+      className="sticky-top bg-white box-shadow border-bottom"
+    >
       <Container fluid className="px-5">
         <Navbar.Brand href="#" className="d-flex align-items-center">
           <figure className="m-0">
@@ -42,16 +45,19 @@ function HomeNavbar2() {
             <Nav.Link href="#link">Gallery</Nav.Link>
           </Nav>
           <Nav className="ml-auto">
-            <Nav.Link>
+            <Nav.Link md={12} xs={12} className="">
               <button
-                className="btn btn-outline-secondary"
+                md={12}
+                xs={12}
+                className="btn btn-outline-secondary w-100" // Added w-100 class here
                 onClick={toggleLanguage}
               >
                 {language === "ml" ? "Malayalam" : "English"}
               </button>
             </Nav.Link>
-            <Nav.Link>
-              <button className="btn btn-outline-primary">Sign Up</button>
+            <Nav.Link md={12} xs={12}>
+              <button className="btn btn-outline-primary w-100">Sign Up</button>{" "}
+              {/* Added w-100 class here */}
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

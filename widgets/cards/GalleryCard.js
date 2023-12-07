@@ -5,14 +5,14 @@ import "slick-carousel/slick/slick-theme.css";
 
 function GalleryCard() {
   const imageGallery = [
-    { id: "1", categoryTitle: "KIDS", categoryLink: "/" },
-    { id: "2", categoryTitle: "WOMEN", categoryLink: "/" },
-    { id: "3", categoryTitle: "MEN", categoryLink: "/" },
-    { id: "4", categoryTitle: "MEN", categoryLink: "/" },
-    { id: "5", categoryTitle: "MEN", categoryLink: "/" },
-    { id: "6", categoryTitle: "MEN", categoryLink: "/" },
-    { id: "7", categoryTitle: "MEN", categoryLink: "/" },
-    { id: "8", categoryTitle: "MEN", categoryLink: "/" },
+    { id: "1", categoryTitle: "Enterpreneurship Programme", categoryLink: "/" },
+    { id: "2", categoryTitle: "Thaliparamba Photos", categoryLink: "/" },
+    { id: "3", categoryTitle: "Thaliparamba Photos", categoryLink: "/" },
+    { id: "4", categoryTitle: "Thaliparamba Photos", categoryLink: "/" },
+    { id: "5", categoryTitle: "Thaliparamba Photos", categoryLink: "/" },
+    { id: "6", categoryTitle: "Thaliparamba Photos", categoryLink: "/" },
+    { id: "7", categoryTitle: "Thaliparamba Photos", categoryLink: "/" },
+    { id: "8", categoryTitle: "Thaliparamba Photos", categoryLink: "/" },
   ];
 
   let settings = {
@@ -67,7 +67,7 @@ function GalleryCard() {
               />
             </Card>
             <Card.Body>
-              <h3 className="text-lg font-weight-medium text-dark text">
+              <h3 class="text-center fs-4 fw-medium text-dark">
                 {item?.categoryTitle}
               </h3>
             </Card.Body>
