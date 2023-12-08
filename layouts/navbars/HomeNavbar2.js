@@ -1,17 +1,30 @@
-import Link from "next/link";
 import { useState } from "react";
+import { useTranslation } from "next-i18next";
+import Link from "next/link";
 import { Container, Image } from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { useMediaQuery } from "react-responsive";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 function HomeNavbar2() {
+  const { t } = useTranslation("Navbar");
+  console.log("🚀 ~ file: HomeNavbar2.js:12 ~ HomeNavbar2 ~ t:", t);
+
+  const { data: session, status } = useSession();
+  console.log("🚀 ~ file: HomeNavbar2.js:11 ~ HomeNavbar2 ~ status:", status);
+  console.log("🚀 ~ file: HomeNavbar2.js:11 ~ HomeNavbar2 ~ session:", session);
   const [language, setLanguage] = useState("ml");
 
   const toggleLanguage = () => {
     const newValue = language === "en" ? "ml" : "en";
     setLanguage(newValue);
   };
+
+  // const handleSignIn = async () => {
+  //   console.log("Login clicked");
+  //   signIn("google");
+  // };
   const isMobile = useMediaQuery({ maxWidth: 615 });
   return (
     <Navbar
@@ -39,7 +52,9 @@ function HomeNavbar2() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="ms-2">
           <Nav className="mx-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
+            <Nav.Link href="#home">Home </Nav.Link>
+            {/* {t("home")} */}
+
             <Nav.Link href="#link">About Us</Nav.Link>
             <Nav.Link href="#link">Tourism</Nav.Link>
             <Nav.Link href="#link">Gallery</Nav.Link>
@@ -55,10 +70,27 @@ function HomeNavbar2() {
                 {language === "ml" ? "Malayalam" : "English"}
               </button>
             </Nav.Link>
-            <Nav.Link md={12} xs={12}>
-              <button className="btn btn-outline-primary w-100">Sign Up</button>{" "}
-              {/* Added w-100 class here */}
-            </Nav.Link>
+            {session ? (
+              <Nav.Link md={12} xs={12}>
+                <button
+                  className="btn btn-outline-primary w-100"
+                  onClick={() => signOut()}
+                >
+                  Logout
+                </button>{" "}
+                {/* Added w-100 class here */}
+              </Nav.Link>
+            ) : (
+              <Nav.Link md={12} xs={12} href="api/auth/signin">
+                <button
+                  className="btn btn-outline-primary w-100"
+                  // onClick={() => signIn("google")}
+                >
+                  Login
+                </button>{" "}
+                {/* Added w-100 class here */}
+              </Nav.Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -1,5 +1,6 @@
 // import node module libraries
 import Head from "next/head";
+import { appWithTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
 import SSRProvider from "react-bootstrap/SSRProvider";
@@ -10,8 +11,10 @@ import "styles/theme.scss";
 
 // import default layouts
 import DefaultDashboardLayout from "layouts/DefaultDashboardLayout";
+import AuthProvider from "context/AuthProvider";
+import { SessionProvider } from "next-auth/react";
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter();
   const pageURL = process.env.baseURL + router.pathname;
   const title = "Thalipparamb";
@@ -46,12 +49,14 @@ function MyApp({ Component, pageProps }) {
           site_name: process.env.siteName,
         }}
       />
-      <Layout>
-        <Component {...pageProps} />
-        <Analytics />
-      </Layout>
+      <SessionProvider session={session}>
+        <Layout>
+          <Component {...pageProps} />
+          <Analytics />
+        </Layout>
+      </SessionProvider>
     </SSRProvider>
   );
 }
 
-export default MyApp;
+export default appWithTranslation(MyApp);

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Col, Row, Container } from "react-bootstrap";
 
 // import sub components
@@ -6,14 +5,20 @@ import { PricingCard, PageHeading, FeatureLeftTopIcon } from "widgets";
 
 // import data files
 import { standard, multisite, extended } from "data/pricing/PricingPlansData";
-import FAQsData from "data/pricing/FAQsData";
-import FeaturesData from "data/pricing/FeaturesData";
 import Banner from "components/users/Banner";
 
 import HomeLayout from "layouts/HomeLayout";
 import GalleryCard from "widgets/cards/GalleryCard";
 import EventCard from "widgets/cards/EventCard";
+// import { getServerSession } from "next-auth";
+
 const Home = () => {
+  // const session = await getServerSession(options);
+
+  // if (!session) {
+  //   redirect("/api/auth/signin?callbackUrl=/");
+  // }
+
   return (
     <Container fluid className=" ps-md-4 pe-md-4 px-5 py-3 mt-1 px-sm-0 ">
       {/* Page Heading */}

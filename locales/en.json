@@ -1,0 +1,13 @@
+{
+  "Navbar": {
+    "home": "Home",
+    "about": "About",
+    "complaints": "Complaints"
+  },
+  "page": {
+    "home": {
+      "festivel": "Happiness Festival",
+      "gallery": "IMAGE GALLERIES"
+    }
+  }
+}

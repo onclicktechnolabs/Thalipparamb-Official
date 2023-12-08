@@ -1,32 +1,63 @@
-// import node module libraries
 import { Row, Col, Card, Form, Button, Image } from "react-bootstrap";
 import Link from "next/link";
 
-// import authlayout to override default layout
 import AuthLayout from "layouts/AuthLayout";
+import { signIn } from "next-auth/react";
 
 const SignUp = () => {
+  // Step 1: Create a single state object for form data
+
+  const email = e.target.email.value;
+  const password = e.target.password.value;
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Form Data:", formData);
+
+    try {
+      // const apiRes = await axios.post(
+      //   "http://localhost:3000/api/auth/user",
+      //   formData
+      // );
+
+      // if (apiRes?.data?.success) {
+      const loginRes = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
+      console.log(
+        "🚀 ~ file: register.js:44 ~ handleSubmit ~ loginRes:",
+        loginRes
+      );
+
+      // } else {
+      //   console.log("User registration failed. Server response:", apiRes?.data);
+      // }
+    } catch (error) {
+      console.error("Error during registration:", error);
+    }
+  };
+
   return (
     <Row className="align-items-center justify-content-center g-0 min-vh-100">
       <Col xxl={4} lg={6} md={8} xs={12} className="py-8 py-xl-0">
-        {/* Card */}
         <Card className="smooth-shadow-md">
-          {/* Card body */}
           <Card.Body className="p-6">
-            <div className="mb-4">
-              <Link href="/">
-                <Image
-                  src="/images/brand/logo/logo-primary.svg"
-                  className="mb-2"
-                  alt=""
-                />
-              </Link>
+            <div className="mb-5 gap-2">
+              <div className="d-flex justify-content-center align-items-center">
+                <Link href="/">
+                  <Image
+                    src="/thalipparamb/logo-Thaliparamba-ml (1).png"
+                    alt="Thalipparamb"
+                    className="img-fluid w-100 h-100"
+                  />
+                </Link>
+              </div>
               <p className="mb-6">Please enter your user information.</p>
             </div>
-            {/* Form */}
-            <Form>
-              {/* Username */}
-              <Form.Group className="mb-3" controlId="username">
+            <Form onSubmit={handleSubmit}>
+              {/* <Form.Group className="mb-3" controlId="username">
                 <Form.Label>Username or email</Form.Label>
                 <Form.Control
                   type="text"
@@ -34,9 +65,7 @@ const SignUp = () => {
                   placeholder="User Name"
                   required=""
                 />
-              </Form.Group>
-
-              {/* Email */}
+              </Form.Group> */}
               <Form.Group className="mb-3" controlId="email">
                 <Form.Label>Email</Form.Label>
                 <Form.Control
@@ -46,8 +75,6 @@ const SignUp = () => {
                   required=""
                 />
               </Form.Group>
-
-              {/* Password */}
               <Form.Group className="mb-3" controlId="password">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
@@ -57,50 +84,30 @@ const SignUp = () => {
                   required=""
                 />
               </Form.Group>
-
-              {/* Confirm Password */}
-              <Form.Group className="mb-3" controlId="confirm-password">
+              {/* <Form.Group className="mb-3" controlId="confirm-password">
                 <Form.Label>Confirm Password</Form.Label>
                 <Form.Control
                   type="password"
-                  name="confirm-password"
+                  name="confirmPassword"
                   placeholder="**************"
                   required=""
+                  value={formData.confirmPassword}
+                  onChange={handleInputChange}
                 />
-              </Form.Group>
-
-              {/* Checkbox */}
-              <div className="mb-3">
-                <Form.Check type="checkbox" id="check-api-checkbox">
-                  <Form.Check.Input type="checkbox" />
-                  <Form.Check.Label>
-                    I agree to the <Link href="#"> Terms of Service </Link> and{" "}
-                    <Link href="#"> Privacy Policy.</Link>
-                  </Form.Check.Label>
-                </Form.Check>
-              </div>
-
+              </Form.Group> */}
               <div>
-                {/* Button */}
                 <div className="d-grid">
                   <Button variant="primary" type="submit">
-                    Create Free Account
+                    Register
                   </Button>
                 </div>
                 <div className="d-md-flex justify-content-between mt-4">
                   <div className="mb-2 mb-md-0">
-                    <Link href="/authentication/sign-in" className="fs-5">
-                      Already member? Login{" "}
+                    <Link href="api/auth/login" className="fs-5">
+                      Already a member? Login
                     </Link>
                   </div>
-                  <div>
-                    <Link
-                      href="/authentication/forget-password"
-                      className="text-inherit fs-5"
-                    >
-                      Forgot your password?
-                    </Link>
-                  </div>
+                  <div></div>
                 </div>
               </div>
             </Form>
