@@ -5,84 +5,117 @@ import { connectToDB } from "lib/mongodb";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 
-// import { userAgent } from "next/server.js";
 
-console.log(
-  "🚀 ~ file: [...nextauth].js:9 ~ process.env.GOOGLE_CLIENT_ID:",
-  process.env.GOOGLE_CLIENT_ID
-);
 connectToDB().catch((err) => res.json(err));
 
 export const options = {
   providers: [
     GoogleProvider({
+      profile(profile) {
+        console.log("Profile Google: ", profile);
+
+        let userRole = "User";
+        return {
+          ...profile,
+          id: profile.sub,
+          role: userRole,
+        };
+      },
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
     CredentialsProvider({
-      id: "credentials",
+      // id: "credentials",
       name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "text" },
-        password: { label: "Password", type: "password" },
+        email: { label: "Email", type: "text", placeholder: "your-email", },
+        password: { label: "Password", type: "password", placeholder: "your-password", },
       },
       async authorize(credentials) {
-        console.log(
-          "🚀 ~ file: [...nextauth].js:27 ~ authorize ~ credentials:",
-          credentials
-        );
-        const email = credentials.email;
-        // await connectToDB().catch((err) => {
-        //   throw new Error(err);
-        // });
-        //check email exist in db
-        const existingUser = await User.findOne({ email });
-        if (!existingUser) {
-          const hashedPassword = await bcrypt.hash(password, 10);
+        try {
+          console.log(
+            "🚀 ~ file: [...nextauth].js:27 ~ authorize ~ credentials:",
+            credentials
+          );
+          const email = credentials.email;
+          // await connectToDB().catch((err) => {
+          //   throw new Error(err);
+          // });
+          //check email exist in db
+          const foundUser = await User.findOne({ email });
+          // if (!existingUser) {
+          //   const hashedPassword = await bcrypt.hash(password, 10);
 
-          const newUser = await User.create({
-            email: credentials.email,
-            password: hashedPassword,
-          });
-          return newUser;
+          //   const newUser = await User.create({
+          //     email: credentials.email,
+          //     password: hashedPassword,
+          //   });
+          //   return newUser;
+          // }
+          if (foundUser) {
+            console.log("User Exists");
+            const match = await bcrypt.compare(
+              credentials.password,
+              foundUser.password
+            );
+
+            if (match) {
+              console.log("Good Pass");
+              delete foundUser.password;
+
+              foundUser["role"] = "Unverified Email";
+              return foundUser;
+            }
+          }
+          // const user = await User.findOne({
+          //   email: credentials?.email,
+          // }).select("+password");
+
+          // if (!user) {
+          //   throw new Error("Invalid credentials");
+          // }
+
+          // const isPasswordCorrect = await compare(
+          //   credentials?.password,
+          //   user.password
+          // );
+
+          // if (!isPasswordCorrect) {
+          //   throw new Error("Invalid credentials");
+          // }
+
+        } catch (error) {
+          console.log(error);
         }
-
-        // const user = await User.findOne({
-        //   email: credentials?.email,
-        // }).select("+password");
-
-        // if (!user) {
-        //   throw new Error("Invalid credentials");
-        // }
-
-        // const isPasswordCorrect = await compare(
-        //   credentials?.password,
-        //   user.password
-        // );
-
-        // if (!isPasswordCorrect) {
-        //   throw new Error("Invalid credentials");
-        // }
-
-        return false;
+        return null;
       },
     }),
   ],
-
-  pages: {
-    signIn: "api/auth/signin",
-    signOut: "api/auth/signout",
-    error: "api/auth/error",
+  session: {
+    jwt: true,
   },
+  jwt: {
+    secret: process.env.JWT_SECRET,
+  },
+  // pages: {
+  //   signIn: "api/auth/signin",
+  //   signOut: "api/auth/signout",
+  //   error: "api/auth/error",
+  // },
 
   callbacks: {
-    // jwt: async ({ token, user }) => {
-    //   user && (token.user = user);
-    //   return token;
-    // },
-    session: async ({ session, user }) => {
-      session.user.id = user.id;
-      return Promise.resolve(session);
+    jwt: async ({ token, user, account, profile, isNewUser }) => {
+      console.log("🚀 ~ file: [...nextauth].js:80 ~ jwt: ~  token, user,account,profile,isNewUser:", token, user, account, profile, isNewUser)
+      if (user) token.role = user.role;
+      // user && (token.user = user);
+      // return Promise.resolve(token);
+      return token;
+    },
+    session: async ({ session, token }) => {
+      if (session?.user) session.user.role = token.role;
+      return session;
+      // session.user.id = user.id;
+      // return Promise.resolve(session);
       // const user = token.user;
       // session.user = user;
 

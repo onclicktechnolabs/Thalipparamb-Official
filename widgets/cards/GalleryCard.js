@@ -57,7 +57,7 @@ function GalleryCard() {
   return (
     <Slider {...settings} className="d-flex  w-100 ">
       {imageGallery?.map((item, index) => (
-        <div className="px-3">
+        <div className="px-3" key={index}>
           <Card key={item.id}>
             <Card>
               <Image
@@ -67,7 +67,7 @@ function GalleryCard() {
               />
             </Card>
             <Card.Body>
-              <h3 class="text-center fs-4 fw-medium text-dark">
+              <h3 className="text-center fs-4 fw-medium text-dark">
                 {item?.categoryTitle}
               </h3>
             </Card.Body>

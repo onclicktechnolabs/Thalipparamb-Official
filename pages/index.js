@@ -18,7 +18,6 @@ const Home = () => {
   // if (!session) {
   //   redirect("/api/auth/signin?callbackUrl=/");
   // }
-
   return (
     <Container fluid className=" ps-md-4 pe-md-4 px-5 py-3 mt-1 px-sm-0 ">
       {/* Page Heading */}
