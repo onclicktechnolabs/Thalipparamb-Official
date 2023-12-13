@@ -5,8 +5,7 @@ import { connectToDB } from "lib/mongodb";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 
-
-connectToDB().catch((err) => res.json(err));
+// connectToDB().catch((err) => res.json(err));
 
 export const options = {
   providers: [
@@ -28,8 +27,12 @@ export const options = {
       // id: "credentials",
       name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "text", placeholder: "your-email", },
-        password: { label: "Password", type: "password", placeholder: "your-password", },
+        email: { label: "Email", type: "text", placeholder: "your-email" },
+        password: {
+          label: "Password",
+          type: "password",
+          placeholder: "your-password",
+        },
       },
       async authorize(credentials) {
         try {
@@ -38,11 +41,15 @@ export const options = {
             credentials
           );
           const email = credentials.email;
+          console.log(
+            "🚀 ~ file: [...nextauth].js:44 ~ authorize ~ email:",
+            email
+          );
           // await connectToDB().catch((err) => {
           //   throw new Error(err);
           // });
           //check email exist in db
-          const foundUser = await User.findOne({ email });
+          // const foundUser = await User.findOne({ email });
           // if (!existingUser) {
           //   const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -52,21 +59,23 @@ export const options = {
           //   });
           //   return newUser;
           // }
-          if (foundUser) {
-            console.log("User Exists");
-            const match = await bcrypt.compare(
-              credentials.password,
-              foundUser.password
-            );
 
-            if (match) {
-              console.log("Good Pass");
-              delete foundUser.password;
+          // if (foundUser) {
+          //   console.log("User Exists");
+          //   const match = await bcrypt.compare(
+          //     credentials.password,
+          //     foundUser.password
+          //   );
 
-              foundUser["role"] = "Unverified Email";
-              return foundUser;
-            }
-          }
+          //   if (match) {
+          //     console.log("Good Pass");
+          //     delete foundUser.password;
+
+          //     foundUser["role"] = "Unverified Email";
+          //     return foundUser;
+          //   }
+          // }
+
           // const user = await User.findOne({
           //   email: credentials?.email,
           // }).select("+password");
@@ -83,7 +92,7 @@ export const options = {
           // if (!isPasswordCorrect) {
           //   throw new Error("Invalid credentials");
           // }
-
+          return { role: "admin" };
         } catch (error) {
           console.log(error);
         }
@@ -105,13 +114,25 @@ export const options = {
 
   callbacks: {
     jwt: async ({ token, user, account, profile, isNewUser }) => {
-      console.log("🚀 ~ file: [...nextauth].js:80 ~ jwt: ~  token, user,account,profile,isNewUser:", token, user, account, profile, isNewUser)
+      console.log(
+        "🚀 ~ file: [...nextauth].js:80 ~ jwt: ~  token, user,account,profile,isNewUser:",
+        token,
+        user,
+        account,
+        profile,
+        isNewUser
+      );
+      console.log("USER ROLE", user.role);
       if (user) token.role = user.role;
       // user && (token.user = user);
       // return Promise.resolve(token);
       return token;
     },
     session: async ({ session, token }) => {
+      console.log(
+        "🚀 ~ file: [...nextauth].js:131 ~ session: ~ token:",
+        token.role
+      );
       if (session?.user) session.user.role = token.role;
       return session;
       // session.user.id = user.id;
@@ -123,7 +144,7 @@ export const options = {
       // Attach MongoDB user ID to the session
     },
   },
-  database: process.env.MONGODB_URI,
+  // database: process.env.MONGODB_URI,
   // callbacks: {
   //   async signIn({ user, account }) {
   //     console.log("🚀 ~ file: [...nextauth].js:23 ~ signIn ~ user:", user);
