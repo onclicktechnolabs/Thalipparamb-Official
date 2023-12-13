@@ -1,13 +1,11 @@
-import { withAuth, NextRequestWithAuth } from "next-auth/middleware";
+import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 
 console.log("ENTER MIDDLEWARE");
 export default withAuth(
   function middleware(request) {
-    console.log(
-      "🚀 ~ file: middleware.js:6 ~ middleware ~ req:",
-      request.nextUrl.pathname
-    );
+    console.log(request.nextUrl.pathname, "PATH NAME");
+    console.log(request.nextauth.token.role, "ROLE");
     if (
       request.nextUrl.pathname.startsWith("/admin") &&
       request.nextauth.token?.role !== "admin"
@@ -24,5 +22,5 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/admin"],
+  matcher: ["/admin/wellness"],
 };
