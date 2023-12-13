@@ -1,15 +1,18 @@
 import { Col, Row, Container } from "react-bootstrap";
 
 // import sub components
-import { PricingCard, PageHeading, FeatureLeftTopIcon } from "widgets";
+import HappinessCard from "widgets/cards/HappinessCard";
 
 // import data files
 import { standard, multisite, extended } from "data/pricing/PricingPlansData";
 import Banner from "components/users/Banner";
+import EventCard from "widgets/cards/EventCard";
 
 import HomeLayout from "layouts/HomeLayout";
 import GalleryCard from "widgets/cards/GalleryCard";
-import EventCard from "widgets/cards/EventCard";
+import { useEffect, useState } from "react";
+import { getAllHappiness } from "components/api/admin/happiness/route";
+import { getAllEvents } from "components/api/admin/events/route";
 // import { getServerSession } from "next-auth";
 
 const Home = () => {
@@ -18,6 +21,23 @@ const Home = () => {
   // if (!session) {
   //   redirect("/api/auth/signin?callbackUrl=/");
   // }
+
+  const [happinessItems, setHappinessItems] = useState([]);
+  const [eventItems, setEventsItems] = useState([]);
+
+  const getHappiness = async () => {
+    const res = await getAllHappiness();
+    setHappinessItems(res);
+  };
+  const getEvents = async () => {
+    const res = await getAllEvents();
+    setEventsItems(res);
+  };
+  useEffect(() => {
+    getHappiness();
+    getEvents();
+  }, []);
+
   return (
     <Container fluid className=" ps-md-4 pe-md-4 px-5 py-3 mt-1 px-sm-0 ">
       {/* Page Heading */}
@@ -34,19 +54,20 @@ const Home = () => {
               >
                 <h2 className="happiness fw-bold ls-sm ">Happiness Festival</h2>
               </Col>
-              <Col xl={4} lg={6} md={12} xs={12} className="mb-3">
-                {/* Standard Pricing Card */}
+              {happinessItems?.map((item) => (
+                <Col
+                  xl={4}
+                  lg={6}
+                  md={12}
+                  xs={12}
+                  className="mb-3"
+                  key={item?.id}
+                >
+                  {/* Standard Pricing Card */}
 
-                <PricingCard content={standard} />
-              </Col>
-              <Col xl={4} lg={6} md={12} xs={12} className="mb-3">
-                {/* Multisite Pricing Card */}
-                <PricingCard content={multisite} />
-              </Col>
-              <Col xl={4} lg={6} md={12} xs={12} className="mb-3">
-                {/* Extended Pricing Card */}
-                <PricingCard content={extended} />
-              </Col>
+                  <HappinessCard content={item} />
+                </Col>
+              ))}
             </Row>
           </Col>
         </Row>
@@ -62,30 +83,29 @@ const Home = () => {
             >
               <h2 className="happiness fw-bold ls-sm">Events</h2>
             </Col>
-            <Col xl={6} lg={6} md={12} xs={12} className="mb-3">
+            {eventItems?.map((item) => (
+              <Col
+                xl={6}
+                lg={6}
+                md={12}
+                xs={12}
+                className="mb-3"
+                key={item?.id}
+                style={{ height: "280px" }}
+              >
+                <EventCard item={item} />
+              </Col>
+            ))}
+
+            {/* <Col xl={6} lg={6} md={12} xs={12} className="mb-3">
               <EventCard />
-            </Col>
-            <Col xl={6} lg={6} md={12} xs={12} className="mb-3">
-              <EventCard />
-            </Col>
-            <Col xl={6} lg={6} md={12} xs={12} className="mb-3">
-              <EventCard />
-            </Col>
-            <Col xl={6} lg={6} md={12} xs={12} className="mb-3">
-              <EventCard />
-            </Col>
-            <Col xl={6} lg={6} md={12} xs={12} className="mb-3">
-              <EventCard />
-            </Col>
-            <Col xl={6} lg={6} md={12} xs={12} className="mb-3">
-              <EventCard />
-            </Col>
+            </Col> */}
           </Row>
         </Col>
       </Row>
       {/* end Events  */}
       {/* gallery*/}
-      <Row>
+      <Row id="gallery">
         <Col xl={{ span: 10, offset: 1 }} md={12}>
           <Row className="mb-10">
             <Col
@@ -95,7 +115,7 @@ const Home = () => {
             >
               <h2 className="happiness fw-bold ls-sm">Image Gallery</h2>
             </Col>
-            <Col className="d-flex mb-3">
+            <Col className="d-flex mb-3 w-100">
               <GalleryCard />
             </Col>
           </Row>

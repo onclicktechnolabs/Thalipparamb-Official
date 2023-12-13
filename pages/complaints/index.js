@@ -1,12 +1,14 @@
+import React from "react";
+import HomeLayout from "layouts/HomeLayout";
 import ComplaintForm from "components/admin/ComplaintForm";
+import { useSession } from "next-auth/react";
+import { redirect, useRouter } from "next/navigation";
 import {
   createComplaint,
   uploadComplaintImages,
 } from "components/api/admin/complaint/route";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
-function AddComplaints() {
+function Complaints() {
   const { data: session } = useSession({
     required: true,
     onUnauthenticated() {
@@ -35,26 +37,28 @@ function AddComplaints() {
         description: formData.description,
         panchayath: formData.panchayath,
         createdBy: session?.user?.email,
-        type: formData.type,
         priority: "low",
         status: "created",
+        type: formData.type,
         image: resImage,
       });
       router.push("/admin/complaints/all");
     }
-    // if (session?.user?.role === "User") {
-    //   const res = await createComplaint({
-    //     title: formData.title,
-    //     phone: formData.phone,
-    //     address: formData.address,
-    //     description: formData.description,
-    //     panchayath: formData.panchayath,
-    //     createdBy: session?.user?.email,
-    //     type: "complaint",
-    //     image: resImage,
-    //   });
-    //   router.push("/");
-    // }
+    if (session?.user?.role === "User") {
+      const res = await createComplaint({
+        title: formData.title,
+        phone: formData.phone,
+        address: formData.address,
+        description: formData.description,
+        panchayath: formData.panchayath,
+        createdBy: session?.user?.email,
+        priority: "low",
+        status: "created",
+        type: "complaint",
+        image: resImage,
+      });
+      router.push("/");
+    }
   };
   return (
     <div className="mt-6">
@@ -67,4 +71,5 @@ function AddComplaints() {
   );
 }
 
-export default AddComplaints;
+Complaints.Layout = HomeLayout;
+export default Complaints;

@@ -1,14 +1,14 @@
 import React from "react";
 import { Card, Image } from "react-bootstrap";
 
-function EventCard() {
+function EventCard({ item }) {
   return (
     <Card className=" h-100">
       <Card className="h-100">
         <Image
           className="d-block w-100 h-100 object-fit-fill"
-          src="/thalipparamb/events/event1.jpeg"
-          alt="Second slide"
+          src={item?.image}
+          alt={item?.title}
         />
       </Card>
       {/* <Card.Body className="d-flex flex-column justify-content-between align-items-center">

@@ -1,5 +1,9 @@
+import { getAllComplaints } from "components/api/admin/complaint/route";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { ProgressBar, Col, Row, Card, Table, Image } from "react-bootstrap";
+import { formatDate } from "widgets/utility/formateData";
 
 const ActiveProjectsData = [
   {
@@ -27,6 +31,22 @@ const ActiveProjectsData = [
 ];
 
 function Complaints() {
+  const router = useRouter();
+  const [data, setData] = useState([]);
+  console.log("🚀 ~ file: all.js:35 ~ Complaints ~ data:", data);
+
+  useEffect(() => {
+    const getComplaintData = async () => {
+      try {
+        const res = await getAllComplaints();
+        setData(res);
+      } catch (error) {
+        console.error("Error fetching Complaint data:", error);
+      }
+    };
+
+    getComplaintData();
+  }, []);
   return (
     <>
       <Col lg={12} md={12} xs={12} className="mt-6">
@@ -37,7 +57,7 @@ function Complaints() {
               <h3 className="mb-0  text-dark">Complaints</h3>
             </div>
             <div>
-              <Link href="/admin/employees/new" className="btn btn-white">
+              <Link href="/admin/complaints/new" className="btn btn-white">
                 Create New Complaints
               </Link>
             </div>
@@ -64,30 +84,50 @@ function Complaints() {
                 </tr>
               </thead>
               <tbody>
-                {ActiveProjectsData.map((item, index) => {
+                {data.map((item) => {
                   return (
-                    <tr key={index}>
+                    <tr key={item?.id}>
                       <td className="align-middle">
                         <div className="d-flex align-items-center">
                           <div className="ms-3 lh-1">
                             <h5 className=" mb-1">
-                              <Link href="#" className="text-inherit">
-                                {item.complaintsTitle}
+                              <Link
+                                href={`/admin/complaints/${item?.id}`}
+                                className="text-inherit"
+                              >
+                                {item?.title}
                               </Link>
                             </h5>
                           </div>
                         </div>
                       </td>
-                      <td className="align-middle">{item.userName}</td>
+                      <td className="align-middle">{item?.createdBy}</td>
 
-                      <td className="align-middle">{item.Date}</td>
                       <td className="align-middle">
+                        {formatDate(item?.createdAt)}
+                      </td>
+                      {/* <td className="align-middle">
                         <span className={`badge bg-${item.priorityBadgeBg}`}>
-                          {item.priority}
+                          {item?.priority}
+                        </span>
+                      </td> */}
+                      <td className="align-middle">
+                        <span
+                          className={`badge bg-${
+                            item?.priority === "low"
+                              ? "info"
+                              : item?.priority === "high"
+                              ? "danger"
+                              : ""
+                          }`}
+                        >
+                          {item?.priority}
                         </span>
                       </td>
-                      <td className="align-middle">{item.AssignTo}</td>
-                      <td className="align-middle">{item.Status}</td>
+                      <td className="align-middle">
+                        {item.AssignTo || "Assign to"}
+                      </td>
+                      <td className="align-middle">{item?.status}</td>
                     </tr>
                   );
                 })}

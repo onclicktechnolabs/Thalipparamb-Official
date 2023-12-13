@@ -87,6 +87,15 @@ function EventForm({ onSubmit, defaultValue }) {
 
             <div>
               <Form onSubmit={handleSubmit(handleFormSubmit)}>
+                {formFields.map((field) => (
+                  <AutoFormField
+                    key={field.name}
+                    onChange={(value) => setValue(field.name, value)}
+                    errors={errors}
+                    {...field}
+                  />
+                ))}
+
                 <Row className="mb-3">
                   <label
                     htmlFor="fullName"
@@ -116,16 +125,6 @@ function EventForm({ onSubmit, defaultValue }) {
                     </Button>
                   </div>
                 </Row>
-
-                {formFields.map((field) => (
-                  <AutoFormField
-                    key={field.name}
-                    onChange={(value) => setValue(field.name, value)}
-                    errors={errors}
-                    {...field}
-                  />
-                ))}
-
                 <Col md={{ offset: 4, span: 8 }} xs={12} className="mt-4">
                   <Button variant="primary" type="submit">
                     Create

@@ -40,7 +40,7 @@ function AutoFormField({
             value={value}
             onChange={handleChange}
           >
-            <option value="">Select status</option>
+            <option value="">{`Select ${name}`}</option>
             {options.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}

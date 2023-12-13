@@ -6,13 +6,21 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormSelect, DropFiles } from "widgets";
 
-const Happinesschema = Yup.object().shape({
+const Complaintschema = Yup.object().shape({
   // photo: Yup.string().required("Photo is required"),
   title: Yup.string().required("Title is required"),
+  phone: Yup.string().required("Phone Number is required"),
+  address: Yup.string().required("Address is required"),
   description: Yup.string().required("Description is required"),
+  panchayath: Yup.string().required("Panchayath is required"),
 });
 
-function HappinessForm({ onSubmit, defaultValue }) {
+function ComplaintForm({ onSubmit, defaultValue, loginData }) {
+  console.log(
+    "🚀 ~ file: ComplaintForm.js:19 ~ ComplaintForm ~ loginData:",
+    loginData
+  );
+
   const formFields = [
     {
       label: "Title",
@@ -22,39 +30,76 @@ function HappinessForm({ onSubmit, defaultValue }) {
       required: false,
     },
     {
+      label: "Phone Number",
+      name: "phone",
+      type: "tel",
+      placeholder: "Enter Phone Number",
+      required: false,
+    },
+    {
+      label: "Address",
+      name: "address",
+      type: "text",
+      placeholder: "Enter Address",
+      required: false,
+    },
+    {
+      label: "Panchayath",
+      name: "panchayath",
+      type: "select",
+      placeholder: "Select Panchayath",
+      required: false,
+      options: [
+        { label: " Thalipparamb", value: "Thalipparamb" },
+        { label: "Alakode", value: "Alakode" },
+        { label: "Chengalai", value: "Chengalai" },
+        { label: "Irikkur", value: "Irikkur" },
+        { label: "Payyavur", value: "Payyavur" },
+      ],
+    },
+    {
       label: "Description",
       name: "description",
-      type: "text",
-      placeholder: "Enter Description",
+      type: "textarea",
+      placeholder: "Enter description",
       required: false,
     },
   ];
-
+  const options = [
+    { label: " Events/Functions", value: "Events" },
+    { label: "Inaguration", value: "Inaguration" },
+    { label: "Complaint", value: "Complaint" },
+  ];
   const [files, setFiles] = useState([]);
+  console.log(
+    "🚀 ~ file: ComplaintForm.js:74 ~ ComplaintForm ~ files:",
+    files.length
+  );
+  const [type, setType] = useState("");
+  console.log("🚀 ~ file: ComplaintForm.js:71 ~ ComplaintForm ~ type:", type);
   const [fileError, setFileError] = useState("");
+
   const {
     handleSubmit,
     control,
     setValue,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(Happinesschema),
+    resolver: yupResolver(Complaintschema),
     defaultValues: defaultValue || {},
   });
-  console.log(
-    "🚀 ~ file: HappinessForm.js:60 ~ HappinessForm ~ errors:",
-    errors
-  );
 
   const handleFormSubmit = (formData) => {
     if (files.length === 0) {
-      setFileError("Please select an image file");
+      setFileError("Please select a file");
+    } else {
+      const formDataWithFiles = {
+        ...formData,
+        type: type,
+        files: files,
+      };
+      onSubmit(formDataWithFiles);
     }
-    const formDataWithFiles = {
-      ...formData,
-      files: files,
-    };
-    onSubmit(formDataWithFiles);
   };
 
   return (
@@ -63,7 +108,7 @@ function HappinessForm({ onSubmit, defaultValue }) {
         <Card>
           <Card.Body>
             <div className=" mb-6">
-              <h4 className="mb-1">New Happiness</h4>
+              <h4 className="mb-1">Register Complaint</h4>
             </div>
 
             <div>
@@ -76,13 +121,40 @@ function HappinessForm({ onSubmit, defaultValue }) {
                     {...field}
                   />
                 ))}
+                {/* complaint type  */}
+                {loginData?.role === "admin" && (
+                  <Row className="mb-3">
+                    <label
+                      htmlFor={name}
+                      className="col-sm-4 col-form-label form-label"
+                    >
+                      Select Complaint Type
+                    </label>
+                    <Col md={8} xs={12}>
+                      <Form.Select
+                        name="complaintType"
+                        value={type}
+                        onChange={(e) => setType(e.target.value)}
+                      >
+                        <option value="">Select Complaint Type</option>
+                        {options.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </Form.Select>
+                    </Col>
+                  </Row>
+                )}
+
+                {/*End complaint type  */}
 
                 <Row className="mb-3">
                   <label
                     htmlFor="fullName"
                     className="col-sm-4 col-form-label form-label"
                   >
-                    Happiness photo
+                    Upload Files
                   </label>
                   <div className="col-md-8 col-12">
                     <div
@@ -106,7 +178,6 @@ function HappinessForm({ onSubmit, defaultValue }) {
                     </Button>
                   </div>
                 </Row>
-
                 <Col md={{ offset: 4, span: 8 }} xs={12} className="mt-4">
                   <Button variant="primary" type="submit">
                     Create
@@ -121,4 +192,4 @@ function HappinessForm({ onSubmit, defaultValue }) {
   );
 }
 
-export default HappinessForm;
+export default ComplaintForm;

@@ -13,14 +13,18 @@ import { ActiveProjects, Teams, TasksPerformance } from "sub-components";
 
 // import required data files
 import ProjectsStatsData from "data/dashboard/ProjectsStatsData";
+import { useSession } from "next-auth/react";
 
 const AdminHome = () => {
   console.log("Enter Admin home");
-  // const session = await getServerSession(options);
+  const { data: session } = useSession({
+    required: true,
+  });
 
-  // if (!session) {
-  //   redirect("/api/auth/signin?callbackUrl=/");
-  // }
+  if (!session || !(session.user.role === "admin")) {
+    router.push("/api/auth/signin?callbackUrl=/");
+  }
+
   return (
     <Fragment>
       <div className="bg-primary pt-10 pb-21"></div>

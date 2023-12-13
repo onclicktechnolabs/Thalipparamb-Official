@@ -60,10 +60,11 @@ function HomeNavbar2() {
         {/* <Col xs={12} md={8} className="d-flex justify-content-between align-items-end"> */}
         <Navbar.Collapse id="basic-navbar-nav" className=" ms-2">
           <Nav className="mx-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
+            <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="#about">About Us</Nav.Link>
             <Nav.Link href="#tourism">Tourism</Nav.Link>
             <Nav.Link href="#gallery">Gallery</Nav.Link>
+            <Nav.Link href="complaints">Complaints</Nav.Link>
           </Nav>
         </Navbar.Collapse>
 
