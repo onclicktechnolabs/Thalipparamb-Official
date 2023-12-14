@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { Card, Col, Image, ListGroup, Row, Table } from "react-bootstrap";
 import { singleComplaint } from "components/api/admin/complaint/route";
 import { formatDate } from "widgets/utility/formateData";
+import Link from "next/link";
 
 function ComplaintInfo() {
   console.log("Enter ComplaintInfo");
@@ -11,7 +12,7 @@ function ComplaintInfo() {
   console.log(router.query.compalintId, "complaint Id");
 
   const [data, setData] = useState();
-  console.log("🚀 ~ file: all.js:35 ~ Complaints ~ data:", data);
+  console.log("🚀 ~ file: [compalintId].js:15 ~ ComplaintInfo ~ data:", data);
 
   useEffect(() => {
     const getComplaintData = async () => {
@@ -134,17 +135,26 @@ function ComplaintInfo() {
                 {" "}
                 <div className="d-flex gap-4">
                   <h4>Files:</h4>
-                  <div>
-                    <Image
-                      src={data?.image}
-                      alt={data?.title}
-                      className="img-fluid"
-                      style={{
-                        display: "block",
-                        width: "100%",
-                        height: "auto",
-                      }}
-                    />
+                  <div className="d-flex flex-column">
+                    <div className="">
+                      <a
+                        href={data?.image}
+                        className="text-primary"
+                        target="_self"
+                      >
+                        Click here
+                      </a>
+                    </div>
+
+                    {/* <div>
+                      <iframe
+                        src={data?.image}
+                        width="100%"
+                        height="300px"
+                        style={{ border: "none" }}
+                        title="PDF Viewer"
+                      ></iframe>
+                    </div> */}
                   </div>
                 </div>
               </ListGroup.Item>

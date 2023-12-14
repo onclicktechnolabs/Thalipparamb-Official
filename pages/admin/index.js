@@ -1,9 +1,6 @@
 // import node module libraries
 import { Fragment } from "react";
 import { Container, Col, Row } from "react-bootstrap";
-// import { redirect } from "next/navigation";
-// import { getServerSession } from "next-auth";
-// import { options } from "pages/api/api/auth/[...nextauth]";
 
 // import widget/custom components
 import { StatRightTopIcon } from "widgets";
@@ -14,15 +11,21 @@ import { ActiveProjects, Teams, TasksPerformance } from "sub-components";
 // import required data files
 import ProjectsStatsData from "data/dashboard/ProjectsStatsData";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const AdminHome = () => {
   console.log("Enter Admin home");
+  const router = useRouter();
   const { data: session } = useSession({
     required: true,
   });
+  console.log("🚀 ~ file: index.js:25 ~ AdminHome ~ session:", session);
 
+  // if (!session || !(session.user.role === "admin")) {
+  //   router.push("/api/auth/signin?callbackUrl=/");
+  // }
   if (!session || !(session.user.role === "admin")) {
-    router.push("/api/auth/signin?callbackUrl=/");
+    return null;
   }
 
   return (

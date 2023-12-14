@@ -70,8 +70,6 @@ export const uploadImages = async (file) => {
 //   }
 // };
 export const getAllBanner = async () => {
-  console.log("Called getAllBanner");
-
   const q = query(collection(db, "baner"), orderBy("createdAt", "desc"));
   const documents = [];
 

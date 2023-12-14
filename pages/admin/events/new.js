@@ -1,5 +1,4 @@
 import EventForm from "components/admin/EventForm";
-import BannerForm from "components/admin/banner/BannerForm";
 import {
   createEvent,
   uploadEventImages,

@@ -51,8 +51,6 @@ export const uploadGalleryImages = async (file) => {
 };
 
 export const getAllgallery = async () => {
-  console.log("Called getAllBanner");
-
   const q = query(collection(db, "gallery"), orderBy("createdAt", "desc"));
   const documents = [];
 

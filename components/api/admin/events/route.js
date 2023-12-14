@@ -26,7 +26,6 @@ export const createEvent = async (data) => {
   try {
     const eventData = { ...data, createdAt: serverTimestamp() };
     const docRef = await addDoc(collection(db, "event"), eventData);
-    console.log("Document written with ID: ", docRef.id);
     return docRef;
   } catch (e) {
     console.error("Error adding document: ", e);
@@ -52,8 +51,6 @@ export const uploadEventImages = async (file) => {
 };
 
 export const getAllEvents = async () => {
-  console.log("Called getAllEvents");
-
   const q = query(collection(db, "event"), orderBy("createdAt", "desc"));
   const documents = [];
 
@@ -64,10 +61,6 @@ export const getAllEvents = async () => {
       documents.push({ id: doc.id, ...doc.data() });
     });
 
-    console.log(
-      "🚀 ~ file: route.js:69 ~ getAllEvents ~ documents:",
-      documents
-    );
     return documents;
   } catch (error) {
     console.error("Error getting documents:", error.message);

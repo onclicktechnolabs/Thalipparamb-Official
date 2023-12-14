@@ -52,8 +52,6 @@ export const uploadHappinessImages = async (file) => {
 };
 
 export const getAllHappiness = async () => {
-  console.log("Called getAllhappinesss");
-
   const q = query(collection(db, "happiness"), orderBy("createdAt", "desc"));
   const documents = [];
 
@@ -64,10 +62,6 @@ export const getAllHappiness = async () => {
       documents.push({ id: doc.id, ...doc.data() });
     });
 
-    console.log(
-      "🚀 ~ file: route.js:69 ~ getAllHappinesss ~ documents:",
-      documents
-    );
     return documents;
   } catch (error) {
     console.error("Error getting documents:", error.message);

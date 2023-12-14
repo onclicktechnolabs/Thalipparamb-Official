@@ -19,10 +19,6 @@ function GalleryCard() {
 
   //data fetching
   const [galleryItems, setgalleryItems] = useState([]);
-  console.log(
-    "🚀 ~ file: GalleryCard.js:21 ~ GalleryCard ~ galleryItems:",
-    galleryItems
-  );
 
   const getGallery = async () => {
     const res = await getAllgallery();
