@@ -1,6 +1,7 @@
 // import node module libraries
 import Head from "next/head";
-import { appWithTranslation } from "next-i18next";
+// import { appWithTranslation } from "next-i18next";
+import { NextIntlClientProvider } from "next-intl";
 import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
 import SSRProvider from "react-bootstrap/SSRProvider";
@@ -11,7 +12,7 @@ import "styles/theme.scss";
 
 // import default layouts
 import DefaultDashboardLayout from "layouts/DefaultDashboardLayout";
-import AuthProvider from "context/AuthProvider";
+// import AuthProvider from "context/AuthProvider";
 import { SessionProvider } from "next-auth/react";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
@@ -49,14 +50,21 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
           site_name: process.env.siteName,
         }}
       />
-      <SessionProvider session={session}>
-        <Layout>
-          <Component {...pageProps} />
-          <Analytics />
-        </Layout>
-      </SessionProvider>
+      <NextIntlClientProvider
+        locale={router.locale}
+        messages={pageProps.messages}
+      >
+        <SessionProvider session={session}>
+          <Layout>
+            <Component {...pageProps} />
+            <Analytics />
+          </Layout>
+        </SessionProvider>
+      </NextIntlClientProvider>
     </SSRProvider>
   );
 }
 
-export default appWithTranslation(MyApp);
+export default MyApp;
+
+// appWithTranslation(MyApp);

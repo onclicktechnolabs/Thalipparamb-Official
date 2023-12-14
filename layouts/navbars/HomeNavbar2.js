@@ -1,23 +1,22 @@
-import { useState } from "react";
-import { useTranslation } from "next-i18next";
-import Link from "next/link";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { useMediaQuery } from "react-responsive";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { useTranslations } from "next-intl";
+import LocaleSwitcher from "components/LocaleSwitcher";
 
 function HomeNavbar2() {
-  const { t } = useTranslation("Navbar");
+  const t = useTranslations("Navbar");
 
   const { data: session, status } = useSession();
   console.log("🚀 ~ file: HomeNavbar2.js:14 ~ HomeNavbar2 ~ session:", session);
-  const [language, setLanguage] = useState("ml");
+  // const [language, setLanguage] = useState("ml");
 
-  const toggleLanguage = () => {
-    const newValue = language === "en" ? "ml" : "en";
-    setLanguage(newValue);
-  };
+  // const toggleLanguage = () => {
+  //   const newValue = language === "en" ? "ml" : "en";
+  //   setLanguage(newValue);
+  // };
 
   const isMobile = useMediaQuery({ maxWidth: 615 });
   return (
@@ -32,7 +31,7 @@ function HomeNavbar2() {
         {/* <Row className="align-items-center"> */}
         {/* Logo and Menu for Small Screens */}
         {/* <Col xs={6} md={4}> */}
-        <Navbar.Brand href="#" className=" w-25  ">
+        <Navbar.Brand href="/" className=" w-25  ">
           {/* <figure className="m-0 w-full"> */}
           {isMobile ? (
             <Image
@@ -60,11 +59,21 @@ function HomeNavbar2() {
         {/* <Col xs={12} md={8} className="d-flex justify-content-between align-items-end"> */}
         <Navbar.Collapse id="basic-navbar-nav" className=" ms-2">
           <Nav className="mx-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="#about">About Us</Nav.Link>
-            <Nav.Link href="#tourism">Tourism</Nav.Link>
-            <Nav.Link href="#gallery">Gallery</Nav.Link>
-            <Nav.Link href="complaints">Complaints</Nav.Link>
+            <Nav.Link href="/" className="fw-bold">
+              {t("home")}{" "}
+            </Nav.Link>
+            <Nav.Link href="#about" className="fw-bold">
+              {t("about")}
+            </Nav.Link>
+            <Nav.Link href="#tourism" className="fw-bold">
+              {t("tourism")}
+            </Nav.Link>
+            <Nav.Link href="#gallery" className="fw-bold">
+              {t("gallery")}
+            </Nav.Link>
+            <Nav.Link href="complaints" className="fw-bold">
+              {t("complaints")}
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
 
@@ -73,14 +82,15 @@ function HomeNavbar2() {
           className="ms-2 d-lg-flex justify-content-lg-end  "
         >
           <Nav className="mr-auto">
-            <Nav.Link>
+            <LocaleSwitcher />
+            {/* <Nav.Link>
               <button
                 className="btn btn-outline-secondary w-100"
                 onClick={toggleLanguage}
               >
                 {language === "ml" ? "Malayalam" : "English"}
               </button>
-            </Nav.Link>
+            </Nav.Link> */}
             {session ? (
               <Nav.Link>
                 <button

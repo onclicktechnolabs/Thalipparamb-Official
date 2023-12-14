@@ -73,3 +73,11 @@ function Complaints() {
 
 Complaints.Layout = HomeLayout;
 export default Complaints;
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      messages: (await import(`../../locales/${locale}.json`)).default,
+    },
+  };
+}

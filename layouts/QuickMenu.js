@@ -1,5 +1,6 @@
 // import node module libraries
 import Link from "next/link";
+import { signOut, useSession } from "next-auth/react";
 import { Fragment } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Row, Col, Image, Dropdown, ListGroup } from "react-bootstrap";
@@ -13,13 +14,23 @@ import NotificationList from "data/Notification";
 
 // import hooks
 import useMounted from "hooks/useMounted";
+import { useRouter } from "next/navigation";
 
 const QuickMenu = () => {
+  const router = useRouter();
+  const { data: session } = useSession();
+  console.log("🚀 ~ file: QuickMenu.js:20 ~ QuickMenu ~ session:", session);
   const hasMounted = useMounted();
 
   const isDesktop = useMediaQuery({
     query: "(min-width: 1224px)",
   });
+
+  const handleLogout = async () => {
+    console.log("Logout clicked");
+    await signOut();
+    router.push("/");
+  };
 
   const Notifications = () => {
     return (
@@ -135,7 +146,8 @@ const QuickMenu = () => {
               </Link>
             </Dropdown.Item>
             <Dropdown.Item>
-              <i className="fe fe-power me-2"></i>Sign Out
+              <i className="fe fe-power me-2" onClick={handleLogout}></i>Sign
+              Out
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
@@ -226,7 +238,7 @@ const QuickMenu = () => {
             <Dropdown.Item>
               <i className="fe fe-settings me-2"></i> Account Settings
             </Dropdown.Item>
-            <Dropdown.Item>
+            <Dropdown.Item onClick={() => signOut()}>
               <i className="fe fe-power me-2"></i>Sign Out
             </Dropdown.Item>
           </Dropdown.Menu>

@@ -1,13 +1,15 @@
 {
   "Navbar": {
     "home": "Home",
-    "about": "About",
+    "about": "About Us",
+    "tourism": "Tourism",
+    "gallery": "Gallery",
     "complaints": "Complaints"
   },
-  "page": {
-    "home": {
-      "festivel": "Happiness Festival",
-      "gallery": "IMAGE GALLERIES"
-    }
+
+  "home": {
+    "festivel": "Happiness Festival",
+    "event": "Events",
+    "gallery": "IMAGE GALLERIES"
   }
 }

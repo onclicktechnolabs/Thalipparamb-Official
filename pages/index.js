@@ -1,21 +1,23 @@
+import { useEffect, useState } from "react";
 import { Col, Row, Container } from "react-bootstrap";
 
 // import sub components
 import HappinessCard from "widgets/cards/HappinessCard";
-
-// import data files
-import { standard, multisite, extended } from "data/pricing/PricingPlansData";
 import Banner from "components/users/Banner";
 import EventCard from "widgets/cards/EventCard";
-
 import HomeLayout from "layouts/HomeLayout";
 import GalleryCard from "widgets/cards/GalleryCard";
-import { useEffect, useState } from "react";
 import { getAllHappiness } from "components/api/admin/happiness/route";
 import { getAllEvents } from "components/api/admin/events/route";
+
+// import data files
+import { useTranslations } from "next-intl";
+
 // import { getServerSession } from "next-auth";
 
 const Home = () => {
+  const t = useTranslations("home");
+
   // const session = await getServerSession(options);
 
   // if (!session) {
@@ -52,7 +54,7 @@ const Home = () => {
                 xs={12}
                 className="mb-6 d-flex justify-content-center align-items-center"
               >
-                <h2 className="happiness fw-bold ls-sm ">Happiness Festival</h2>
+                <h2 className="happiness fw-bold ls-sm ">{t("festivel")}</h2>
               </Col>
               {happinessItems?.map((item) => (
                 <Col
@@ -81,7 +83,7 @@ const Home = () => {
               xs={12}
               className="d-flex justify-content-center align-items-center mb-6"
             >
-              <h2 className="happiness fw-bold ls-sm">Events</h2>
+              <h2 className="happiness fw-bold ls-sm">{t("event")}</h2>
             </Col>
             {eventItems?.map((item) => (
               <Col
@@ -113,7 +115,7 @@ const Home = () => {
               xs={12}
               className="d-flex justify-content-center align-items-center mb-6"
             >
-              <h2 className="happiness fw-bold ls-sm">Image Gallery</h2>
+              <h2 className="happiness fw-bold ls-sm">{t("gallery")}</h2>
             </Col>
             <Col className="d-flex mb-3 w-100">
               <GalleryCard />
@@ -127,3 +129,11 @@ const Home = () => {
 };
 Home.Layout = HomeLayout;
 export default Home;
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      messages: (await import(`../locales/${locale}.json`)).default,
+    },
+  };
+}
