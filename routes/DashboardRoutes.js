@@ -74,7 +74,7 @@ export const DashboardMenu = [
   {
     id: uuid(),
     title: "Happiness",
-    icon: "smile-heart",
+    icon: "heart",
     children: [
       { id: uuid(), link: "/admin/happiness/all", name: "All" },
       { id: uuid(), link: "/admin/happiness/new", name: "New" },
@@ -83,7 +83,8 @@ export const DashboardMenu = [
   {
     id: uuid(),
     title: "Employees",
-    icon: "laptop",
+    icon: "users",
+
     children: [
       { id: uuid(), link: "/admin/employees/all", name: "All" },
       { id: uuid(), link: "/admin/employees/new", name: "New" },
@@ -101,7 +102,7 @@ export const DashboardMenu = [
   {
     id: uuid(),
     title: "Tourism",
-    icon: "travel",
+    icon: "image",
     children: [
       { id: uuid(), link: "/admin/tourism/all", name: "All" },
       { id: uuid(), link: "/admin/tourism/new", name: "New" },

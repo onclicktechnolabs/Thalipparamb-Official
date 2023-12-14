@@ -131,7 +131,20 @@ function allEvents() {
                           </div>
                         </div>
                       </td> */}
-                      <td className="align-middle">{item?.title}</td>
+                      <td className="align-middle">
+                        <div className="d-flex align-items-center">
+                          <div className="ms-3 lh-1">
+                            <h5 className=" mb-1">
+                              <Link
+                                href={`/admin/events/${item?.id}`}
+                                className="text-inherit"
+                              >
+                                {item?.title}
+                              </Link>
+                            </h5>
+                          </div>
+                        </div>
+                      </td>
 
                       <td className="align-middle">{item?.place}</td>
                       <td className="align-middle">
@@ -143,7 +156,7 @@ function allEvents() {
                           className={`badge bg-${
                             item?.status === "Planned"
                               ? "info"
-                              : item?.status === "InProgress"
+                              : item?.status === "In-Progress"
                               ? "warning"
                               : item?.status === "Completed"
                               ? "success"

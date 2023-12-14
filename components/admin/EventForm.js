@@ -24,10 +24,10 @@ function EventForm({ onSubmit, defaultValue }) {
       required: false,
     },
     {
-      label: "Place",
+      label: "Venu",
       name: "place",
       type: "text",
-      placeholder: "Enter Place",
+      placeholder: "Enter Venu",
       required: false,
     },
     {
@@ -45,7 +45,7 @@ function EventForm({ onSubmit, defaultValue }) {
       required: false,
       options: [
         { label: " Planned", value: "Planned" },
-        { label: " In Progress", value: "InProgress" },
+        { label: " In Progress", value: "In-Progress" },
         { label: " Completed", value: "Completed" },
         { label: " Cancelled", value: "Cancelled" },
       ],
@@ -101,7 +101,7 @@ function EventForm({ onSubmit, defaultValue }) {
                     htmlFor="fullName"
                     className="col-sm-4 col-form-label form-label"
                   >
-                    Event photo
+                    Poster
                   </label>
                   <div className="col-md-8 col-12">
                     <div

@@ -19,7 +19,6 @@ import { useRouter } from "next/navigation";
 const QuickMenu = () => {
   const router = useRouter();
   const { data: session } = useSession();
-  console.log("🚀 ~ file: QuickMenu.js:20 ~ QuickMenu ~ session:", session);
   const hasMounted = useMounted();
 
   const isDesktop = useMediaQuery({

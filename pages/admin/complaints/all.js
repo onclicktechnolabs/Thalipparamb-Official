@@ -76,6 +76,7 @@ function Complaints() {
                 <tr>
                   <th>Title</th>
                   <th>User</th>
+                  <th>Event Type</th>
 
                   <th>Complaint Date</th>
                   <th>priority</th>
@@ -102,6 +103,7 @@ function Complaints() {
                         </div>
                       </td>
                       <td className="align-middle">{item?.createdBy}</td>
+                      <td className="align-middle">{item?.type}</td>
 
                       <td className="align-middle">
                         {formatDate(item?.createdAt)}
@@ -116,6 +118,8 @@ function Complaints() {
                           className={`badge bg-${
                             item?.priority === "low"
                               ? "info"
+                              : item?.priority === "medium"
+                              ? "warning"
                               : item?.priority === "high"
                               ? "danger"
                               : ""
@@ -125,7 +129,7 @@ function Complaints() {
                         </span>
                       </td>
                       <td className="align-middle">
-                        {item.AssignTo || "Assign to"}
+                        {item.assignTo || "Assign to"}
                       </td>
                       <td className="align-middle">{item?.status}</td>
                     </tr>

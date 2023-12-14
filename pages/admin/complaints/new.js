@@ -37,7 +37,7 @@ function AddComplaints() {
         createdBy: session?.user?.email,
         type: formData.type,
         priority: "low",
-        status: "created",
+        status: "new",
         image: resImage,
       });
       router.push("/admin/complaints/all");

@@ -1,10 +1,6 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import User from "models/UserModel";
-import { connectToDB } from "lib/mongodb";
 import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs";
-import { userLoggin } from "components/api/auth/route";
 
 // connectToDB().catch((err) => res.json(err));
 
@@ -34,13 +30,8 @@ export const options = {
         },
       },
       async authorize(credentials) {
-        console.log(
-          "🚀 ~ file: [...nextauth].js:37 ~ authorize ~ credentials:",
-          credentials
-        );
         const { email, id, accessToken, refreshToken, accessTokenExp, role } =
           credentials;
-        console.log("🚀 ~ file: [...nextauth].js:40 ~ authorize ~ role:", role);
 
         const user = {
           email,
@@ -54,57 +45,60 @@ export const options = {
           return Promise.resolve(user);
         }
         return Promise.resolve(null);
-        // try {
-        //   const user = await userLoggin(credentials);
-
-        //   return user;
-        // } catch (error) {
-        //   console.log(error);
-        // }
       },
     }),
   ],
   session: {
     jwt: true,
   },
-  jwt: {
-    secret: process.env.JWT_SECRET,
-  },
+  // jwt: {
+  //   secret: process.env.JWT_SECRET,
+  // },
 
   callbacks: {
     jwt: async ({ token, user }) => {
-      const tokenExp = token.accessTokenExp * 1000;
-      const currentTime = await Date.now();
-      if (tokenExp < currentTime) {
-        console.log("token expired time");
-        const data = await refreshToken(token.refreshToken);
-        if (data.status) {
-          return {
-            ...token,
-            refreshToken: data.refreshToken,
-            accessToken: data.accessToken,
-            accessTokenExp: data.accessTokenExp,
-            ...user,
-          };
-        } else {
-          return null;
-        }
-      } else {
+      if (user?.email) {
         return { ...token, ...user };
       }
 
-      // if (user) token.role = user.role;
+      if (token?.accessTokenExpires) {
+        if (Date.now() / 1000 < token?.accessTokenExpires)
+          return { ...token, ...user };
+      }
+      // else if (token?.refreshToken) return refreshAccessToken(token);
 
-      // return { ...token, ...user };
+      return { ...token, ...user };
     },
+    // jwt: async ({ token, user }) => {
+    //   const tokenExp = token.accessTokenExp * 1000;
+
+    //   const currentTime = await Date.now();
+    //   if (tokenExp < currentTime) {
+    //     console.log("token expired time");
+    //     const data = await refreshToken(token.refreshToken);
+    //     if (data.status) {
+    //       return {
+    //         // ...token,
+    //         refreshToken: data.refreshToken,
+    //         accessToken: data.accessToken,
+    //         accessTokenExp: data.accessTokenExp,
+    //         ...user,
+    //       };
+    //     } else {
+    //       return null;
+    //     }
+    //   } else {
+    //     console.log("token not expire");
+    //     return { ...token, ...user };
+    //   }
+    // },
     session: async ({ session, token }) => {
       session.user = token;
       return session;
-
-      // if (session?.user) session.user.role = token.role;
-      // return session;
     },
   },
+  secret: "process.env.NEXTAUTH_SECRET",
+
   pages: {
     signOut: "/login",
   },
