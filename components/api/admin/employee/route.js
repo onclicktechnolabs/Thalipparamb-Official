@@ -1,4 +1,5 @@
 import { db } from "lib/firebaseConfig";
+const bcrypt = require("bcryptjs");
 
 import {
   collection,
@@ -11,15 +12,42 @@ import {
   getDoc,
   serverTimestamp,
   orderBy,
+  where,
 } from "firebase/firestore";
+
+export const checkAdminExistence = async (email) => {
+  try {
+    const q = query(collection(db, "admin"), where("email", "==", email));
+    const querySnapshot = await getDocs(q);
+
+    return !querySnapshot.empty;
+  } catch (error) {
+    console.error("Error checking admin existence:", error.message);
+    throw error;
+  }
+};
 
 export const createEmploye = async (data) => {
   try {
-    const employeData = { ...data, createdAt: serverTimestamp() };
+    const { email, password, ...otherData } = data;
+
+    const adminExists = await checkAdminExistence(email);
+
+    if (adminExists) {
+      throw new Error(`Admin with email ${email} already exists.`);
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const employeData = {
+      password: hashedPassword,
+      email,
+      ...otherData,
+      createdAt: serverTimestamp(),
+    };
     const docRef = await addDoc(collection(db, "admin"), employeData);
     return docRef;
   } catch (e) {
-    console.error("Error adding document: ", e);
+    console.error("Error adding document: ", e.message);
+    throw e;
   }
 };
 

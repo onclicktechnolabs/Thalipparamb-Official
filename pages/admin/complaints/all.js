@@ -33,7 +33,6 @@ const ActiveProjectsData = [
 function Complaints() {
   const router = useRouter();
   const [data, setData] = useState([]);
-  console.log("🚀 ~ file: all.js:35 ~ Complaints ~ data:", data);
 
   useEffect(() => {
     const getComplaintData = async () => {

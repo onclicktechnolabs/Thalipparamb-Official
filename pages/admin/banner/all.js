@@ -21,7 +21,6 @@ function AllBanner() {
     const getBannerData = async () => {
       try {
         const res = await getAllBanner();
-        console.log("🚀 ~ file: all.js:33 ~ getBannerData ~ res:", res);
         setData(res);
       } catch (error) {
         console.error("Error fetching banner data:", error);
@@ -111,7 +110,7 @@ function AllBanner() {
                           className="px-2"
                           onClick={() => handleDelete(item.id)}
                         >
-                          <Trash2 size="18px" />
+                          <Trash2 size="18px" className="mx-1" />
                           Delete
                         </Button>
                       </div>

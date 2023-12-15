@@ -52,8 +52,6 @@ export const uploadComplaintImages = async (file) => {
 };
 
 export const getAllComplaints = async () => {
-  console.log("Called getAllComplaints");
-
   const q = query(collection(db, "Complaint"), orderBy("createdAt", "desc"));
   const documents = [];
 
@@ -64,17 +62,13 @@ export const getAllComplaints = async () => {
       documents.push({ id: doc.id, ...doc.data() });
     });
 
-    console.log(
-      "🚀 ~ file: route.js:69 ~ getAllComplaints ~ documents:",
-      documents
-    );
     return documents;
   } catch (error) {
     console.error("Error getting documents:", error.message);
     throw error;
   }
 };
-//delete banner
+//delete complaints
 export const deleteComplaint = async (documentId) => {
   const documentRef = doc(db, "Complaint", documentId);
 
@@ -99,7 +93,7 @@ export const singleComplaint = async (documentId) => {
     throw error;
   }
 };
-//update banner
+//update complaints
 export const updateComplaint = async (documentId, dataToUpdate) => {
   const documentRef = doc(db, "Complaint", documentId);
 

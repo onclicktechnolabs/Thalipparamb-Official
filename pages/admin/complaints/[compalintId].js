@@ -6,6 +6,9 @@ import {
   updateComplaint,
 } from "components/api/admin/complaint/route";
 import { getAllEmployes } from "components/api/admin/employee/route";
+import { getSingleGreetingByGreetingType } from "components/api/admin/greetings/route";
+import { downloadFile } from "widgets/utility/downloadFile";
+import { saveAs } from "file-saver";
 
 const priorityType = ["high", "low", "medium"];
 const statusType = ["new", "processing", "completed"];
@@ -14,6 +17,8 @@ function ComplaintInfo() {
   const router = useRouter();
   const compalintid = router.query.compalintId;
   const [data, setData] = useState(null);
+  // const [greeting, setGreeting] = useState(null);
+
   const [employee, setEmployee] = useState([]);
   const [selectedEmp, setSelectedEmp] = useState("");
   const [selectedPrty, setSelectedPrty] = useState("");
@@ -34,6 +39,15 @@ function ComplaintInfo() {
       setData(res);
     } catch (error) {
       console.error("Error fetching complaint data:", error);
+    }
+  };
+
+  const getGreetingsData = async () => {
+    try {
+      const res = await getSingleGreetingByGreetingType(data?.type);
+      return res;
+    } catch (error) {
+      console.error("Error fetching Greeting data:", error);
     }
   };
 
@@ -75,6 +89,12 @@ function ComplaintInfo() {
     handleUpdatePrty();
     handleUpdateStatus();
   }, [selectedEmp, selectedPrty, selectedStatus, compalintid]);
+
+  const handleDownload = async () => {
+    const res = await getGreetingsData();
+    const path = res.file;
+    saveAs(path, "image.jpg");
+  };
 
   const timestampData = (data) => {
     if (data) {
@@ -168,7 +188,10 @@ function ComplaintInfo() {
                 </div>
                 <div class="col-8">
                   <p>{data?.type}</p>
-                  <button className="btn btn-outline-primary mb-2">
+                  <button
+                    className="btn btn-outline-primary mb-2"
+                    onClick={handleDownload}
+                  >
                     Download
                   </button>
                 </div>

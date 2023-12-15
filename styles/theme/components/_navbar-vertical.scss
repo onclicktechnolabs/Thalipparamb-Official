@@ -42,6 +42,10 @@
   }
   .navbar-nav {
     .nav-item {
+      &.active {
+        color: $gray-900;
+        background-color: $gray-200;
+      }
       .nav-link {
         padding: 0.5rem 1.5rem;
         display: flex;
@@ -111,7 +115,7 @@
           }
           &.active {
             color: $black;
-            background-color: $gray-200;
+            background-color: $gray-400;
           }
         }
         .nav {
@@ -125,7 +129,7 @@
               }
               &.active {
                 color: $black;
-                background-color: $gray-200;
+                background-color: $gray-400;
               }
             }
             .nav {
@@ -138,7 +142,7 @@
                   }
                   &.active {
                     color: $black;
-                    background-color: $gray-200;
+                    background-color: $gray-400;
                   }
                 }
               }

@@ -6,6 +6,7 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Col, Row, Card, Table, Image } from "react-bootstrap";
+import { truncateText } from "widgets/utility/truncateText";
 
 const ActiveProjectsData = [
   {
@@ -39,7 +40,6 @@ const ActiveProjectsData = [
 function Happiness() {
   const router = useRouter();
   const [data, setData] = useState([]);
-  console.log("🚀 ~ file: all.js:42 ~ Happiness ~ data:", data);
 
   useEffect(() => {
     const getHappinessData = async () => {
@@ -114,7 +114,10 @@ function Happiness() {
 
                       <td className="align-middle">{item?.title}</td>
 
-                      <td className="align-middle">{item?.description}</td>
+                      <td className="align-middle ">
+                        {" "}
+                        {truncateText(item?.description)}
+                      </td>
                     </tr>
                   );
                 })}

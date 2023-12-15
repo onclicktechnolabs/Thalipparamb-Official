@@ -11,14 +11,19 @@ function AddEmployees() {
     sectionRole: "",
   };
   const onSubmit = async (formData) => {
-    const res = await createEmploye({
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      sectionRole: formData.sectionRole,
-      role: "admin",
-    });
-    router.push("/admin/employees/all");
+    try {
+      const res = await createEmploye({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        sectionRole: formData.sectionRole,
+        password: "123456",
+        role: "admin",
+      });
+      router.push("/admin/employees/all");
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <div className="mt-6">
