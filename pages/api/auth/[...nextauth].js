@@ -1,13 +1,22 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { getAdminByEmail } from "components/api/auth/route";
 
 // connectToDB().catch((err) => res.json(err));
 
 export const options = {
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
   providers: [
     GoogleProvider({
       profile(profile) {
+        console.log(
+          "🚀 ~ file: [...nextauth].js:12 ~ profile ~ profile:",
+          profile
+        );
         let userRole = "User";
         return {
           ...profile,
@@ -30,69 +39,26 @@ export const options = {
         },
       },
       async authorize(credentials) {
-        const { email, id, accessToken, refreshToken, accessTokenExp, role } =
-          credentials;
+        console.log(
+          "🚀 ~ file: [...nextauth].js:42 ~ authorize ~ credentials:",
+          credentials
+        );
+        const adminData = await getAdminByEmail(credentials);
 
-        const user = {
-          email,
-          id,
-          accessToken,
-          accessTokenExp,
-          refreshToken,
-          role: "admin",
-        };
-        if (user) {
-          return Promise.resolve(user);
+        if (adminData) {
+          return Promise.resolve(adminData);
         }
         return Promise.resolve(null);
       },
     }),
   ],
-  session: {
-    jwt: true,
-  },
-  // jwt: {
-  //   secret: process.env.JWT_SECRET,
-  // },
-
   callbacks: {
     jwt: async ({ token, user }) => {
-      if (user?.email) {
-        return { ...token, ...user };
-      }
-
-      if (token?.accessTokenExpires) {
-        if (Date.now() / 1000 < token?.accessTokenExpires)
-          return { ...token, ...user };
-      }
-      // else if (token?.refreshToken) return refreshAccessToken(token);
-
       return { ...token, ...user };
     },
-    // jwt: async ({ token, user }) => {
-    //   const tokenExp = token.accessTokenExp * 1000;
 
-    //   const currentTime = await Date.now();
-    //   if (tokenExp < currentTime) {
-    //     console.log("token expired time");
-    //     const data = await refreshToken(token.refreshToken);
-    //     if (data.status) {
-    //       return {
-    //         // ...token,
-    //         refreshToken: data.refreshToken,
-    //         accessToken: data.accessToken,
-    //         accessTokenExp: data.accessTokenExp,
-    //         ...user,
-    //       };
-    //     } else {
-    //       return null;
-    //     }
-    //   } else {
-    //     console.log("token not expire");
-    //     return { ...token, ...user };
-    //   }
-    // },
-    session: async ({ session, token }) => {
+    session: async ({ session, token, user }) => {
+      console.log("🚀 ~ file: [...nextauth].js:65 ~ session: ~ token:", token);
       session.user = token;
       return session;
     },
@@ -105,3 +71,27 @@ export const options = {
 };
 
 export default NextAuth(options);
+
+// jwt: async ({ token, user }) => {
+//   const tokenExp = token.accessTokenExp * 1000;
+
+//   const currentTime = await Date.now();
+//   if (tokenExp < currentTime) {
+//     console.log("token expired time");
+//     const data = await refreshToken(token.refreshToken);
+//     if (data.status) {
+//       return {
+//         // ...token,
+//         refreshToken: data.refreshToken,
+//         accessToken: data.accessToken,
+//         accessTokenExp: data.accessTokenExp,
+//         ...user,
+//       };
+//     } else {
+//       return null;
+//     }
+//   } else {
+//     console.log("token not expire");
+//     return { ...token, ...user };
+//   }
+// },

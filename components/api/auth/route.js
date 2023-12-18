@@ -1,4 +1,5 @@
 import { db, storage } from "lib/firebaseConfig";
+const bcrypt = require("bcryptjs");
 
 import {
   collection,
@@ -7,24 +8,36 @@ import {
   getDoc,
   setDoc,
   where,
+  query,
 } from "firebase/firestore";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
 
-export const getAdminByEmail = async (email) => {
-  const q = query(collection(db, "admin"), where("email", "==", email));
+export const getAdminByEmail = async (credentials) => {
+  const { email, password } = credentials;
+  console.log(
+    "🚀 ~ file: route.js:17 ~ Enter API getAdminByEmail ~ email:",
+    email,
+    password
+  );
 
   try {
+    const q = query(collection(db, "admin"), where("email", "==", email));
     const querySnapshot = await getDocs(q);
 
-    if (querySnapshot.size > 0) {
-      // Admin with the specified email exists, return the data
+    if (!querySnapshot.empty) {
       const adminData = querySnapshot.docs[0].data();
-      return { id: querySnapshot.docs[0].id, ...adminData };
+
+      // Compare the provided password with the hashed password stored in the database
+      const passwordMatch = await bcrypt.compare(password, adminData.password);
+
+      if (passwordMatch) {
+        const { password, ...others } = adminData;
+        return { id: querySnapshot.docs[0].id, ...others };
+      } else {
+        // Password does not match
+        return null;
+      }
     } else {
-      // Admin with the specified email doesn't exist
+      // Admin with the provided email doesn't exist
       return null;
     }
   } catch (error) {
