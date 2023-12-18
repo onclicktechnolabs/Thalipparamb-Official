@@ -11,6 +11,7 @@ import {
   Badge,
   useAccordionButton,
   AccordionContext,
+  Nav,
 } from "react-bootstrap";
 
 // import simple bar scrolling used for notification item scrolling
@@ -71,9 +72,8 @@ const NavbarVertical = (props) => {
     return (
       <Link
         href={item.link}
-        className={`nav-link ${
-          location.pathname === item.link ? "active" : ""
-        }`}
+        className={`nav-link ${location.pathname === item.link ? "active" : ""
+          }`}
         onClick={(e) =>
           isMobile ? props.onClick(!props.showMenu) : props.showMenu
         }
@@ -99,15 +99,17 @@ const NavbarVertical = (props) => {
   return (
     <Fragment>
       <SimpleBar style={{ maxHeight: "100vh" }}>
-        <div className="nav-scroller">
-          <figure className="w-full d-flex justify-content-center align-items-center md:w-auto mt-2">
-            <Image
-              src="/thalipparamb/apple-touch-icon.png"
-              alt="Thalipparamb"
-              className="img-fluid w-25 h-25"
-            />
-          </figure>
-        </div>
+        <Nav.Link href="/">
+          <div className="nav-scroller">
+            <figure className="w-full d-flex justify-content-center align-items-center md:w-auto mt-2">
+              <Image
+                src="/thalipparamb/apple-touch-icon.png"
+                alt="Thalipparamb"
+                className="img-fluid w-25 h-25"
+              />
+            </figure>
+          </div>
+        </Nav.Link>
         {/* Dashboard Menu */}
         <Accordion
           defaultActiveKey="0"
@@ -315,9 +317,8 @@ const NavbarVertical = (props) => {
                     {/* menu item without any childern items like Documentation and Changelog items*/}
                     <Link
                       href={menu.link}
-                      className={`nav-link ${
-                        location.pathname === menu.link ? "active" : ""
-                      }`}
+                      className={`nav-link ${location.pathname === menu.link ? "active" : ""
+                        }`}
                     >
                       {typeof menu.icon === "string" ? (
                         <i className={`nav-icon fe fe-${menu.icon} me-2`}></i>

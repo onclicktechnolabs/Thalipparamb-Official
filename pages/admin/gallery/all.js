@@ -24,6 +24,22 @@ const ActiveProjectsData = [
 ];
 
 function Gallery() {
+  const router = useRouter();
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const getGalleryData = async () => {
+      try {
+        const res = await getAllgallery();
+        setData(res);
+      } catch (error) {
+        console.error("Error fetching Gallery data:", error);
+      }
+    };
+
+    getGalleryData();
+  }, []);
+
   return (
     <>
       <Col lg={12} md={12} xs={12} className="mt-6">

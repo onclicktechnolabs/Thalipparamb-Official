@@ -6,6 +6,9 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { useMediaQuery } from "react-responsive";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { useTranslations } from "next-intl";
+import LocaleSwitcher from "components/LocaleSwitcher";
+import QuickMenu from "layouts/QuickMenu";
 
 function HomeNavbar2() {
   const { t } = useTranslation("Navbar");
@@ -64,38 +67,44 @@ function HomeNavbar2() {
               </Nav>
             </Navbar.Collapse>
 
-            <Navbar.Collapse id="basic-navbar-nav" className="ms-2">
-              <Nav className="mr-auto">
-                <Nav.Link>
-                  <button
-                    className="btn btn-outline-secondary w-100"
-                    onClick={toggleLanguage}
-                  >
-                    {language === "ml" ? "Malayalam" : "English"}
-                  </button>
-                </Nav.Link>
-                {session ? (
-                  <Nav.Link>
-                    <button
-                      className="btn btn-outline-primary w-100"
-                      onClick={() => signOut()}
-                    >
-                      Logout
-                    </button>{" "}
-                  </Nav.Link>
-                ) : (
-                  <Nav.Link>
-                    <button
-                      className="btn btn-outline-primary w-100"
-                      onClick={() => signIn("google")}
-                    >
-                      Login
-                    </button>{" "}
-                  </Nav.Link>
-                )}
-              </Nav>
-            </Navbar.Collapse>
-          {/* </Col> */}
+        <Navbar.Collapse
+          id="basic-navbar-nav"
+          className="ms-2 d-lg-flex justify-content-lg-end  "
+        >
+          <Nav className="mr-auto">
+            <LocaleSwitcher />
+            {/* <Nav.Link>
+              <button
+                className="btn btn-outline-secondary w-100"
+                onClick={toggleLanguage}
+              >
+                {language === "ml" ? "Malayalam" : "English"}
+              </button>
+            </Nav.Link> */}
+            {session ? (
+              <Nav.Link>
+                <button
+                  className="btn btn-outline-primary w-100"
+                  onClick={() => signOut()}
+                >
+                  Logout
+                </button>{" "}
+              </Nav.Link>
+            ) : (
+              <Nav.Link>
+                <button
+                  className="btn btn-outline-primary w-100"
+                  onClick={() => signIn("google")}
+                >
+                  Login
+                </button>{" "}
+              </Nav.Link>
+            )}
+            <QuickMenu />
+
+          </Nav>
+        </Navbar.Collapse>
+        {/* </Col> */}
         {/* </Row> */}
       </Container>
     </Navbar>

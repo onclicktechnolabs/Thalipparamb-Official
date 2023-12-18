@@ -31,6 +31,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
         : DefaultDashboardLayout
       : DefaultDashboardLayout);
 
+  const timeZone = 'Asia/Kolkata';
   return (
     <SSRProvider>
       <Head>
@@ -49,12 +50,18 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
           site_name: process.env.siteName,
         }}
       />
-      <SessionProvider session={session}>
-        <Layout>
-          <Component {...pageProps} />
-          <Analytics />
-        </Layout>
-      </SessionProvider>
+      <NextIntlClientProvider
+        locale={router.locale}
+        messages={pageProps.messages}
+        timeZone={timeZone}
+      >
+        <SessionProvider session={session}>
+          <Layout>
+            <Component {...pageProps} />
+            <Analytics />
+          </Layout>
+        </SessionProvider>
+      </NextIntlClientProvider>
     </SSRProvider>
   );
 }

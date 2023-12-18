@@ -1,8 +1,9 @@
 // import node module libraries
 import Link from "next/link";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { Fragment } from "react";
 import { useMediaQuery } from "react-responsive";
-import { Row, Col, Image, Dropdown, ListGroup } from "react-bootstrap";
+import { Row, Col, Image, Dropdown, ListGroup, Nav } from "react-bootstrap";
 
 // simple bar scrolling used for notification item scrolling
 import SimpleBar from "simplebar-react";
@@ -113,7 +114,8 @@ const QuickMenu = () => {
           >
             <Dropdown.Item as="div" className="px-4 pb-0 pt-2" bsPrefix=" ">
               <div className="lh-1 ">
-                <h5 className="mb-1"> John E. Grainger</h5>
+                {/* <h5 className="mb-1"> user</h5> */}
+                <h5 className="mb-1"> {session?.user?.email}</h5>
                 <Link href="/admin/settings" className="text-inherit fs-6">
                   View my profile
                 </Link>
@@ -135,7 +137,25 @@ const QuickMenu = () => {
               </Link>
             </Dropdown.Item>
             <Dropdown.Item>
-              <i className="fe fe-power me-2"></i>Sign Out
+              {session ? (
+                <Nav.Link>
+                  <button
+                    className="btn btn-outline-primary w-100"
+                    onClick={() => signOut()}
+                  >
+                    Logout
+                  </button>{" "}
+                </Nav.Link>
+              ) : (
+                <Nav.Link>
+                  <button
+                    className="btn btn-outline-primary w-100"
+                    onClick={() => signIn("google")}
+                  >
+                    Login
+                  </button>{" "}
+                </Nav.Link>
+              )}
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
@@ -220,9 +240,7 @@ const QuickMenu = () => {
             <Dropdown.Item eventKey="3">
               <i className="fe fe-activity me-2"></i> Activity Log
             </Dropdown.Item>
-            <Dropdown.Item className="text-primary">
-              <i className="fe fe-star me-2"></i> Go Pro
-            </Dropdown.Item>
+           
             <Dropdown.Item>
               <i className="fe fe-settings me-2"></i> Account Settings
             </Dropdown.Item>
