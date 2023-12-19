@@ -145,8 +145,8 @@ const QuickMenu = () => {
                 <i className="fe fe-settings me-2"></i> Account Settings
               </Link>
             </Dropdown.Item>
-            <Dropdown.Item>
-              <i className="fe fe-power me-2" onClick={handleLogout}></i>Log Out
+            <Dropdown.Item onClick={handleLogout}>
+              <i className="fe fe-power me-2"></i>Log Out
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>

@@ -15,10 +15,7 @@ export const options = {
       async profile(profile) {
         try {
           const userData = await userLoggin(profile);
-          console.log(
-            "🚀 ~ file: [...nextauth].js:18 ~ profile ~ userData:",
-            userData
-          );
+
           if (!userData) {
             console.error("User data not available or error occurred.");
             return null;
@@ -74,6 +71,10 @@ export const options = {
 
   pages: {
     signOut: "/login",
+  },
+  theme: {
+    colorScheme: "auto",
+    logo: "/thalipparamb/apple-touch-icon.png",
   },
 };
 

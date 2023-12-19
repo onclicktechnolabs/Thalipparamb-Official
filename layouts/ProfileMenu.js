@@ -42,7 +42,7 @@ const ProfileMenu = ({ data }) => {
         bsPrefix="navbar-nav"
         className="navbar-right-wrap ms-auto d-flex nav-top-wrap"
       >
-        <Dropdown as="li" className="ms-2 bg-primary">
+        <Dropdown as="li" className="ms-2 ">
           <Dropdown.Toggle
             as="a"
             bsPrefix=" "
