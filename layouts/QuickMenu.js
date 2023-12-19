@@ -29,7 +29,7 @@ const QuickMenu = () => {
   const handleLogout = async () => {
     console.log("Logout clicked");
     await signOut();
-    router.push("/");
+    router.push("/api/auth/signin");
   };
 
   const Notifications = () => {
