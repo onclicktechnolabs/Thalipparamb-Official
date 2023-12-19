@@ -35,8 +35,9 @@ const ActiveProjectsData = [
   },
 ];
 
-function allEvents() {
+function AllEvents() {
   const [data, setData] = useState([]);
+  console.log("🚀 ~ file: all.js:40 ~ AllEvents ~ data:", data);
 
   useEffect(() => {
     const getBannerData = async () => {
@@ -185,4 +186,4 @@ function allEvents() {
   );
 }
 
-export default allEvents;
+export default AllEvents;
