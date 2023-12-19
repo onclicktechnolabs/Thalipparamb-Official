@@ -46,25 +46,29 @@ export const getAdminByEmail = async (credentials) => {
   }
 };
 
-export const userLoggin = async (credentials) => {
+export const userLoggin = async (data) => {
+  console.log("🚀 ~ file: route.js:50 ~ userLoggin ~ data:", data);
   try {
     console.log("ENTER NEXT AUTH SIGNIN=======");
 
-    const userRef = doc(collection(db, "admin"), credentials.email);
+    const userRef = doc(collection(db, "users"), data.email);
     const userDoc = await getDoc(userRef);
 
     if (!userDoc.exists()) {
-      return false;
-      // const newUserRef = doc(collection(db, "admin"), credentials.email);
-      // await setDoc(newUserRef, {
-      //   email: credentials.email,
-      //   isBlock: false,
-      //   role: "admin",
-      // });
+      // User does not exist, create a new user
+      const newUserRef = doc(collection(db, "users"), data.email);
+      await setDoc(newUserRef, {
+        email: data.email,
+        name: data.name,
+        isBlock: false,
+        role: "User",
+      });
 
-      // const newUserDoc = await getDoc(newUserRef);
-      // return newUserDoc.data();
+      const newUserDoc = await getDoc(newUserRef);
+      return newUserDoc.data();
     }
+
+    // User already exists, return the user data
     return userDoc.data();
   } catch (error) {
     console.error("Error in userLoggin:", error);
@@ -77,18 +81,13 @@ export const getAllUserData = async () => {
     const usersCollection = collection(db, "users");
     const usersSnapshot = await getDocs(usersCollection);
 
-    const filteredUserData = [];
+    const userDataArray = [];
 
     usersSnapshot.forEach((doc) => {
-      const userData = doc.data();
-
-      // Check if the role is not "admin"
-      if (userData.role !== "admin") {
-        filteredUserData.push(userData);
-      }
+      userDataArray.push({ id: doc.id, ...doc.data() });
     });
 
-    return filteredUserData;
+    return userDataArray;
   } catch (error) {
     console.error("Error fetching all user data:", error);
     return null;

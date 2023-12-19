@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 const QuickMenu = () => {
   const router = useRouter();
   const { data: session } = useSession();
+  console.log("🚀 ~ file: QuickMenu.js:22 ~ QuickMenu ~ session:", session);
   const hasMounted = useMounted();
 
   const isDesktop = useMediaQuery({
@@ -123,7 +124,7 @@ const QuickMenu = () => {
           >
             <Dropdown.Item as="div" className="px-4 pb-0 pt-2" bsPrefix=" ">
               <div className="lh-1 ">
-                <h5 className="mb-1"> John E. Grainger</h5>
+                <h5 className="mb-1"> {session?.user.email}</h5>
                 <Link href="/admin/settings" className="text-inherit fs-6">
                   View my profile
                 </Link>
@@ -145,8 +146,7 @@ const QuickMenu = () => {
               </Link>
             </Dropdown.Item>
             <Dropdown.Item>
-              <i className="fe fe-power me-2" onClick={handleLogout}></i>Sign
-              Out
+              <i className="fe fe-power me-2" onClick={handleLogout}></i>Log Out
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
@@ -218,7 +218,7 @@ const QuickMenu = () => {
           >
             <Dropdown.Item as="div" className="px-4 pb-0 pt-2" bsPrefix=" ">
               <div className="lh-1 ">
-                <h5 className="mb-1"> John E. Grainger</h5>
+                <h5 className="mb-1"> {session?.user.email}</h5>
                 <Link href="/admin/settings" className="text-inherit fs-6">
                   View my profile
                 </Link>
@@ -237,8 +237,8 @@ const QuickMenu = () => {
             <Dropdown.Item>
               <i className="fe fe-settings me-2"></i> Account Settings
             </Dropdown.Item>
-            <Dropdown.Item onClick={() => signOut()}>
-              <i className="fe fe-power me-2"></i>Sign Out
+            <Dropdown.Item onClick={handleLogout}>
+              <i className="fe fe-power me-2"></i>Log Out
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>

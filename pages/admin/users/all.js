@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ProgressBar, Col, Row, Card, Table, Image } from "react-bootstrap";
+import { getAllUserData } from "components/api/auth/route";
 
 const ActiveProjectsData = [
   {
@@ -27,6 +29,21 @@ const ActiveProjectsData = [
 ];
 
 function Users() {
+  // const router = useRouter();
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const getUsersData = async () => {
+      try {
+        const res = await getAllUserData();
+        setData(res);
+      } catch (error) {
+        console.error("Error fetching Happiness data:", error);
+      }
+    };
+
+    getUsersData();
+  }, []);
   return (
     <>
       <Col lg={12} md={12} xs={12} className="mt-6">
@@ -37,9 +54,9 @@ function Users() {
               <h3 className="mb-0  text-dark">Users</h3>
             </div>
             <div>
-              <Link href="/admin/Users/new" className="btn btn-white">
+              {/* <Link href="/admin/Users/new" className="btn btn-white">
                 Create New Users
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>
@@ -55,16 +72,14 @@ function Users() {
               <thead className="table-light">
                 <tr>
                   <th>Name</th>
-                  <th>Mobile Number</th>
                   <th>Email</th>
-                  <th>Address</th>
 
                   {/* <th>Members</th>
                   <th>Progress</th> */}
                 </tr>
               </thead>
               <tbody>
-                {ActiveProjectsData.map((item, index) => {
+                {data?.map((item, index) => {
                   return (
                     <tr key={index}>
                       <td className="align-middle">
@@ -79,15 +94,14 @@ function Users() {
                           <div className="ms-3 lh-1">
                             <h5 className=" mb-1">
                               <Link href="#" className="text-inherit">
-                                {item.userName}
+                                {item.name}
                               </Link>
                             </h5>
                           </div>
                         </div>
                       </td>
-                      <td className="align-middle">{item.mobile}</td>
+                      {/* <td className="align-middle">{item.mobile}</td> */}
                       <td className="align-middle">{item.email}</td>
-                      <td className="align-middle">{item.address}</td>
 
                       {/* <td className="align-middle">
                         <span className={`badge bg-${item.priorityBadgeBg}`}>

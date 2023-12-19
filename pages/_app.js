@@ -15,7 +15,7 @@ import DefaultDashboardLayout from "layouts/DefaultDashboardLayout";
 // import AuthProvider from "context/AuthProvider";
 import { SessionProvider } from "next-auth/react";
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+function MyApp({ Component, pageProps: { session, locale, ...pageProps } }) {
   const router = useRouter();
   const pageURL = process.env.baseURL + router.pathname;
   const title = "Thalipparamb";
@@ -31,6 +31,8 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
         ? DefaultDashboardLayout
         : DefaultDashboardLayout
       : DefaultDashboardLayout);
+
+  const timeZone = "Asia/Kolkata";
 
   return (
     <SSRProvider>
@@ -51,8 +53,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
         }}
       />
       <NextIntlClientProvider
-        locale={router.locale}
+        locale={locale || "ml"}
         messages={pageProps.messages}
+        timeZone={timeZone}
       >
         <SessionProvider session={session}>
           <Layout>

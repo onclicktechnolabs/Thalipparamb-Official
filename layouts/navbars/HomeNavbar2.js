@@ -5,18 +5,13 @@ import { useMediaQuery } from "react-responsive";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import LocaleSwitcher from "components/LocaleSwitcher";
+import ProfileMenu from "layouts/ProfileMenu";
 
 function HomeNavbar2() {
   const t = useTranslations("Navbar");
 
   const { data: session, status } = useSession();
   console.log("🚀 ~ file: HomeNavbar2.js:14 ~ HomeNavbar2 ~ session:", session);
-  // const [language, setLanguage] = useState("ml");
-
-  // const toggleLanguage = () => {
-  //   const newValue = language === "en" ? "ml" : "en";
-  //   setLanguage(newValue);
-  // };
 
   const isMobile = useMediaQuery({ maxWidth: 615 });
   return (
@@ -62,10 +57,10 @@ function HomeNavbar2() {
             <Nav.Link href="/" className="fw-bold">
               {t("home")}{" "}
             </Nav.Link>
-            <Nav.Link href="#about" className="fw-bold">
+            <Nav.Link href="/about" className="fw-bold">
               {t("about")}
             </Nav.Link>
-            <Nav.Link href="#tourism" className="fw-bold">
+            <Nav.Link href="/tourism" className="fw-bold">
               {t("tourism")}
             </Nav.Link>
             <Nav.Link href="#gallery" className="fw-bold">
@@ -92,13 +87,16 @@ function HomeNavbar2() {
               </button>
             </Nav.Link> */}
             {session ? (
+              // <Nav.Link>
+              //   <button
+              //     className="btn btn-outline-primary w-100"
+              //     onClick={() => signOut()}
+              //   >
+              //     Logout
+              //   </button>{" "}
+              // </Nav.Link>
               <Nav.Link>
-                <button
-                  className="btn btn-outline-primary w-100"
-                  onClick={() => signOut()}
-                >
-                  Logout
-                </button>{" "}
+                <ProfileMenu data={session} />
               </Nav.Link>
             ) : (
               <Nav.Link>

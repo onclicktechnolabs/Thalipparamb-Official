@@ -11,6 +11,7 @@ export default function LocaleSwitcher() {
 
   const toggleLanguage = () => {
     const newLocale = otherLocale || locales[0];
+
     push(route, route, { locale: newLocale });
   };
   return (
