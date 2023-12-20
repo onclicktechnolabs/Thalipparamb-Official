@@ -3,6 +3,8 @@ import HomeLayout from "layouts/HomeLayout";
 import ComplaintForm from "components/admin/ComplaintForm";
 import { useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+
 import {
   createComplaint,
   uploadComplaintImages,
@@ -23,25 +25,33 @@ function Complaints() {
     title: "",
     phone: "",
     address: "",
-    description: "",
     panchayath: "",
+    ward: "",
+    subject: "",
+    description: "",
   };
   const onSubmit = async (formData) => {
-    console.log("🚀 ~ file: index.js:15 ~ onSubmit ~ formData:", formData);
     const resImage = await uploadComplaintImages(formData.files[0]);
     if (session?.user?.role === "admin") {
       const res = await createComplaint({
         title: formData.title,
         phone: formData.phone,
         address: formData.address,
-        description: formData.description,
         panchayath: formData.panchayath,
         createdBy: session?.user?.email,
+        ward: formData.ward,
+        subject: formData.subject,
+        description: formData.description,
         priority: "low",
         status: "created",
         type: formData.type,
         image: resImage,
       });
+      console.log("🚀 ~ file: index.js:45 ~ onSubmit ~ res:", res);
+      if (res) {
+        toast.success("Registration successful");
+      }
+
       router.push("/admin/complaints/all");
     }
     if (session?.user?.role === "User") {
@@ -49,14 +59,19 @@ function Complaints() {
         title: formData.title,
         phone: formData.phone,
         address: formData.address,
-        description: formData.description,
+        ward: formData.ward,
+        subject: formData.subject,
         panchayath: formData.panchayath,
+        description: formData.description,
         createdBy: session?.user?.email,
         priority: "low",
         status: "created",
         type: "complaint",
         image: resImage,
       });
+      if (res) {
+        toast.success("Registration successful");
+      }
       router.push("/");
     }
   };

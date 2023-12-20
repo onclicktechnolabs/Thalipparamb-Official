@@ -109,7 +109,7 @@ function HappinessForm({ onSubmit, defaultValue }) {
 
                 <Col md={{ offset: 4, span: 8 }} xs={12} className="mt-4">
                   <Button variant="primary" type="submit">
-                    Create
+                    Submit
                   </Button>
                 </Col>
               </Form>

@@ -16,7 +16,7 @@ function AutoFormField({
   };
 
   return (
-    <Row className="mb-3">
+    <Row className="mb-3 ">
       <label htmlFor={name} className="col-sm-4 col-form-label form-label">
         {label}
       </label>
