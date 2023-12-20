@@ -37,12 +37,15 @@ const ActiveProjectsData = [
 
 function AllEvents() {
   const [data, setData] = useState([]);
+  const [statusType, setStatusType] = useState("all");
+  console.log("🚀 ~ file: all.js:41 ~ AllEvents ~ statusType:", statusType);
+
   console.log("🚀 ~ file: all.js:40 ~ AllEvents ~ data:", data);
 
   useEffect(() => {
     const getBannerData = async () => {
       try {
-        const res = await getAllEvents();
+        const res = await getAllEvents(statusType);
         setData(res);
       } catch (error) {
         console.error("Error fetching banner data:", error);
@@ -50,7 +53,7 @@ function AllEvents() {
     };
 
     getBannerData();
-  }, []);
+  }, [statusType]);
 
   //dlete banner
   const handleDelete = async (id) => {
@@ -92,9 +95,18 @@ function AllEvents() {
                   Filter By
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item href="#">Action</Dropdown.Item>
-                  <Dropdown.Item href="#">Another action</Dropdown.Item>
-                  <Dropdown.Item href="#">Something else</Dropdown.Item>
+                  <Dropdown.Item onClick={() => setStatusType("Planned")}>
+                    Planned
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => setStatusType("In-Progress")}>
+                    In-Progress
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => setStatusType("Completed")}>
+                    Completed
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => setStatusType("Cancelled")}>
+                    Cancelled
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </Card.Header>

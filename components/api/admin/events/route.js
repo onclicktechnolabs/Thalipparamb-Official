@@ -11,6 +11,7 @@ import {
   getDoc,
   serverTimestamp,
   orderBy,
+  where,
 } from "firebase/firestore";
 import {
   deleteObject,
@@ -50,8 +51,40 @@ export const uploadEventImages = async (file) => {
   }
 };
 
-export const getAllEvents = async () => {
-  const q = query(collection(db, "event"), orderBy("createdAt", "desc"));
+// export const getAllEvents = async () => {
+//   const q = query(collection(db, "event"), orderBy("createdAt", "desc"));
+//   const documents = [];
+
+//   try {
+//     const querySnapshot = await getDocs(q);
+
+//     querySnapshot.forEach((doc) => {
+//       documents.push({ id: doc.id, ...doc.data() });
+//     });
+
+//     return documents;
+//   } catch (error) {
+//     console.error("Error getting documents:", error.message);
+//     throw error;
+//   }
+// };
+
+export const getAllEvents = async (status = "all") => {
+  console.log("🚀 ~ file: route.js:72 ~ getAllEvents ~ status:", status);
+  let q;
+
+  if (status === "all") {
+    // Fetch all events
+    q = query(collection(db, "event"), orderBy("createdAt", "desc"));
+  } else {
+    // Fetch events based on the provided status
+    q = query(
+      collection(db, "event"),
+      where("status", "==", status),
+      orderBy("createdAt", "desc")
+    );
+  }
+
   const documents = [];
 
   try {

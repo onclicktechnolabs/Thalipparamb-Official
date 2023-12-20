@@ -68,8 +68,11 @@ function EventCard() {
                 style={{ height: "18rem" }}
                 className="img-fluid w-100 h-48 md:h-64 aspect-square"
               />
-              <Card.Body>
-                <Card.Text>{item?.title}</Card.Text>
+              <Card.Body className="px-3">
+                <div className="w-100 d-flex justify-content-between  fw-bold">
+                  <Card.Text>{item?.title}</Card.Text>
+                  <Card.Text>Venu:{item?.place}</Card.Text>
+                </div>
                 <Card.Text>
                   Some quick example text to build on the card title and make up
                   the bulk of the card's content.

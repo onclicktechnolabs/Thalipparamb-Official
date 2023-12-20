@@ -161,6 +161,15 @@ function ComplaintInfo() {
                 </div>
                 <div class="col-4 text-capitalize"></div>
               </div>
+              <div class="row">
+                <div class="col-4 text-capitalize">
+                  <h4>address:</h4>
+                </div>
+                <div class="col-8">
+                  <p>{data?.address}</p>
+                </div>
+                <div class="col-4 text-capitalize"></div>
+              </div>
 
               <div class="row">
                 <div class="col-4 text-capitalize">
@@ -174,10 +183,20 @@ function ComplaintInfo() {
 
               <div class="row">
                 <div class="col-4 text-capitalize">
-                  <h4>address:</h4>
+                  <h4>Ward Number:</h4>
                 </div>
                 <div class="col-8">
-                  <p>{data?.address}</p>
+                  <p>{data?.ward}</p>
+                </div>
+                <div class="col-4 text-capitalize"></div>
+              </div>
+
+              <div class="row">
+                <div class="col-4 text-capitalize">
+                  <h4>Subject:</h4>
+                </div>
+                <div class="col-8">
+                  <p>{data?.subject}</p>
                 </div>
                 <div class="col-4 text-capitalize"></div>
               </div>
