@@ -16,38 +16,33 @@ const Complaintschema = Yup.object().shape({
 });
 
 function ComplaintForm({ onSubmit, defaultValue, loginData }) {
-  console.log(
-    "🚀 ~ file: ComplaintForm.js:19 ~ ComplaintForm ~ loginData:",
-    loginData
-  );
-
   const formFields = [
     {
-      label: "Title",
+      label: "പേര്",
       name: "title",
       type: "text",
-      placeholder: "Enter title",
+      placeholder: "നിങ്ങളുടെ പേര് നൽകുക",
       required: false,
     },
     {
-      label: "Phone Number",
+      label: "ഫോൺ നമ്പർ",
       name: "phone",
       type: "tel",
-      placeholder: "Enter Phone Number",
+      placeholder: "നിങ്ങളുടെ ഫോൺ നമ്പർ നൽകുക",
       required: false,
     },
     {
-      label: "Address",
+      label: "വിലാസം",
       name: "address",
       type: "text",
-      placeholder: "Enter Address",
+      placeholder: "നിങ്ങളുടെ വിലാസം നൽകുക",
       required: false,
     },
     {
-      label: "Panchayath",
+      label: "പഞ്ചായത്ത് / മുനിസിപ്പാലിറ്റി",
       name: "panchayath",
       type: "select",
-      placeholder: "Select Panchayath",
+      placeholder: "പഞ്ചായത്ത് / മുനിസിപ്പാലിറ്റി",
       required: false,
       options: [
         { label: " Thalipparamb", value: "Thalipparamb" },
@@ -58,10 +53,24 @@ function ComplaintForm({ onSubmit, defaultValue, loginData }) {
       ],
     },
     {
-      label: "Description",
+      label: "വാർഡ് നമ്പർ",
+      name: "ward",
+      type: "text",
+      placeholder: "നിങ്ങളുടെ വാർഡ് നമ്പർ നൽകുക",
+      required: false,
+    },
+    {
+      label: "വിഷയം",
+      name: "subject",
+      type: "text",
+      placeholder: "വിഷയം നൽകുക",
+      required: false,
+    },
+    {
+      label: "വിവരണം",
       name: "description",
       type: "textarea",
-      placeholder: "Enter description",
+      placeholder: "വിവരണം",
       required: false,
     },
   ];
@@ -71,10 +80,7 @@ function ComplaintForm({ onSubmit, defaultValue, loginData }) {
     { label: "Complaint", value: "Complaint" },
   ];
   const [files, setFiles] = useState([]);
-  console.log(
-    "🚀 ~ file: ComplaintForm.js:74 ~ ComplaintForm ~ files:",
-    files.length
-  );
+
   const [type, setType] = useState("");
   console.log("🚀 ~ file: ComplaintForm.js:71 ~ ComplaintForm ~ type:", type);
   const [fileError, setFileError] = useState("");
@@ -128,7 +134,7 @@ function ComplaintForm({ onSubmit, defaultValue, loginData }) {
                       htmlFor={name}
                       className="col-sm-4 col-form-label form-label"
                     >
-                      Select Complaint Type
+                      പരാതിയുടെ തരം തിരഞ്ഞെടുക്കുക
                     </label>
                     <Col md={8} xs={12}>
                       <Form.Select
@@ -154,7 +160,7 @@ function ComplaintForm({ onSubmit, defaultValue, loginData }) {
                     htmlFor="fullName"
                     className="col-sm-4 col-form-label form-label"
                   >
-                    Upload Files
+                    ഫയലുകൾ അപ്‌ലോഡ് ചെയ്യുക
                   </label>
                   <div className="col-md-8 col-12">
                     <div
@@ -180,7 +186,7 @@ function ComplaintForm({ onSubmit, defaultValue, loginData }) {
                 </Row>
                 <Col md={{ offset: 4, span: 8 }} xs={12} className="mt-4">
                   <Button variant="primary" type="submit">
-                    Create
+                    Submit
                   </Button>
                 </Col>
               </Form>

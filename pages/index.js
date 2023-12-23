@@ -85,7 +85,7 @@ const Home = () => {
             >
               <h2 className="happiness fw-bold ls-sm">{t("event")}</h2>
             </Col>
-            {eventItems?.map((item) => (
+            {/* {eventItems?.map((item) => (
               <Col
                 xl={6}
                 lg={6}
@@ -97,11 +97,11 @@ const Home = () => {
               >
                 <EventCard item={item} />
               </Col>
-            ))}
+            ))} */}
 
-            {/* <Col xl={6} lg={6} md={12} xs={12} className="mb-3">
+            <Col xl={12} lg={12} md={12} xs={12} className="mb-3">
               <EventCard />
-            </Col> */}
+            </Col>
           </Row>
         </Col>
       </Row>

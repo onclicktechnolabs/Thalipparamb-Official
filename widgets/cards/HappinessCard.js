@@ -15,7 +15,7 @@ const HappinessCard = ({ content }) => {
       </Card>
       <Card.Body className="d-flex flex-column justify-content-between align-items-center m-0 p-0">
         <h3 className="mb-3 mt-2">{content?.title}</h3>
-        <p className="d-block mb-0 p-2" style={{ textAlign: "justify" }}>
+        <p className="d-block mb-0 px-4 mb-2" style={{ textAlign: "justify" }}>
           {content?.description}
         </p>
       </Card.Body>

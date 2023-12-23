@@ -1,4 +1,4 @@
-import { Col, Container, Image, Row } from "react-bootstrap";
+import { Col, Container, Image, NavDropdown, Row } from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { useMediaQuery } from "react-responsive";
@@ -14,6 +14,7 @@ function HomeNavbar2() {
   console.log("🚀 ~ file: HomeNavbar2.js:14 ~ HomeNavbar2 ~ session:", session);
 
   const isMobile = useMediaQuery({ maxWidth: 615 });
+
   return (
     <Navbar
       expand="lg"
@@ -63,7 +64,23 @@ function HomeNavbar2() {
             <Nav.Link href="/tourism" className="fw-bold">
               {t("tourism")}
             </Nav.Link>
-            <Nav.Link href="#gallery" className="fw-bold">
+            <NavDropdown
+              title={t("projects")}
+              id="basic-nav-dropdown"
+              className="fw-bold"
+            >
+              <NavDropdown.Item
+                href="/entrepreneurship-program"
+                className="fw-bold"
+              >
+                Entrepreneurship program
+              </NavDropdown.Item>
+              <NavDropdown.Item href="/happiness-festivel" className="fw-bold">
+                Happiness Festivel
+              </NavDropdown.Item>
+            </NavDropdown>
+
+            <Nav.Link href="/#gallery" className="fw-bold">
               {t("gallery")}
             </Nav.Link>
             <Nav.Link href="complaints" className="fw-bold">

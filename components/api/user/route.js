@@ -1,6 +1,13 @@
 import { db, storage } from "lib/firebaseConfig";
 
-import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  updateDoc,
+  serverTimestamp,
+  addDoc,
+} from "firebase/firestore";
 
 export const getAllUserData = async () => {
   try {
@@ -46,5 +53,18 @@ export const unblockUser = async (email) => {
     console.log("User unblocked successfully");
   } catch (error) {
     console.error("Error unblocking user:", error);
+  }
+};
+
+// register Program
+export const createProgram = async (data) => {
+  try {
+    const programData = { ...data, createdAt: serverTimestamp() };
+
+    const docRef = await addDoc(collection(db, "programs"), programData);
+    console.log("Document written with ID: ", docRef.id);
+    return { success: "ok" };
+  } catch (e) {
+    console.error("Error adding document: ", e);
   }
 };

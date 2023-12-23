@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
 import SSRProvider from "react-bootstrap/SSRProvider";
 import { Analytics } from "@vercel/analytics/react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // import theme style scss file
 import "styles/theme.scss";
@@ -64,6 +66,7 @@ function MyApp({ Component, pageProps: { session, locale, ...pageProps } }) {
           </Layout>
         </SessionProvider>
       </NextIntlClientProvider>
+      <ToastContainer />
     </SSRProvider>
   );
 }

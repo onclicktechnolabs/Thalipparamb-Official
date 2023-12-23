@@ -24,6 +24,13 @@ function EventForm({ onSubmit, defaultValue }) {
       required: false,
     },
     {
+      label: "Title in Malayalam",
+      name: "titleMalayalam",
+      type: "text",
+      placeholder: "Enter title in Malayalam",
+      required: false,
+    },
+    {
       label: "Venu",
       name: "place",
       type: "text",
@@ -49,6 +56,20 @@ function EventForm({ onSubmit, defaultValue }) {
         { label: " Completed", value: "Completed" },
         { label: " Cancelled", value: "Cancelled" },
       ],
+    },
+    {
+      label: "Description",
+      name: "description",
+      type: "text",
+      placeholder: "Enter Description",
+      required: false,
+    },
+    {
+      label: "Description in Malayalam",
+      name: "descriptionMalayalam",
+      type: "text",
+      placeholder: "Enter Description in Malayalam",
+      required: false,
     },
   ];
 
@@ -127,7 +148,7 @@ function EventForm({ onSubmit, defaultValue }) {
                 </Row>
                 <Col md={{ offset: 4, span: 8 }} xs={12} className="mt-4">
                   <Button variant="primary" type="submit">
-                    Create
+                    Submit
                   </Button>
                 </Col>
               </Form>
