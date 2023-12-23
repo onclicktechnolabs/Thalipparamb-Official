@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { getAllEmployes } from "components/api/admin/employee/route";
 import Link from "next/link";
 import { ProgressBar, Col, Row, Card, Table, Image } from "react-bootstrap";
 
@@ -35,6 +37,21 @@ const ActiveProjectsData = [
 ];
 
 function Employees() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const getEmployeData = async () => {
+      try {
+        const res = await getAllEmployes();
+        setData(res);
+      } catch (error) {
+        console.error("Error fetching banner data:", error);
+      }
+    };
+
+    getEmployeData();
+  }, []);
+
   return (
     <>
       <Col lg={12} md={12} xs={12} className="mt-6">
@@ -69,42 +86,13 @@ function Employees() {
                 </tr>
               </thead>
               <tbody>
-                {ActiveProjectsData.map((item, index) => {
+                {data?.map((item) => {
                   return (
-                    <tr key={index}>
+                    <tr key={item?.id}>
                       <td className="align-middle">{item.name}</td>
-                      <td className="align-middle">{item.mobile}</td>
+                      <td className="align-middle">{item.phone}</td>
                       <td className="align-middle">{item.email}</td>
-                      <td className="align-middle">{item.role}</td>
-
-                      {/* <td className="align-middle">
-                        <span className={`badge bg-${item.priorityBadgeBg}`}>
-                          {item.priority}
-                        </span>
-                      </td> */}
-                      {/* <td className="align-middle">
-                        <div className="avatar-group">
-                          {item.members.map((avatar, avatarIndex) => {
-                            return (
-                              <span
-                                className="avatar avatar-sm"
-                                key={avatarIndex}
-                              >
-                                <Image
-                                  alt="avatar"
-                                  src={avatar.image}
-                                  className="rounded-circle"
-                                />
-                              </span>
-                            );
-                          })}
-                          <span className="avatar avatar-sm avatar-primary">
-                            <span className="avatar-initials rounded-circle fs-6">
-                              +5
-                            </span>
-                          </span>
-                        </div>
-                      </td> */}
+                      <td className="align-middle">{item.sectionRole}</td>
                     </tr>
                   );
                 })}

@@ -63,6 +63,9 @@
 
         &.active {
           color: $gray-900;
+          background-color: $gray-400;
+          border-radius: $border-radius-lg;
+          padding: 30px;
         }
 
         &.active .nav-icon {
@@ -72,6 +75,7 @@
       }
       .nav-link[data-bs-toggle="collapse"] {
         position: relative;
+
         &:after {
           display: block;
           content: "";
@@ -87,6 +91,10 @@
           filter: brightness(1) invert(0);
           transform: scale(0.7);
         }
+        // &.active {
+        //   color: $primary;
+        //   background-color: $gray-400;
+        // }
       }
     }
     .nav-icon {
@@ -105,10 +113,11 @@
           color: $gray-700;
           padding: 0.25rem 3rem;
           &:hover {
-            color: $black;
+            color: $primary;
           }
           &.active {
-            color: $black;
+            color: $primary;
+            // background-color: $gray-400;
           }
         }
         .nav {
@@ -118,10 +127,12 @@
               padding: 0.25rem 3.5rem;
 
               &:hover {
-                color: $black;
+                color: $primary;
               }
               &.active {
-                color: $black;
+                color: $primary;
+                list-style-type: circle;
+                // background-color: $gray-400;
               }
             }
             .nav {
@@ -130,10 +141,12 @@
                   color: $gray-700;
                   padding: 0.25rem 4.2rem;
                   &:hover {
-                    color: $black;
+                    color: $primary;
                   }
                   &.active {
-                    color: $black;
+                    color: $primary;
+                    list-style-type: circle;
+                    // background-color: $gray-400;
                   }
                 }
               }
@@ -147,4 +160,8 @@
 
 .collapse.in {
   display: block;
+}
+.activeLink {
+  color: $primary;
+  background-color: $gray-500;
 }

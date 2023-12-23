@@ -1,13 +1,30 @@
 // import node module libraries
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { Card, Table, Dropdown, Image } from "react-bootstrap";
+import { Card, Table, Dropdown } from "react-bootstrap";
 import { MoreVertical } from "react-feather";
 
 // import required data files
 import TeamsData from "data/dashboard/TeamsData";
+import { getAllEmployes } from "components/api/admin/employee/route";
 
 const Teams = () => {
+  const [data, setData] = useState([]);
+  console.log("🚀 ~ file: Teams.js:12 ~ Teams ~ data:", data);
+
+  useEffect(() => {
+    const getEmployeData = async () => {
+      try {
+        const res = await getAllEmployes();
+        setData(res);
+      } catch (error) {
+        console.error("Error fetching banner data:", error);
+      }
+    };
+
+    getEmployeData();
+  }, []);
+
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <Link
       href=""
@@ -54,10 +71,10 @@ const Teams = () => {
           </tr>
         </thead>
         <tbody>
-          {TeamsData.map((item, index) => {
+          {data?.map((item, index) => {
             return (
               <tr key={index}>
-                <td className="align-middle">
+                {/* <td className="align-middle">
                   <div className="d-flex align-items-center">
                     <div>
                       <Image
@@ -71,12 +88,10 @@ const Teams = () => {
                       <p className="mb-0">{item.email}</p>
                     </div>
                   </div>
-                </td>
-                <td className="align-middle">{item.role}</td>
-                <td className="align-middle">{item.lastActivity}</td>
-                {/* <td className="align-middle">
-                                    <ActionMenu />
-                                </td> */}
+                </td> */}
+                <td className="align-middle">{item.name}</td>
+                <td className="align-middle">{item.sectionRole}</td>
+                <td className="align-middle">{item.phone}</td>
               </tr>
             );
           })}

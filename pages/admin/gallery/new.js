@@ -1,5 +1,11 @@
 import React from "react";
-import GeneralForm from "sub-components/generalForm";
+
+import GalleryForm from "components/admin/GalleryForm";
+import { useRouter } from "next/navigation";
+import {
+  createGallery,
+  uploadGalleryImages,
+} from "components/api/admin/gallery/route";
 
 function AddGallery() {
   const router = useRouter();
@@ -17,7 +23,7 @@ function AddGallery() {
 
   return (
     <div className="mt-6">
-      <GeneralForm />
+      <GalleryForm onSubmit={onSubmit} defaultValue={defaultValues} />
     </div>
   );
 }

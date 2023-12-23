@@ -40,8 +40,17 @@ export const DashboardMenu = [
     title: "Events",
     icon: "calendar",
     children: [
-      { id: uuid(), link: "/admin/events/all", name: "All Events" },
-      { id: uuid(), link: "/admin/events/new", name: "New Events" },
+      { id: uuid(), link: "/admin/events/all", name: "All" },
+      { id: uuid(), link: "/admin/events/new", name: "New" },
+    ],
+  },
+  {
+    id: uuid(),
+    title: "Banner",
+    icon: "calendar",
+    children: [
+      { id: uuid(), link: "/admin/banner/all", name: "All" },
+      { id: uuid(), link: "/admin/banner/new", name: "New" },
     ],
   },
   {
@@ -49,8 +58,8 @@ export const DashboardMenu = [
     title: "Users",
     icon: "users",
     children: [
-      { id: uuid(), link: "/admin/users/all", name: "All Users" },
-      { id: uuid(), link: "/admin/users/new", name: "New Users" },
+      { id: uuid(), link: "/admin/users/all", name: "All" },
+      // { id: uuid(), link: "/admin/users/new", name: "New" },
     ],
   },
   {
@@ -58,26 +67,28 @@ export const DashboardMenu = [
     title: "Complaints",
     icon: "mail",
     children: [
-      { id: uuid(), link: "/admin/complaints/all", name: "All Complaints" },
-      { id: uuid(), link: "/admin/complaints/new", name: "New Complaints" },
+      { id: uuid(), link: "/admin/complaints/all", name: "All" },
+      { id: uuid(), link: "/admin/complaints/new", name: "New" },
+      { id: uuid(), link: "/admin/complaints/greetings", name: "Greetings" },
     ],
   },
   {
     id: uuid(),
     title: "Happiness",
-    icon: "smile-heart",
+    icon: "heart",
     children: [
-      { id: uuid(), link: "/admin/happiness/all", name: "All Happiness" },
-      { id: uuid(), link: "/admin/happiness/new", name: "New Happiness" },
+      { id: uuid(), link: "/admin/happiness/all", name: "All" },
+      { id: uuid(), link: "/admin/happiness/new", name: "New" },
     ],
   },
   {
     id: uuid(),
     title: "Employees",
-    icon: "laptop",
+    icon: "users",
+
     children: [
-      { id: uuid(), link: "/admin/employees/all", name: "All Employees" },
-      { id: uuid(), link: "/admin/employees/new", name: "New Employ" },
+      { id: uuid(), link: "/admin/employees/all", name: "All" },
+      { id: uuid(), link: "/admin/employees/new", name: "New" },
     ],
   },
   {
@@ -85,17 +96,17 @@ export const DashboardMenu = [
     title: "News",
     icon: "book",
     children: [
-      { id: uuid(), link: "/admin/news/all", name: "All News" },
-      { id: uuid(), link: "/admin/news/new", name: "Create News" },
+      { id: uuid(), link: "/admin/news/all", name: "All" },
+      { id: uuid(), link: "/admin/news/new", name: "Create" },
     ],
   },
   {
     id: uuid(),
     title: "Tourism",
-    icon: "travel",
+    icon: "image",
     children: [
-      { id: uuid(), link: "/admin/tourism/all", name: "Tourism Lists" },
-      { id: uuid(), link: "/admin/tourism/new", name: "New Tourism" },
+      { id: uuid(), link: "/admin/tourism/all", name: "All" },
+      { id: uuid(), link: "/admin/tourism/new", name: "New" },
     ],
   },
   {
@@ -103,8 +114,8 @@ export const DashboardMenu = [
     title: "Wellness",
     icon: "heart",
     children: [
-      { id: uuid(), link: "/admin/wellness/all", name: "All Wellness" },
-      { id: uuid(), link: "/admin/wellness/new", name: "Add Wellness" },
+      { id: uuid(), link: "/admin/wellness/all", name: "All" },
+      { id: uuid(), link: "/admin/wellness/new", name: "Add" },
     ],
   },
 
@@ -113,8 +124,8 @@ export const DashboardMenu = [
     title: "Gallery",
     icon: "image",
     children: [
-      { id: uuid(), link: "/admin/gallery/all", name: "All Gallery" },
-      { id: uuid(), link: "/admin/gallery/new", name: "Add gallery" },
+      { id: uuid(), link: "/admin/gallery/all", name: "All" },
+      { id: uuid(), link: "/admin/gallery/new", name: "New" },
     ],
   },
   {

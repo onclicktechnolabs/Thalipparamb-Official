@@ -121,7 +121,7 @@ const NavbarVertical = (props) => {
               return (
                 <Card bsPrefix="nav-item" key={index}>
                   {/* group title item */}
-                  <div className="navbar-heading">{menu.title}</div>
+                  <div className="navbar-heading">{menu.title} </div>
                   {/* end of group title item */}
                 </Card>
               );
@@ -134,6 +134,9 @@ const NavbarVertical = (props) => {
                       eventKey={index}
                       icon={menu.icon}
                       link={menu.children[0].link}
+                      className={`${
+                        location.pathname === menu.link ? "active" : ""
+                      }`}
                     >
                       {menu.title}
                       {menu.badge ? (

@@ -16,8 +16,8 @@ const thumb = {
   border: "1px solid #eaeaea",
   marginBottom: 8,
   marginRight: 8,
-  width: 100,
-  height: 100,
+  width: 250,
+  height: 150,
   padding: 4,
   boxSizing: "border-box",
 };
@@ -30,8 +30,9 @@ const thumbInner = {
 
 const img = {
   display: "block",
-  width: "auto",
+  width: "100%",
   height: "100%",
+  objectFit: "fill",
 };
 
 export const DropFiles = ({ files, setFiles }) => {

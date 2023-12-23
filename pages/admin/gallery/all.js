@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { ProgressBar, Col, Row, Card, Table, Image } from "react-bootstrap";
+import { useRouter } from "next/navigation";
+import { getAllgallery } from "components/api/admin/gallery/route";
 
 const ActiveProjectsData = [
   {
@@ -67,22 +69,23 @@ function Gallery() {
             <Table responsive className="text-nowrap mb-0">
               <thead className="table-light">
                 <tr>
-                  <th>Image</th>
+                  <th style={{ width: "25%" }}>Image</th>
+
                   <th>Title</th>
                 </tr>
               </thead>
               <tbody>
-                {ActiveProjectsData.map((item, index) => {
+                {data.map((item) => {
                   return (
-                    <tr key={index}>
+                    <tr key={item.id}>
                       <td className="align-middle">
                         <div className="d-flex align-items-center">
                           <div>
-                            <div
-                              className={`icon-shape icon-md border p-4 rounded-1 ${item.brandLogoBg}`}
-                            >
-                              <Image src={item.brandLogo} alt="" />
-                            </div>
+                            <Image
+                              src={item?.image}
+                              alt={item.title}
+                              className="img-fluid "
+                            />
                           </div>
                         </div>
                       </td>

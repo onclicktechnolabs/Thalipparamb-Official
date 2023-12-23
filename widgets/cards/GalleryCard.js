@@ -1,7 +1,9 @@
+import { useEffect, useState } from "react";
 import { Card, Image } from "react-bootstrap";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { getAllgallery } from "components/api/admin/gallery/route";
 
 function GalleryCard() {
   const imageGallery = [
@@ -15,10 +17,23 @@ function GalleryCard() {
     { id: "8", categoryTitle: "Thaliparamba Photos", categoryLink: "/" },
   ];
 
+  //data fetching
+  const [galleryItems, setgalleryItems] = useState([]);
+
+  const getGallery = async () => {
+    const res = await getAllgallery();
+    setgalleryItems(res);
+  };
+
+  useEffect(() => {
+    getGallery();
+  }, []);
+
   let settings = {
     arrows: false,
     dots: false,
     infinite: true,
+    lazyLoad: true,
     slidesToShow: 4,
     slidesToScroll: 4,
     autoplay: true,
@@ -55,20 +70,18 @@ function GalleryCard() {
     ],
   };
   return (
-    <Slider {...settings} className="d-flex  w-100 ">
-      {imageGallery?.map((item, index) => (
-        <div className="px-3" key={index}>
-          <Card key={item.id}>
-            <Card>
-              <Image
-                src="https://plus.unsplash.com/premium_photo-1667354155834-eb14918fb4a3?q=80&w=1452&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt="image"
-                className="img-fluid w-100 h-48 md:h-64 aspect-square"
-              />
-            </Card>
-            <Card.Body>
+    <Slider {...settings} className="w-100  ">
+      {galleryItems?.map((item) => (
+        <div key={item.id} className="px-3  w-100 d-flex">
+          <Card className="w-100 ">
+            <Image
+              src={item?.image}
+              alt={item?.title}
+              className="img-fluid w-100 h-48 md:h-64 aspect-square"
+            />
+            <Card.Body className="w-full">
               <h3 className="text-center fs-4 fw-medium text-dark">
-                {item?.categoryTitle}
+                {item?.title}
               </h3>
             </Card.Body>
           </Card>

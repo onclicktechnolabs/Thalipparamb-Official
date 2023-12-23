@@ -1,6 +1,7 @@
 // import node module libraries
 import Head from "next/head";
-import { appWithTranslation } from "next-i18next";
+// import { appWithTranslation } from "next-i18next";
+import { NextIntlClientProvider } from "next-intl";
 import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
 import SSRProvider from "react-bootstrap/SSRProvider";
@@ -11,10 +12,10 @@ import "styles/theme.scss";
 
 // import default layouts
 import DefaultDashboardLayout from "layouts/DefaultDashboardLayout";
-import AuthProvider from "context/AuthProvider";
+// import AuthProvider from "context/AuthProvider";
 import { SessionProvider } from "next-auth/react";
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+function MyApp({ Component, pageProps: { session, locale, ...pageProps } }) {
   const router = useRouter();
   const pageURL = process.env.baseURL + router.pathname;
   const title = "Thalipparamb";
@@ -31,7 +32,8 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
         : DefaultDashboardLayout
       : DefaultDashboardLayout);
 
-  const timeZone = 'Asia/Kolkata';
+  const timeZone = "Asia/Kolkata";
+
   return (
     <SSRProvider>
       <Head>
@@ -51,7 +53,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
         }}
       />
       <NextIntlClientProvider
-        locale={router.locale}
+        locale={locale || "ml"}
         messages={pageProps.messages}
         timeZone={timeZone}
       >
@@ -66,4 +68,6 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   );
 }
 
-export default appWithTranslation(MyApp);
+export default MyApp;
+
+// appWithTranslation(MyApp);

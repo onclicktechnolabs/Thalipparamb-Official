@@ -1,5 +1,12 @@
+import { useEffect, useState } from "react";
+import {
+  deleteHappiness,
+  getAllHappiness,
+} from "components/api/admin/happiness/route";
 import Link from "next/link";
-import { ProgressBar, Col, Row, Card, Table, Image } from "react-bootstrap";
+import { useRouter } from "next/navigation";
+import { Col, Row, Card, Table, Image } from "react-bootstrap";
+import { truncateText } from "widgets/utility/truncateText";
 
 const ActiveProjectsData = [
   {
@@ -31,6 +38,31 @@ const ActiveProjectsData = [
 ];
 
 function Happiness() {
+  const router = useRouter();
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const getHappinessData = async () => {
+      try {
+        const res = await getAllHappiness();
+        setData(res);
+      } catch (error) {
+        console.error("Error fetching Happiness data:", error);
+      }
+    };
+
+    getHappinessData();
+  }, []);
+
+  //dlete Happiness
+  const handleDelete = async (id) => {
+    const confirm = window.confirm("Are you shure you wand to delete");
+    if (confirm) {
+      await deleteHappiness(id);
+      router.refresh();
+    }
+  };
+
   return (
     <>
       <Col lg={12} md={12} xs={12} className="mt-6">
@@ -58,44 +90,33 @@ function Happiness() {
             <Table responsive className="text-nowrap mb-0">
               <thead className="table-light">
                 <tr>
-                  <th>Image</th>
+                  <th style={{ width: "25%" }}>Image</th>
+
                   <th>Title</th>
                   <th>Description</th>
                 </tr>
               </thead>
               <tbody>
-                {ActiveProjectsData.map((item, index) => {
+                {data.map((item) => {
                   return (
-                    <tr key={index}>
+                    <tr key={item?.id}>
                       <td className="align-middle">
                         <div className="d-flex align-items-center">
                           <div>
-                            <div
-                              className={`icon-shape icon-md border p-4 rounded-1 ${item.brandLogoBg}`}
-                            >
-                              <Image src={item.brandLogo} alt="" />
-                            </div>
+                            <Image
+                              src={item?.image}
+                              alt={item?.title}
+                              className="img-fluid"
+                            />
                           </div>
                         </div>
                       </td>
 
-                      <td className="align-middle">
-                        <div className="d-flex align-items-start">
-                          <div className="ms-3 lh-1">
-                            <h5 className=" mb-1">
-                              <Link href="#" className="text-inherit">
-                                {item.title}
-                              </Link>
-                            </h5>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="align-middle">{item.Description}</td>
+                      <td className="align-middle">{item?.title}</td>
 
-                      <td className="align-middle">
-                        <span className={`badge bg-${item.priorityBadgeBg}`}>
-                          {item.priority}
-                        </span>
+                      <td className="align-middle ">
+                        {" "}
+                        {truncateText(item?.description)}
                       </td>
                     </tr>
                   );

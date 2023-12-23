@@ -63,6 +63,8 @@ function EventForm({ onSubmit, defaultValue }) {
     resolver: yupResolver(Eventschema),
     defaultValues: defaultValue || {},
   });
+  console.log("🚀 ~ file: EventForm.js:60 ~ EventForm ~ errors:", errors);
+
   const handleFormSubmit = (formData) => {
     if (files.length === 0) {
       setFileError("Please select an image file");

@@ -1,25 +1,37 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import User from "models/UserModel";
-import { connectToDB } from "lib/mongodb";
 import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs";
+import { getAdminByEmail, userLoggin } from "components/api/auth/route";
 
-
-connectToDB().catch((err) => res.json(err));
+// connectToDB().catch((err) => res.json(err));
 
 export const options = {
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
   providers: [
     GoogleProvider({
-      profile(profile) {
-        console.log("Profile Google: ", profile);
+      async profile(profile) {
+        try {
+          const userData = await userLoggin(profile);
 
-        let userRole = "User";
-        return {
-          ...profile,
-          id: profile.sub,
-          role: userRole,
-        };
+          if (!userData) {
+            console.error("User data not available or error occurred.");
+            return null;
+          }
+
+          const userRole = userData.role || "User";
+
+          return {
+            ...profile,
+            id: profile.sub,
+            role: userRole,
+          };
+        } catch (error) {
+          console.error("Error in profile:", error);
+          return null;
+        }
       },
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -28,206 +40,66 @@ export const options = {
       // id: "credentials",
       name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "text", placeholder: "your-email", },
-        password: { label: "Password", type: "password", placeholder: "your-password", },
+        email: { label: "Email", type: "text", placeholder: "your-email" },
+        password: {
+          label: "Password",
+          type: "password",
+          placeholder: "your-password",
+        },
       },
       async authorize(credentials) {
-        try {
-          console.log(
-            "🚀 ~ file: [...nextauth].js:27 ~ authorize ~ credentials:",
-            credentials
-          );
-          const email = credentials.email;
-          // await connectToDB().catch((err) => {
-          //   throw new Error(err);
-          // });
-          //check email exist in db
-          const foundUser = await User.findOne({ email });
-          // if (!existingUser) {
-          //   const hashedPassword = await bcrypt.hash(password, 10);
+        const adminData = await getAdminByEmail(credentials);
 
-          //   const newUser = await User.create({
-          //     email: credentials.email,
-          //     password: hashedPassword,
-          //   });
-          //   return newUser;
-          // }
-          if (foundUser) {
-            console.log("User Exists");
-            const match = await bcrypt.compare(
-              credentials.password,
-              foundUser.password
-            );
-
-            if (match) {
-              console.log("Good Pass");
-              delete foundUser.password;
-
-              foundUser["role"] = "Unverified Email";
-              return foundUser;
-            }
-          }
-          // const user = await User.findOne({
-          //   email: credentials?.email,
-          // }).select("+password");
-
-          // if (!user) {
-          //   throw new Error("Invalid credentials");
-          // }
-
-          // const isPasswordCorrect = await compare(
-          //   credentials?.password,
-          //   user.password
-          // );
-
-          // if (!isPasswordCorrect) {
-          //   throw new Error("Invalid credentials");
-          // }
-
-        } catch (error) {
-          console.log(error);
+        if (adminData) {
+          return Promise.resolve(adminData);
         }
-        return null;
+        return Promise.resolve(null);
       },
     }),
   ],
-  session: {
-    jwt: true,
-  },
-  jwt: {
-    secret: process.env.JWT_SECRET,
-  },
-  // pages: {
-  //   signIn: "api/auth/signin",
-  //   signOut: "api/auth/signout",
-  //   error: "api/auth/error",
-  // },
-
   callbacks: {
-    jwt: async ({ token, user, account, profile, isNewUser }) => {
-      console.log("🚀 ~ file: [...nextauth].js:80 ~ jwt: ~  token, user,account,profile,isNewUser:", token, user, account, profile, isNewUser)
-      if (user) token.role = user.role;
-      // user && (token.user = user);
-      // return Promise.resolve(token);
-      return token;
+    jwt: async ({ token, user }) => {
+      return { ...token, ...user };
     },
-    session: async ({ session, token }) => {
-      if (session?.user) session.user.role = token.role;
-      return session;
-      // session.user.id = user.id;
-      // return Promise.resolve(session);
-      // const user = token.user;
-      // session.user = user;
 
-      // return session;
-      // Attach MongoDB user ID to the session
+    session: async ({ session, token, user }) => {
+      session.user = token;
+      return session;
     },
   },
-  database: process.env.MONGODB_URI,
-  // callbacks: {
-  //   async signIn({ user, account }) {
-  //     console.log("🚀 ~ file: [...nextauth].js:23 ~ signIn ~ user:", user);
-  //     if (account.provider === "google") {
-  //       const { name, email } = user;
-  //       try {
-  //         await connectToDB();
-  //         const userExists = await User.findOne({ email });
+  secret: "process.env.NEXTAUTH_SECRET",
 
-  //         if (!userExists) {
-  //           const res = await fetch("http://localhost:3000/api/user", {
-  //             method: "POST",
-  //             headers: {
-  //               "Content-Type": "application/json",
-  //             },
-  //             body: JSON.stringify({
-  //               name,
-  //               email,
-  //             }),
-  //           });
-
-  //           if (res.ok) {
-  //             return user;
-  //           }
-  //         }
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     }
-
-  //     return user;
-  //   },
-  // },
+  pages: {
+    signOut: "/login",
+  },
+  theme: {
+    colorScheme: "auto",
+    logo: "/thalipparamb/apple-touch-icon.png",
+  },
 };
 
-// export const options = {
-//   providers: [
-//     GoogleProvider({
-//       clientId: process.env.GOOGLE_CLIENT_ID,
-//       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-//       allowDangerousEmailAccountLinking: true,
-
-//       profile(profile) {
-//         console.log("Profile Google: ", profile);
-
-//         let userRole = "user";
-//         return {
-//           ...profile,
-//           id: profile.sub,
-//           role: userRole,
-//         };
-//       },
-//     }),
-//     CredentialsProvider({
-//       name: "Credentials",
-//       credentials: {
-//         username: {
-//           label: "Username:",
-//           type: "text",
-//           placeholder: "your-cool-username",
-//         },
-//         password: {
-//           label: "Password:",
-//           type: "password",
-//           placeholder: "your-awesome-password",
-//         },
-//       },
-//       async authorize(credentials) {
-//         // This is where you need to retrieve user data
-//         // to verify with credentials
-//         // Docs: https://next-auth.js.org/configuration/providers/credentials
-//         const user = {
-//           id: "22",
-//           name: "sample",
-//           password: "nextauth",
-//           role: "admin",
-//         };
-
-//         if (
-//           credentials?.username === user.name &&
-//           credentials?.password === user.password
-//         ) {
-//           return user;
-//         } else {
-//           return null;
-//         }
-//       },
-//     }),
-//   ],
-
-//   callbacks: {
-//     async jwt({ token, user }) {
-//       if (user?.role) {
-//         token.role = user.role;
-//       }
-//       return token;
-//     },
-//     async session({ session, token }) {
-//       console.log("🚀 ~ file: options.js:29 ~ session ~ token:", token);
-//       if (session?.user) {
-//         session.user.role = token.role;
-//       }
-//       return session;
-//     },
-//   },
-// };
 export default NextAuth(options);
+
+// jwt: async ({ token, user }) => {
+//   const tokenExp = token.accessTokenExp * 1000;
+
+//   const currentTime = await Date.now();
+//   if (tokenExp < currentTime) {
+//     console.log("token expired time");
+//     const data = await refreshToken(token.refreshToken);
+//     if (data.status) {
+//       return {
+//         // ...token,
+//         refreshToken: data.refreshToken,
+//         accessToken: data.accessToken,
+//         accessTokenExp: data.accessTokenExp,
+//         ...user,
+//       };
+//     } else {
+//       return null;
+//     }
+//   } else {
+//     console.log("token not expire");
+//     return { ...token, ...user };
+//   }
+// },

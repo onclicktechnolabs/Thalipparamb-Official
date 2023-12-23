@@ -1,4 +1,10 @@
-import GeneralForm from "sub-components/generalForm";
+import ComplaintForm from "components/admin/ComplaintForm";
+import {
+  createComplaint,
+  uploadComplaintImages,
+} from "components/api/admin/complaint/route";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 function AddComplaints() {
   const { data: session } = useSession({
@@ -8,6 +14,7 @@ function AddComplaints() {
     },
   });
 
+  // console.log("🚀 ~ file: index.js:14 ~ Complaints ~ session:", session);
 
   const router = useRouter();
   const defaultValues = {
@@ -18,6 +25,7 @@ function AddComplaints() {
     panchayath: "",
   };
   const onSubmit = async (formData) => {
+    console.log("🚀 ~ file: index.js:15 ~ onSubmit ~ formData:", formData);
     const resImage = await uploadComplaintImages(formData.files[0]);
     if (session?.user?.role === "admin") {
       const res = await createComplaint({
@@ -50,7 +58,11 @@ function AddComplaints() {
   };
   return (
     <div className="mt-6">
-      <GeneralForm />
+      <ComplaintForm
+        onSubmit={onSubmit}
+        defaultValue={defaultValues}
+        loginData={session?.user}
+      />
     </div>
   );
 }

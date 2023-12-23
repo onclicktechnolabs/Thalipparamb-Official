@@ -76,6 +76,7 @@ function ComplaintForm({ onSubmit, defaultValue, loginData }) {
     files.length
   );
   const [type, setType] = useState("");
+  console.log("🚀 ~ file: ComplaintForm.js:71 ~ ComplaintForm ~ type:", type);
   const [fileError, setFileError] = useState("");
 
   const {
