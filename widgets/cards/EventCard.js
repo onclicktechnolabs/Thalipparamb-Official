@@ -1,19 +1,8 @@
-import { getAllEvents } from "components/api/admin/events/route";
-import React, { useEffect, useState } from "react";
-import { Card, Image } from "react-bootstrap";
+import React from "react";
+import { Card } from "react-bootstrap";
 import Slider from "react-slick";
 
-function EventCard() {
-  const [eventItems, setEventsItems] = useState([]);
-
-  const getEvents = async () => {
-    const res = await getAllEvents();
-    setEventsItems(res);
-  };
-
-  useEffect(() => {
-    getEvents();
-  }, []);
+function EventCard({events}) {
 
   let settings = {
     arrows: false,
@@ -57,22 +46,23 @@ function EventCard() {
   };
   return (
     <>
-      <Slider {...settings} className="w-100 ">
-        {eventItems?.map((item) => (
-          <div key={item.id} className="w-100 d-flex gap-3">
-            <Card className="mx-3">
+      <Slider {...settings} className="w-100  ">
+        {events?.map((item) => (
+          <div key={item.id} className="px-3 w-100 d-flex ">
+            <Card className="">
               <Card.Img
                 variant="top"
                 src={item?.image}
                 alt={item?.title}
                 style={{ height: "18rem" }}
-                className="img-fluid w-100 h-48 md:h-64 aspect-square"
+                className="img-fluid w-100 h-48 md:h-64 aspect-square shadow"
               />
-              <Card.Body className="px-3">
-                <div className="w-100 d-flex justify-content-between  fw-bold">
-                  <Card.Text>{item?.title}</Card.Text>
-                  <Card.Text>Venu:{item?.place}</Card.Text>
+              <Card.Body className="px-4">
+                <div className="w-100 d-flex flex-column flex-sm-row justify-content-between fw-bold text-center py-2">
+                  <Card.Text className=" mb-sm-0">{item?.title}</Card.Text>
+                  <Card.Text>Venue: {item?.place}</Card.Text>
                 </div>
+
                 <Card.Text>
                   Some quick example text to build on the card title and make up
                   the bulk of the card's content.
@@ -88,22 +78,4 @@ function EventCard() {
 
 export default EventCard;
 
-{
-  /* <Card className=" h-100 bg-danger">
-<Card className="h-100 p-4" style={{ height: "280px" }}>
-  <Image
-    className="d-block w-100 h-100 object-fit-fill"
-    src={item?.image}
-    alt={item?.title}
-  />
-</Card>
-<Card.Body className="d-flex flex-column justify-content-between align-items-center">
-  <h3 className="mb-3">Title</h3>
-  <p className="mb-0" style={{ textAlign: "justify" }}>
-    International film festival with favorite films and classic
-    visual experiences of film lovers traveling with the movements
-    of world cinema.
-  </p>
-</Card.Body>
-</Card> */
-}
+

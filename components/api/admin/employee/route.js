@@ -27,7 +27,7 @@ export const checkAdminExistence = async (email) => {
   }
 };
 
-export const createEmploye = async (data) => {
+export const createEmployee = async (data) => {
   try {
     const { email, password, ...otherData } = data;
 
@@ -41,7 +41,7 @@ export const createEmploye = async (data) => {
       password: hashedPassword,
       email,
       ...otherData,
-      createdAt: serverTimestamp(),
+      createdAt: new Date().toISOString(),
     };
     const docRef = await addDoc(collection(db, "admin"), employeData);
     return docRef;

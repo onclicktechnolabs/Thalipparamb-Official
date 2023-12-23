@@ -9,9 +9,9 @@ import ProfileMenu from "layouts/ProfileMenu";
 
 function HomeNavbar2() {
   const t = useTranslations("Navbar");
+  const tp = useTranslations("projects");
 
   const { data: session, status } = useSession();
-  console.log("🚀 ~ file: HomeNavbar2.js:14 ~ HomeNavbar2 ~ session:", session);
 
   const isMobile = useMediaQuery({ maxWidth: 615 });
 
@@ -73,10 +73,10 @@ function HomeNavbar2() {
                 href="/entrepreneurship-program"
                 className="fw-bold"
               >
-                Entrepreneurship program
+                {tp("entrepreneur-ship")}
               </NavDropdown.Item>
-              <NavDropdown.Item href="/happiness-festivel" className="fw-bold">
-                Happiness Festivel
+              <NavDropdown.Item href="/happiness-festival" className="fw-bold">
+                {tp("festival")}
               </NavDropdown.Item>
             </NavDropdown>
 

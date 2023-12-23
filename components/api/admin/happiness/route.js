@@ -24,7 +24,7 @@ import {
 
 export const createHappiness = async (data) => {
   try {
-    const happinessData = { ...data, createdAt: serverTimestamp() };
+    const happinessData = { ...data, createdAt: new Date().toISOString() };
     const docRef = await addDoc(collection(db, "happiness"), happinessData);
     console.log("Document written with ID: ", docRef.id);
     return docRef;
@@ -53,13 +53,13 @@ export const uploadHappinessImages = async (file) => {
 
 export const getAllHappiness = async () => {
   const q = query(collection(db, "happiness"), orderBy("createdAt", "desc"));
-  const documents = [];
 
   try {
     const querySnapshot = await getDocs(q);
 
-    querySnapshot.forEach((doc) => {
-      documents.push({ id: doc.id, ...doc.data() });
+    const documents = querySnapshot.docs.map((doc) => {
+      const { createdAt, scheduleDate, ...data } = doc.data();
+      return { id: doc.id, ...data };
     });
 
     return documents;
@@ -68,6 +68,7 @@ export const getAllHappiness = async () => {
     throw error;
   }
 };
+
 //delete banner
 export const deleteHappiness = async (documentId) => {
   const documentRef = doc(db, "happiness", documentId);
@@ -79,6 +80,7 @@ export const deleteHappiness = async (documentId) => {
     throw error;
   }
 };
+
 //get single happiness
 export const singleHappiness = async (documentId) => {
   try {

@@ -6,7 +6,8 @@ function HomeFooter() {
       <div className="container text-center">
         <span className="text-light p-4">
           Official Web Portal of Thaliparamba Assembly Constituency, Government
-          of Kerala, Developed by: Information Kerala Mission
+          of Kerala.
+          {/* Developed by: Information Kerala Mission */}
         </span>
       </div>
     </footer>

@@ -19,7 +19,7 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 export const createGallery = async (data) => {
   try {
-    const galleryData = { ...data, createdAt: serverTimestamp() };
+    const galleryData = { ...data, createdAt: new Date().toISOString() };
     console.log(
       "🚀 ~ file: route.js:21 ~ createGallery ~ galleryData:",
       galleryData
@@ -50,15 +50,15 @@ export const uploadGalleryImages = async (file) => {
   }
 };
 
-export const getAllgallery = async () => {
+export const getAllGallery = async () => {
   const q = query(collection(db, "gallery"), orderBy("createdAt", "desc"));
-  const documents = [];
 
   try {
     const querySnapshot = await getDocs(q);
 
-    querySnapshot.forEach((doc) => {
-      documents.push({ id: doc.id, ...doc.data() });
+    const documents = querySnapshot.docs.map((doc) => {
+      const { createdAt,  ...data } = doc.data();
+      return { id: doc.id, ...data };
     });
 
     return documents;

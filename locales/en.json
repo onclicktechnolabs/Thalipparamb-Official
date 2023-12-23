@@ -7,10 +7,13 @@
     "gallery": "Gallery",
     "complaints": "Complaints"
   },
-
   "home": {
-    "festivel": "Happiness Festival",
+    "festival": "Happiness Festival",
     "event": "Events",
-    "gallery": "IMAGE GALLERIES"
+    "gallery": "Image Galleries"
+  },
+  "projects": {
+    "entrepreneur-ship": "Entrepreneurship Programme",
+    "festival": "Happiness Festival"
   }
 }

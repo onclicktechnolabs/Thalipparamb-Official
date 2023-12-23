@@ -20,7 +20,7 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 export const createBanner = async (data) => {
   try {
-    const bannerData = { ...data, createdAt: serverTimestamp() };
+    const bannerData = { ...data, createdAt: new Date().toISOString() };
 
     const docRef = await addDoc(collection(db, "baner"), bannerData);
     console.log("Document written with ID: ", docRef.id);
@@ -71,13 +71,13 @@ export const uploadImages = async (file) => {
 // };
 export const getAllBanner = async () => {
   const q = query(collection(db, "baner"), orderBy("createdAt", "desc"));
-  const documents = [];
 
   try {
     const querySnapshot = await getDocs(q);
 
-    querySnapshot.forEach((doc) => {
-      documents.push({ id: doc.id, ...doc.data() });
+    const documents = querySnapshot.docs.map((doc) => {
+      const { createdAt,scheduleDate,  ...data } = doc.data();
+      return { id: doc.id, ...data };
     });
 
     return documents;

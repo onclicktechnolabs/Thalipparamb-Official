@@ -59,7 +59,7 @@ export const unblockUser = async (email) => {
 // register Program
 export const createProgram = async (data) => {
   try {
-    const programData = { ...data, createdAt: serverTimestamp() };
+    const programData = { ...data, createdAt: new Date().toISOString() };
 
     const docRef = await addDoc(collection(db, "programs"), programData);
     console.log("Document written with ID: ", docRef.id);

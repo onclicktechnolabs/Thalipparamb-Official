@@ -1,4 +1,5 @@
 import HomeLayout from "layouts/HomeLayout";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button, ButtonGroup, Carousel, Image } from "react-bootstrap";
@@ -6,10 +7,13 @@ import { Button, ButtonGroup, Carousel, Image } from "react-bootstrap";
 function EntrepreneurshipProgram() {
   const router = useRouter();
   const [openAbout, setOpenAbout] = useState(false);
+  const tp = useTranslations("projects");
+
   return (
     <section className=" d-flex flex-column justify-content-center ">
-      <h2 className="happiness fw-bold ls-sm text-center my-3">
-        Entrepreneurship Program
+      <h2 className="happiness fw-bold ls-sm text-center my-6">
+        {tp("entrepreneur-ship")}
+
       </h2>
       <Carousel controls={false} indicators={false}>
         <Carousel.Item className="px-2">
@@ -23,10 +27,10 @@ function EntrepreneurshipProgram() {
       {/* //selection tab */}
       <ButtonGroup
         aria-label="Basic mixed styles example"
-        className="px-4 mt-5"
+        className="px-4 my-4 my-md-10 w-100 d-flex flex-column flex-md-row"
       >
         <Button
-          variant={openAbout ? "primary p-4" : "outline-primary p-4"}
+          variant={openAbout ? "primary p-4 mb-2 mb-md-0" : "outline-primary p-4 mb-2 mb-md-0"}
           onClick={() => setOpenAbout(!openAbout)}
         >
           About
@@ -39,7 +43,7 @@ function EntrepreneurshipProgram() {
         </Button>
       </ButtonGroup>
       {/* content of the page */}
-      <div className="mt-4 p-4">
+      <div className=" p-4 text-center text-justify">
         {openAbout ? (
           <p>
             തളിപ്പറമ്പ് മണ്ഡലത്തിലെ സ്റ്റാർട്ടപ്പ് സംരംഭങ്ങൾ ആരംഭിക്കാൻ
@@ -47,7 +51,7 @@ function EntrepreneurshipProgram() {
             പരിചയപ്പെടുത്തി ആവശ്യമായ പിന്തുണാ സംവിധാനം ഒരുക്കി അഭ്യസ്തവിദ്യരായ
             യുവതികളെ കുടുംബശ്രീയ്ക്ക് കീഴിൽ സ്റ്റാർട്ടപ്പുകൾ തുടങ്ങുന്നതിലേക്ക്
             നയിക്കുന്നതിന് സംസ്ഥാനത്ത് ആദ്യമായി സംഘടിപ്പിക്കുന്ന വനിതാ സംരംഭകത്വ
-            പരിപാടി
+            പരിപാടി.
           </p>
         ) : (
           <p>

@@ -5,7 +5,7 @@ import { Col, Row } from "react-bootstrap";
 import { useTranslations } from "next-intl";
 import { HappinessCard } from "widgets";
 import HappinessBanner from "widgets/cards/HappinessBanner";
-function HappinessFestivel() {
+function Happinessfestival() {
   const t = useTranslations("home");
   const [happinessItems, setHappinessItems] = useState([]);
 
@@ -28,7 +28,7 @@ function HappinessFestivel() {
               xs={12}
               className="d-flex justify-content-center align-items-center mb-6"
             >
-              <h2 className="happiness fw-bold ls-sm">Happiness Festivel</h2>
+              <h2 className="happiness fw-bold ls-sm">Happiness festival</h2>
             </Col>
 
             <Col className="w-100">{/* <HappinessBanner /> */}</Col>
@@ -61,8 +61,8 @@ function HappinessFestivel() {
   );
 }
 
-HappinessFestivel.Layout = HomeLayout;
-export default HappinessFestivel;
+Happinessfestival.Layout = HomeLayout;
+export default Happinessfestival;
 
 export async function getStaticProps({ locale }) {
   return {

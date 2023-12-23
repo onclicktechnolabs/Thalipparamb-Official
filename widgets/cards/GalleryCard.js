@@ -1,33 +1,9 @@
-import { useEffect, useState } from "react";
 import { Card, Image } from "react-bootstrap";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { getAllgallery } from "components/api/admin/gallery/route";
 
-function GalleryCard() {
-  const imageGallery = [
-    { id: "1", categoryTitle: "Enterpreneurship Programme", categoryLink: "/" },
-    { id: "2", categoryTitle: "Thaliparamba Photos", categoryLink: "/" },
-    { id: "3", categoryTitle: "Thaliparamba Photos", categoryLink: "/" },
-    { id: "4", categoryTitle: "Thaliparamba Photos", categoryLink: "/" },
-    { id: "5", categoryTitle: "Thaliparamba Photos", categoryLink: "/" },
-    { id: "6", categoryTitle: "Thaliparamba Photos", categoryLink: "/" },
-    { id: "7", categoryTitle: "Thaliparamba Photos", categoryLink: "/" },
-    { id: "8", categoryTitle: "Thaliparamba Photos", categoryLink: "/" },
-  ];
-
-  //data fetching
-  const [galleryItems, setgalleryItems] = useState([]);
-
-  const getGallery = async () => {
-    const res = await getAllgallery();
-    setgalleryItems(res);
-  };
-
-  useEffect(() => {
-    getGallery();
-  }, []);
+function GalleryCard({galleryItems}) {
 
   let settings = {
     arrows: false,

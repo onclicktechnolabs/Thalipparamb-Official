@@ -25,7 +25,7 @@ import {
 
 export const createGreetings = async (data) => {
   try {
-    const GreetingsData = { ...data, createdAt: serverTimestamp() };
+    const GreetingsData = { ...data, createdAt: new Date().toISOString() };
     const docRef = await addDoc(collection(db, "greetings"), GreetingsData);
     console.log("Document written with ID: ", docRef.id);
     return docRef;

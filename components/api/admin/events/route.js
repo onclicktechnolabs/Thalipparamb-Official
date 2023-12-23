@@ -25,7 +25,7 @@ import {
 
 export const createEvent = async (data) => {
   try {
-    const eventData = { ...data, createdAt: serverTimestamp() };
+    const eventData = { ...data, createdAt: new Date().toISOString() };
     const docRef = await addDoc(collection(db, "event"), eventData);
     return docRef;
   } catch (e) {
@@ -70,14 +70,11 @@ export const uploadEventImages = async (file) => {
 // };
 
 export const getAllEvents = async (status = "all") => {
-  console.log("🚀 ~ file: route.js:72 ~ getAllEvents ~ status:", status);
   let q;
 
   if (status === "all") {
-    // Fetch all events
     q = query(collection(db, "event"), orderBy("createdAt", "desc"));
   } else {
-    // Fetch events based on the provided status
     q = query(
       collection(db, "event"),
       where("status", "==", status),
@@ -85,21 +82,22 @@ export const getAllEvents = async (status = "all") => {
     );
   }
 
-  const documents = [];
 
   try {
     const querySnapshot = await getDocs(q);
 
-    querySnapshot.forEach((doc) => {
-      documents.push({ id: doc.id, ...doc.data() });
+    const events = querySnapshot.docs.map((doc) => {
+      const { createdAt, scheduleDate, ...data } = doc.data();
+      return { id: doc.id, ...data };
     });
 
-    return documents;
+    return events;
   } catch (error) {
     console.error("Error getting documents:", error.message);
     throw error;
   }
 };
+
 //delete banner
 export const deleteEvent = async (documentId) => {
   const documentRef = doc(db, "event", documentId);
