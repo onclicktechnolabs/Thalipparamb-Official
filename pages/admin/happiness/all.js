@@ -2,40 +2,13 @@ import { useEffect, useState } from "react";
 import {
   deleteHappiness,
   getAllHappiness,
+  toggleHappiness,
 } from "components/api/admin/happiness/route";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Col, Row, Card, Table, Image } from "react-bootstrap";
 import { truncateText } from "widgets/utility/truncateText";
 
-const ActiveProjectsData = [
-  {
-    id: 1,
-    title: "Flower show",
-    mobile: "9523457800",
-    email: "sampleEmail@gmail.com",
-    address: "user Address",
-    // Date: "3 May, 2023",
-    // staus: "Medium",
-    brandLogo: "/images/brand/dropbox-logo.svg",
-    priorityBadgeBg: "danger",
-    Description:
-      "Renowned music bands to make the festival nights musical and thrill the hearts of the revelers",
-  },
-  {
-    id: 2,
-    title: "Amusement park",
-    mobile: "9523457800",
-    email: "sampleEmail@gmail.com",
-    address: "user Address",
-    Date: "3 May, 2023",
-    staus: "Medium",
-    brandLogo: "/images/brand/dropbox-logo.svg",
-    priorityBadgeBg: "warning",
-    Description:
-      "Renowned music bands to make the festival nights musical and thrill the hearts of the revelers",
-  },
-];
 
 function Happiness() {
   const router = useRouter();
@@ -54,14 +27,20 @@ function Happiness() {
     getHappinessData();
   }, []);
 
-  //dlete Happiness
+  //delete Happiness
   const handleDelete = async (id) => {
-    const confirm = window.confirm("Are you shure you wand to delete");
+    const confirm = window.confirm("Are you sure you wand to delete");
     if (confirm) {
       await deleteHappiness(id);
       router.refresh();
     }
   };
+  const handleToggle = async (id, isActive) => {
+    await toggleHappiness(id, { active: !isActive });
+    router.refresh();
+  };
+
+  // const { locale } = useRouter();
 
   return (
     <>
@@ -94,6 +73,7 @@ function Happiness() {
 
                   <th>Title</th>
                   <th>Description</th>
+                  <th>options</th>
                 </tr>
               </thead>
               <tbody>
@@ -105,18 +85,29 @@ function Happiness() {
                           <div>
                             <Image
                               src={item?.image}
-                              alt={item?.title}
+                              alt={item?.title_en}
                               className="img-fluid"
                             />
                           </div>
                         </div>
                       </td>
 
-                      <td className="align-middle">{item?.title}</td>
+                      <td className="align-middle">{item?.title_en}</td>
 
                       <td className="align-middle ">
-                        {" "}
-                        {truncateText(item?.description)}
+                        {truncateText(item?.description_en)}
+                      </td>
+
+                      <td className="align-middle gap-4">
+                        <button className={item.active ? "btn btn-success me-2" : "btn btn-primary me-2 "} onClick={() => handleToggle(item?.id, item?.active)}>
+                          {item.active ?
+                            <i className="fe fe-toggle-right "></i> : <i className="fe fe-toggle-left "></i>
+                          }
+                        </button>
+
+                        <button className="btn btn-danger" onClick={() => handleDelete(item?.id)}>
+                          <i className="fe fe-trash "></i>
+                        </button>
                       </td>
                     </tr>
                   );
@@ -125,7 +116,7 @@ function Happiness() {
             </Table>
             <Card.Footer className="bg-white text-center">
               <Link href="#" className="link-primary">
-                View All Happiness
+                Load more...
               </Link>
             </Card.Footer>
           </Card>

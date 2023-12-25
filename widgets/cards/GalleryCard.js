@@ -1,33 +1,9 @@
-import { useEffect, useState } from "react";
 import { Card, Image } from "react-bootstrap";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { getAllgallery } from "components/api/admin/gallery/route";
 
-function GalleryCard() {
-  const imageGallery = [
-    { id: "1", categoryTitle: "Enterpreneurship Programme", categoryLink: "/" },
-    { id: "2", categoryTitle: "Thaliparamba Photos", categoryLink: "/" },
-    { id: "3", categoryTitle: "Thaliparamba Photos", categoryLink: "/" },
-    { id: "4", categoryTitle: "Thaliparamba Photos", categoryLink: "/" },
-    { id: "5", categoryTitle: "Thaliparamba Photos", categoryLink: "/" },
-    { id: "6", categoryTitle: "Thaliparamba Photos", categoryLink: "/" },
-    { id: "7", categoryTitle: "Thaliparamba Photos", categoryLink: "/" },
-    { id: "8", categoryTitle: "Thaliparamba Photos", categoryLink: "/" },
-  ];
-
-  //data fetching
-  const [galleryItems, setgalleryItems] = useState([]);
-
-  const getGallery = async () => {
-    const res = await getAllgallery();
-    setgalleryItems(res);
-  };
-
-  useEffect(() => {
-    getGallery();
-  }, []);
+function GalleryCard({ locale, galleryItems }) {
 
   let settings = {
     arrows: false,
@@ -76,12 +52,12 @@ function GalleryCard() {
           <Card className="w-100 ">
             <Image
               src={item?.image}
-              alt={item?.title}
+              alt={item?.title_en}
               className="img-fluid w-100 h-48 md:h-64 aspect-square"
             />
-            <Card.Body className="w-full">
-              <h3 className="text-center fs-4 fw-medium text-dark">
-                {item?.title}
+            <Card.Body className="w-full ">
+              <h3 className="text-center fs-4 fw-medium text-dark ">
+                {item?.[`title_${locale}`]}
               </h3>
             </Card.Body>
           </Card>

@@ -19,30 +19,30 @@ import {
   ref,
   uploadBytes,
 } from "firebase/storage";
+import { formatToLocalDate } from "widgets/utility/formateDate";
 
 // const storage = getStorage();
 
 export const createComplaint = async (data) => {
   try {
-    const ComplaintData = { ...data, createdAt: serverTimestamp() };
-    const docRef = await addDoc(collection(db, "Complaint"), ComplaintData);
-    console.log("Document written with ID: ", docRef.id);
-    return docRef;
+    const ComplaintData = { ...data, created_at: formatToLocalDate(new Date()) };
+    const docRef = await addDoc(collection(db, "complaint"), ComplaintData);
+
+    return { status: "ok", docRef: docRef };
   } catch (e) {
     console.error("Error adding document: ", e);
+    return { status: "error", error: e.message };
   }
 };
 export const uploadComplaintImages = async (file) => {
-  const storageRef = ref(storage, "thalipparamb/Complaint" + file?.name);
+  const storageRef = ref(storage, "thalipparamb/complaint" + file?.name);
 
   try {
     // Upload the file
     const snapshot = await uploadBytes(storageRef, file);
-    console.log("Uploaded a blob or file!");
 
     // Get the download URL
     const url = await getDownloadURL(storageRef);
-    console.log("Download URL:", url);
 
     return url;
   } catch (error) {
@@ -52,7 +52,7 @@ export const uploadComplaintImages = async (file) => {
 };
 
 export const getAllComplaints = async () => {
-  const q = query(collection(db, "Complaint"), orderBy("createdAt", "desc"));
+  const q = query(collection(db, "complaint"), orderBy("created_at", "desc"));
   const documents = [];
 
   try {
@@ -70,7 +70,7 @@ export const getAllComplaints = async () => {
 };
 //delete complaints
 export const deleteComplaint = async (documentId) => {
-  const documentRef = doc(db, "Complaint", documentId);
+  const documentRef = doc(db, "complaint", documentId);
 
   try {
     await deleteDoc(documentRef);
@@ -79,10 +79,10 @@ export const deleteComplaint = async (documentId) => {
     throw error;
   }
 };
-//get single Complaint
+//get single complaint
 export const singleComplaint = async (documentId) => {
   try {
-    const documentRef = doc(db, "Complaint", documentId);
+    const documentRef = doc(db, "complaint", documentId);
     const docSnap = await getDoc(documentRef);
     if (docSnap.exists()) {
       const ComplaintData = docSnap.data();
@@ -95,7 +95,7 @@ export const singleComplaint = async (documentId) => {
 };
 //update complaints
 export const updateComplaint = async (documentId, dataToUpdate) => {
-  const documentRef = doc(db, "Complaint", documentId);
+  const documentRef = doc(db, "complaint", documentId);
 
   try {
     await updateDoc(documentRef, dataToUpdate);
@@ -108,13 +108,12 @@ export const updateComplaint = async (documentId, dataToUpdate) => {
 export const deleteComplaintImage = async (imageUrl) => {
   const imageRef = ref(
     storage,
-    "thalipparamb/Complaint/" + getImageFileNameFromURL(imageUrl)
+    "thalipparamb/complaint/" + getImageFileNameFromURL(imageUrl)
   );
 
   try {
     // Delete the file
     await deleteObject(imageRef);
-    console.log("Image deleted successfully");
   } catch (error) {
     console.error("Error deleting image:", error.message);
     throw error;

@@ -1,22 +1,21 @@
-// import node module libraries
-import { ListGroup, Card, Image } from "react-bootstrap";
-import Link from "next/link";
-import { Justify } from "react-bootstrap-icons";
+import { Card } from "react-bootstrap";
 
-const HappinessCard = ({ content }) => {
+const HappinessCard = ({ content, locale }) => {
+
   return (
     <Card className="h-100">
       <Card>
-        <Image
-          className="d-block w-100 h-100 object-fit-fill"
+        <Card.Img
+          variant="top"
           src={content?.image}
-          alt="Second slide"
+          className="d-block w-100 h-100 object-fit-fill"
+          alt="Card Image"
         />
       </Card>
-      <Card.Body className="d-flex flex-column justify-content-between align-items-center m-0 p-0">
-        <h3 className="mb-3 mt-2">{content?.title}</h3>
-        <p className="d-block mb-0 p-2" style={{ textAlign: "justify" }}>
-          {content?.description}
+      <Card.Body className="d-flex flex-column align-items-center m-0 py-2">
+        <h3 className="my-3 text-center">  {content?.[`title_${locale}`]}</h3>
+        <p className="d-block " style={{ textAlign: "center" }}>
+          {content?.[`description_${locale}`]}
         </p>
       </Card.Body>
     </Card>

@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
 import SSRProvider from "react-bootstrap/SSRProvider";
 import { Analytics } from "@vercel/analytics/react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // import theme style scss file
 import "styles/theme.scss";
@@ -19,7 +21,7 @@ function MyApp({ Component, pageProps: { session, locale, ...pageProps } }) {
   const router = useRouter();
   const pageURL = process.env.baseURL + router.pathname;
   const title = "Thalipparamb";
-  const description = "Thalipparamb wesite";
+  const description = "Thalipparamb website";
   const keywords = "thalipparamb,Thalipparamb panchayath";
 
   // Identify the layout, which will be applied conditionally
@@ -58,6 +60,7 @@ function MyApp({ Component, pageProps: { session, locale, ...pageProps } }) {
         timeZone={timeZone}
       >
         <SessionProvider session={session}>
+          <ToastContainer />
           <Layout>
             <Component {...pageProps} />
             <Analytics />

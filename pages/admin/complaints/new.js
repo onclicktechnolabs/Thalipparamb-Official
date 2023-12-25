@@ -14,26 +14,28 @@ function AddComplaints() {
     },
   });
 
-  // console.log("🚀 ~ file: index.js:14 ~ Complaints ~ session:", session);
-
   const router = useRouter();
   const defaultValues = {
-    title: "",
+    name: "",
     phone: "",
     address: "",
+    locality: "",
+    ward: "",
+    subject: "",
     description: "",
-    panchayath: "",
   };
   const onSubmit = async (formData) => {
-    console.log("🚀 ~ file: index.js:15 ~ onSubmit ~ formData:", formData);
     const resImage = await uploadComplaintImages(formData.files[0]);
     if (session?.user?.role === "admin") {
       const res = await createComplaint({
-        title: formData.title,
+        name: formData.name,
         phone: formData.phone,
         address: formData.address,
+        ward: formData.ward,
+        locality: formData.locality,
+        subject: formData.subject,
         description: formData.description,
-        panchayath: formData.panchayath,
+
         createdBy: session?.user?.email,
         type: formData.type,
         priority: "low",
@@ -42,19 +44,7 @@ function AddComplaints() {
       });
       router.push("/admin/complaints/all");
     }
-    // if (session?.user?.role === "User") {
-    //   const res = await createComplaint({
-    //     title: formData.title,
-    //     phone: formData.phone,
-    //     address: formData.address,
-    //     description: formData.description,
-    //     panchayath: formData.panchayath,
-    //     createdBy: session?.user?.email,
-    //     type: "complaint",
-    //     image: resImage,
-    //   });
-    //   router.push("/");
-    // }
+
   };
   return (
     <div className="mt-6">
@@ -68,3 +58,11 @@ function AddComplaints() {
 }
 
 export default AddComplaints;
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      messages: (await import(`../../../locales/en.json`)).default,
+    },
+  };
+}

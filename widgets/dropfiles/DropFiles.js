@@ -1,5 +1,4 @@
-// import node module libraries
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { Image } from "react-bootstrap";
 
@@ -36,7 +35,6 @@ const img = {
 };
 
 export const DropFiles = ({ files, setFiles }) => {
-  // const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/*",
     onDrop: (acceptedFiles) => {
@@ -52,7 +50,7 @@ export const DropFiles = ({ files, setFiles }) => {
 
   const thumbs = files.map((file) => (
     <div style={thumb} key={file.name}>
-      <div style={thumbInner}>
+      <div style={thumbInner} >
         <Image src={file.preview} style={img} alt={file.name} />
       </div>
     </div>
@@ -60,15 +58,14 @@ export const DropFiles = ({ files, setFiles }) => {
 
   useEffect(
     () => () => {
-      // Make sure to revoke the data uris to avoid memory leaks
       files.forEach((file) => URL.revokeObjectURL(file.preview));
     },
     [files]
   );
 
   return (
-    <section className="container">
-      <div {...getRootProps({ className: "dropzone" })}>
+    <section className="container d-flex ">
+      <div {...getRootProps({ className: "dropzone py-8" })} >
         <input {...getInputProps()} />
         <p className="text-center">
           Drag 'n' drop some files here, or click to select files

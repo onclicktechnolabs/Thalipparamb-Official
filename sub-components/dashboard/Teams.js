@@ -5,13 +5,10 @@ import { Card, Table, Dropdown } from "react-bootstrap";
 import { MoreVertical } from "react-feather";
 
 // import required data files
-import TeamsData from "data/dashboard/TeamsData";
 import { getAllEmployes } from "components/api/admin/employee/route";
 
 const Teams = () => {
   const [data, setData] = useState([]);
-  console.log("🚀 ~ file: Teams.js:12 ~ Teams ~ data:", data);
-
   useEffect(() => {
     const getEmployeData = async () => {
       try {

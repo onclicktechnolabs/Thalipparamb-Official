@@ -5,49 +5,56 @@ import AutoFormField from "sub-components/generalForm/AutoFormField";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormSelect, DropFiles } from "widgets";
+import { useTranslations } from "next-intl";
 
-const Complaintschema = Yup.object().shape({
-  // photo: Yup.string().required("Photo is required"),
-  title: Yup.string().required("Title is required"),
+const complaintSchema = Yup.object().shape({
+  name: Yup.string().required("Name is required"),
   phone: Yup.string().required("Phone Number is required"),
   address: Yup.string().required("Address is required"),
+  ward: Yup.string().required("Ward is required"),
+  locality: Yup.string().required("Panchayath/municipality is required"),
+  subject: Yup.string().required("Subject is required"),
   description: Yup.string().required("Description is required"),
-  panchayath: Yup.string().required("Panchayath is required"),
+  // priority: Yup.string().required("Priority is required"),
 });
 
 function ComplaintForm({ onSubmit, defaultValue, loginData }) {
-  console.log(
-    "🚀 ~ file: ComplaintForm.js:19 ~ ComplaintForm ~ loginData:",
-    loginData
-  );
-
+  const t = useTranslations("complaint")
   const formFields = [
     {
-      label: "Title",
-      name: "title",
+      label: t("name"),
+      name: "name",
       type: "text",
-      placeholder: "Enter title",
+      placeholder: t("name-p"),
       required: false,
     },
     {
-      label: "Phone Number",
+      label: t("phone"),
       name: "phone",
       type: "tel",
-      placeholder: "Enter Phone Number",
+      placeholder: t("phone-p"),
       required: false,
     },
     {
-      label: "Address",
+      label: t("address"),
       name: "address",
       type: "text",
-      placeholder: "Enter Address",
+      placeholder: t("address-p"),
+      required: false,
+    },
+
+    {
+      label: t("ward"),
+      name: "ward",
+      type: "text",
+      placeholder: t("ward-p"),
       required: false,
     },
     {
-      label: "Panchayath",
-      name: "panchayath",
+      label: t("locality"),
+      name: "locality",
       type: "select",
-      placeholder: "Select Panchayath",
+      placeholder: t("locality-p"),
       required: false,
       options: [
         { label: " Thalipparamb", value: "Thalipparamb" },
@@ -58,25 +65,28 @@ function ComplaintForm({ onSubmit, defaultValue, loginData }) {
       ],
     },
     {
-      label: "Description",
+      label: t("subject"),
+      name: "subject",
+      type: "text",
+      placeholder: t("subject-p"),
+      required: false,
+    },
+    {
+      label: t("description"),
       name: "description",
       type: "textarea",
-      placeholder: "Enter description",
+      placeholder: t("description-p"),
       required: false,
     },
   ];
   const options = [
-    { label: " Events/Functions", value: "Events" },
-    { label: "Inaguration", value: "Inaguration" },
-    { label: "Complaint", value: "Complaint" },
+    { label: "Events/Functions", value: "events" },
+    { label: "Inauguration", value: "inauguration" },
+    { label: "Complaint", value: "complaint" },
   ];
   const [files, setFiles] = useState([]);
-  console.log(
-    "🚀 ~ file: ComplaintForm.js:74 ~ ComplaintForm ~ files:",
-    files.length
-  );
+
   const [type, setType] = useState("");
-  console.log("🚀 ~ file: ComplaintForm.js:71 ~ ComplaintForm ~ type:", type);
   const [fileError, setFileError] = useState("");
 
   const {
@@ -85,7 +95,7 @@ function ComplaintForm({ onSubmit, defaultValue, loginData }) {
     setValue,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(Complaintschema),
+    resolver: yupResolver(complaintSchema),
     defaultValues: defaultValue || {},
   });
 
@@ -104,11 +114,11 @@ function ComplaintForm({ onSubmit, defaultValue, loginData }) {
 
   return (
     <Row className="mb-8 d-flex justify-content-center align-items-center  ">
-      <Col xl={10} lg={10} md={12} xs={12}>
+      <Col xl={10} lg={10} md={12} xs={12} className="w-100 w-md-75 w-lg-50 px-4">
         <Card>
           <Card.Body>
-            <div className=" mb-6">
-              <h4 className="mb-1">Register Complaint</h4>
+            <div className=" my-6 text-center">
+              <h4 className="mb-1">{t("register")}</h4>
             </div>
 
             <div>
@@ -154,12 +164,12 @@ function ComplaintForm({ onSubmit, defaultValue, loginData }) {
                     htmlFor="fullName"
                     className="col-sm-4 col-form-label form-label"
                   >
-                    Upload Files
+                    {t("upload")}
                   </label>
                   <div className="col-md-8 col-12">
                     <div
                       action="#"
-                      className="dropzone mb-3 py-10 border-dashed"
+                      className="dropzone mb-3  border-dashed "
                     >
                       <DropFiles files={files} setFiles={setFiles} />
                     </div>
@@ -170,19 +180,15 @@ function ComplaintForm({ onSubmit, defaultValue, loginData }) {
                         </span>
                       </Col>
                     )}
-                    <Button
-                      variant="outline-white"
-                      onClick={() => setFiles([])}
-                    >
-                      Clear
-                    </Button>
+
                   </div>
                 </Row>
-                <Col md={{ offset: 4, span: 8 }} xs={12} className="mt-4">
-                  <Button variant="primary" type="submit">
-                    Create
-                  </Button>
-                </Col>
+                <Row>
+                  <Col md={{ offset: 4, span: 8 }} xs={12} className="mt-4 d-flex justify-content-between gap-2">
+                    <Button variant="outline-white" onClick={() => setFiles([])}>Clear</Button>
+                    <Button variant="primary" type="submit">{t("submit")}</Button>
+                  </Col>
+                </Row>
               </Form>
             </div>
           </Card.Body>

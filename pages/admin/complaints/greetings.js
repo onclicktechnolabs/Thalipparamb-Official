@@ -25,7 +25,6 @@ function Greetings() {
     getGreetinsData();
   }, []);
   const handleDelete = async (id) => {
-    console.log("🚀 ~ file: greetings.js:57 ~ handleDelete ~ id:", id);
     const confirm = window.confirm("Are you shure you wand to delete");
     if (confirm) {
       await deleteGreetings(id);
@@ -76,7 +75,7 @@ function Greetings() {
                               View
                             </Link>
                           ) : (
-                            <img
+                            <Image
                               src={item?.file}
                               alt={item?.greetingType}
                               className="img-fluid"

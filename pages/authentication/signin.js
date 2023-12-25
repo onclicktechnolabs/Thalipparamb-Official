@@ -22,8 +22,6 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("Username:", username);
-    console.log("Password:", password);
     try {
       const loginRes = await signIn("credentials", {
         redirect: false,

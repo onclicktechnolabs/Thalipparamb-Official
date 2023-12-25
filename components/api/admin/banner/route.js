@@ -14,32 +14,40 @@ import {
   orderBy,
 } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { formatToLocalDate } from "widgets/utility/formateDate";
 
 // const storage = getStorage();
 // const db = getFirestore(app);
 
 export const createBanner = async (data) => {
   try {
-    const bannerData = { ...data, createdAt: serverTimestamp() };
+    const bannerData = { ...data, active: true, created_at: formatToLocalDate(new Date()) };
 
-    const docRef = await addDoc(collection(db, "baner"), bannerData);
-    console.log("Document written with ID: ", docRef.id);
-    return docRef;
+    const docRef = await addDoc(collection(db, "banner"), bannerData);
+    return { status: "ok", docRef }
   } catch (e) {
     console.error("Error adding document: ", e);
   }
 };
+
+export const updateBannerActiveFlag = async (bannerId, isActive) => {
+  try {
+    const bannerRef = doc(db, 'banner', bannerId);
+    await updateDoc(bannerRef, { active: isActive });
+  } catch (e) {
+    console.error(`Error updating banner with ID ${bannerId}: `, e);
+  }
+};
+
 export const uploadImages = async (file) => {
   const storageRef = ref(storage, "thalipparamb/" + file?.name);
 
   try {
     // Upload the file
     const snapshot = await uploadBytes(storageRef, file);
-    console.log("Uploaded a blob or file!");
 
     // Get the download URL
     const url = await getDownloadURL(storageRef);
-    console.log("Download URL:", url);
 
     return url;
   } catch (error) {
@@ -48,29 +56,8 @@ export const uploadImages = async (file) => {
   }
 };
 
-//get all banners
-// export const getAllbanner = async () => {
-//   const documents = [];
-
-//   try {
-//     const querySnapshot = await getDocs(collection(db, "thalipparamb"));
-
-//     querySnapshot.forEach((doc) => {
-//       documents.push({ id: doc.id, ...doc.data() });
-//     });
-
-//     console.log(
-//       "🚀 ~ file: route.js:37 ~ getAllbanner ~ documents:",
-//       documents
-//     );
-//     return documents;
-//   } catch (error) {
-//     console.error("Error getting documents:", error.message);
-//     throw error;
-//   }
-// };
 export const getAllBanner = async () => {
-  const q = query(collection(db, "baner"), orderBy("createdAt", "desc"));
+  const q = query(collection(db, "banner"), orderBy("created_at", "desc"));
   const documents = [];
 
   try {
@@ -87,16 +74,13 @@ export const getAllBanner = async () => {
   }
 };
 //delete banner
-export const deletebanner = async (documentId) => {
-  console.log(
-    "🚀 ~ file: route.js:88 ~ deletebanner ~ documentId:",
-    documentId
-  );
-  const documentRef = doc(db, "baner", documentId);
+export const deleteBanner = async (documentId) => {
+
+  const documentRef = doc(db, "banner", documentId);
 
   try {
     await deleteDoc(documentRef);
-    console.log(`Document with ID ${documentId} deleted successfully`);
+    return
   } catch (error) {
     console.error("Error deleting document:", error.message);
     throw error;
@@ -106,7 +90,7 @@ export const deletebanner = async (documentId) => {
 //get single event
 export const singleBanner = async (documentId) => {
   try {
-    const documentRef = doc(db, "baner", documentId);
+    const documentRef = doc(db, "banner", documentId);
     const docSnap = await getDoc(documentRef);
     if (docSnap.exists()) {
       const eventData = docSnap.data();
@@ -119,12 +103,11 @@ export const singleBanner = async (documentId) => {
 };
 
 //update banner
-export const updatebanner = async (documentId, dataToUpdate) => {
-  const documentRef = doc(db, "baner", documentId);
+export const updateBanner = async (documentId, dataToUpdate) => {
+  const documentRef = doc(db, "banner", documentId);
 
   try {
     await updateDoc(documentRef, dataToUpdate);
-    console.log(`Document with ID ${documentId} updated successfully`);
   } catch (error) {
     console.error("Error updating document:", error.message);
     throw error;

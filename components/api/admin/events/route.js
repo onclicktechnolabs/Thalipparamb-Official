@@ -24,7 +24,7 @@ import {
 
 export const createEvent = async (data) => {
   try {
-    const eventData = { ...data, createdAt: serverTimestamp() };
+    const eventData = { ...data, created_at: new Date().toISOString() };
     const docRef = await addDoc(collection(db, "event"), eventData);
     return docRef;
   } catch (e) {
@@ -37,11 +37,9 @@ export const uploadEventImages = async (file) => {
   try {
     // Upload the file
     const snapshot = await uploadBytes(storageRef, file);
-    console.log("Uploaded a blob or file!");
 
     // Get the download URL
     const url = await getDownloadURL(storageRef);
-    console.log("Download URL:", url);
 
     return url;
   } catch (error) {
@@ -51,17 +49,16 @@ export const uploadEventImages = async (file) => {
 };
 
 export const getAllEvents = async () => {
-  const q = query(collection(db, "event"), orderBy("createdAt", "desc"));
-  const documents = [];
+  const q = query(collection(db, "event"), orderBy("created_at", "desc"));
 
   try {
     const querySnapshot = await getDocs(q);
 
-    querySnapshot.forEach((doc) => {
-      documents.push({ id: doc.id, ...doc.data() });
+    const events = querySnapshot.docs.map((doc) => {
+      return { id: doc.id, ...doc.data() };
     });
 
-    return documents;
+    return events;
   } catch (error) {
     console.error("Error getting documents:", error.message);
     throw error;
@@ -113,7 +110,6 @@ export const deleteEventImage = async (imageUrl) => {
   try {
     // Delete the file
     await deleteObject(imageRef);
-    console.log("Image deleted successfully");
   } catch (error) {
     console.error("Error deleting image:", error.message);
     throw error;

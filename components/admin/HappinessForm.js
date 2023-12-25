@@ -6,26 +6,41 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormSelect, DropFiles } from "widgets";
 
-const Happinesschema = Yup.object().shape({
-  // photo: Yup.string().required("Photo is required"),
-  title: Yup.string().required("Title is required"),
-  description: Yup.string().required("Description is required"),
-});
+const HappinessSchema = Yup.object().shape({
+  title_en: Yup.string().required("Please provide a english title."),
+  title_ml: Yup.string().required("Please provide a malayalam title."),
+  description_en: Yup.string().required("Please provide a english description."),
+  description_ml: Yup.string().required("Please provide a malayalam description."),
+})
 
 function HappinessForm({ onSubmit, defaultValue }) {
   const formFields = [
     {
-      label: "Title",
-      name: "title",
+      label: "Title in english",
+      name: "title_en",
       type: "text",
-      placeholder: "Enter title",
+      placeholder: "Enter title in english",
+      required: true,
+    },
+    {
+      label: "Title in malayalam",
+      name: "title_ml",
+      type: "text",
+      placeholder: "Enter title in malayalam",
       required: false,
     },
     {
-      label: "Description",
-      name: "description",
-      type: "text",
-      placeholder: "Enter Description",
+      label: "Description in english",
+      name: "description_en",
+      type: "textarea",
+      placeholder: "Enter description in english",
+      required: true,
+    },
+    {
+      label: "Description in malayalam",
+      name: "description_ml",
+      type: "textarea",
+      placeholder: "Enter description in malayalam",
       required: false,
     },
   ];
@@ -38,13 +53,9 @@ function HappinessForm({ onSubmit, defaultValue }) {
     setValue,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(Happinesschema),
+    resolver: yupResolver(HappinessSchema),
     defaultValues: defaultValue || {},
   });
-  console.log(
-    "🚀 ~ file: HappinessForm.js:60 ~ HappinessForm ~ errors:",
-    errors
-  );
 
   const handleFormSubmit = (formData) => {
     if (files.length === 0) {
@@ -98,20 +109,22 @@ function HappinessForm({ onSubmit, defaultValue }) {
                         </span>
                       </Col>
                     )}
+                  </div>
+                </Row>
+
+                <Row>
+                  <Col md={{ offset: 4, span: 8 }} xs={12} className="mt-4 d-flex justify-content-between gap-2">
                     <Button
                       variant="outline-white"
                       onClick={() => setFiles([])}
                     >
                       Clear
                     </Button>
-                  </div>
+                    <Button variant="primary" type="submit">
+                      Create
+                    </Button>
+                  </Col>
                 </Row>
-
-                <Col md={{ offset: 4, span: 8 }} xs={12} className="mt-4">
-                  <Button variant="primary" type="submit">
-                    Create
-                  </Button>
-                </Col>
               </Form>
             </div>
           </Card.Body>

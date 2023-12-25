@@ -3,14 +3,13 @@ import React from "react";
 
 function tourism() {
   return (
-    <div className=" h-100 w-100 d-flex flex-column">
-      <div className="flex-grow-1"></div>
-      <div className="text-center">
+    <div className="h-100 w-100 d-flex flex-column" >
+      <div className="text-center d-flex flex-column justify-content-center align-items-center" style={{ height: "80vh", width: "100vw" }}>
         <h2 className="happiness fw-bold ls-sm">Tourism</h2>
-        <p>Comming soon..</p>
+        <p>Coming soon..</p>
       </div>
-      <div className="flex-grow-1"></div>
     </div>
+
   );
 }
 

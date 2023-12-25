@@ -31,7 +31,6 @@ export const blockUser = async (email) => {
     await updateDoc(userDoc, {
       isBlock: true,
     });
-    console.log("User blocked successfully");
   } catch (error) {
     console.error("Error blocking user:", error);
   }
@@ -43,8 +42,19 @@ export const unblockUser = async (email) => {
     await updateDoc(userDoc, {
       isBlock: false,
     });
-    console.log("User unblocked successfully");
   } catch (error) {
     console.error("Error unblocking user:", error);
+  }
+};
+
+// register Program
+export const registerProgram = async (data) => {
+  try {
+    const programData = { ...data, createdAt: serverTimestamp() };
+
+    const docRef = await addDoc(collection(db, "programs"), programData);
+    return { success: "ok" };
+  } catch (e) {
+    console.error("Error adding document: ", e);
   }
 };

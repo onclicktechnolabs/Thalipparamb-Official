@@ -4,24 +4,16 @@ import { useForm } from "react-hook-form";
 import AutoFormField from "sub-components/generalForm/AutoFormField";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormSelect, DropFiles } from "widgets";
+import { DropFiles } from "widgets";
 
 const BannerSchema = Yup.object().shape({
-  // photo: Yup.string().required("Photo is required"),
   title: Yup.string().required("Title is required"),
   description: Yup.string().required("Description is required"),
-  scheduleDate: Yup.date().required("Schedule Date is required"),
 });
 
 function BannerForm({ onSubmit, defaultValue }) {
   const formFields = [
-    // {
-    //   label: "Banner photo",
-    //   name: "photo",
-    //   type: "file",
-    //   placeholder: "Upload photo",
-    //   required: true,
-    // },
+
     {
       label: "Title",
       name: "title",
@@ -36,13 +28,7 @@ function BannerForm({ onSubmit, defaultValue }) {
       placeholder: "Enter description",
       required: false,
     },
-    {
-      label: "Schedule Date",
-      name: "scheduleDate",
-      type: "date",
-      placeholder: "Select date",
-      required: false,
-    },
+
   ];
 
   const [files, setFiles] = useState([]);
@@ -108,19 +94,21 @@ function BannerForm({ onSubmit, defaultValue }) {
                         </span>
                       </Col>
                     )}
+                  </div>
+                </Row>
+                <Row>
+                  <Col md={{ offset: 4, span: 8 }} xs={12} className="mt-4 d-flex justify-content-between gap-2">
                     <Button
                       variant="outline-white"
                       onClick={() => setFiles([])}
                     >
                       Clear
                     </Button>
-                  </div>
+                    <Button variant="primary" type="submit">
+                      Create
+                    </Button>
+                  </Col>
                 </Row>
-                <Col md={{ offset: 4, span: 8 }} xs={12} className="mt-4">
-                  <Button variant="primary" type="submit">
-                    Create
-                  </Button>
-                </Col>
               </Form>
             </div>
           </Card.Body>

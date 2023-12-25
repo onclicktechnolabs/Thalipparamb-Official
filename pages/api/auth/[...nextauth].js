@@ -80,26 +80,3 @@ export const options = {
 
 export default NextAuth(options);
 
-// jwt: async ({ token, user }) => {
-//   const tokenExp = token.accessTokenExp * 1000;
-
-//   const currentTime = await Date.now();
-//   if (tokenExp < currentTime) {
-//     console.log("token expired time");
-//     const data = await refreshToken(token.refreshToken);
-//     if (data.status) {
-//       return {
-//         // ...token,
-//         refreshToken: data.refreshToken,
-//         accessToken: data.accessToken,
-//         accessTokenExp: data.accessTokenExp,
-//         ...user,
-//       };
-//     } else {
-//       return null;
-//     }
-//   } else {
-//     console.log("token not expire");
-//     return { ...token, ...user };
-//   }
-// },

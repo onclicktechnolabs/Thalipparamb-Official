@@ -6,7 +6,7 @@ import {
   PencilSquare,
 } from "react-bootstrap-icons";
 
-export const ProjectsStats = [
+export const projectsStats = [
   {
     id: 1,
     title: "Users",
@@ -37,4 +37,4 @@ export const ProjectsStats = [
     statInfo: '<span className="text-dark me-2">5</span> Completed',
   },
 ];
-export default ProjectsStats;
+export default projectsStats;

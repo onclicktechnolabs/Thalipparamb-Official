@@ -1,39 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { ProgressBar, Col, Row, Card, Table, Image } from "react-bootstrap";
+import { Col, Row, Card, Table, Image } from "react-bootstrap";
 import { useRouter } from "next/navigation";
-import { getAllgallery } from "components/api/admin/gallery/route";
+import { deleteGallery, getAllGallery } from "components/api/admin/gallery/route";
 
-const ActiveProjectsData = [
-  {
-    id: 1,
-    title: "Enterpreneurship Programme",
-
-    brandLogo: "/images/brand/dropbox-logo.svg",
-
-    Description:
-      "Renowned music bands to make the festival nights musical and thrill the hearts of the revelers",
-  },
-  {
-    id: 2,
-    title: "Get healthy in rural areas",
-
-    brandLogo: "/images/brand/dropbox-logo.svg",
-
-    Description:
-      "Renowned music bands to make the festival nights musical and thrill the hearts of the revelers",
-  },
-];
 
 function Gallery() {
   const router = useRouter();
   const [data, setData] = useState([]);
-  console.log("🚀 ~ file: all.js:31 ~ Gallery ~ data:", data);
 
   useEffect(() => {
     const getGalleryData = async () => {
       try {
-        const res = await getAllgallery();
+        const res = await getAllGallery();
         setData(res);
       } catch (error) {
         console.error("Error fetching Gallery data:", error);
@@ -42,7 +21,14 @@ function Gallery() {
 
     getGalleryData();
   }, []);
-
+  //delete Happiness
+  const handleDelete = async (id) => {
+    const confirm = window.confirm("Are you sure you want to delete");
+    if (confirm) {
+      await deleteGallery(id);
+      router.refresh();
+    }
+  };
   return (
     <>
       <Col lg={12} md={12} xs={12} className="mt-6">
@@ -71,8 +57,8 @@ function Gallery() {
               <thead className="table-light">
                 <tr>
                   <th style={{ width: "25%" }}>Image</th>
-
                   <th>Title</th>
+                  <th>Options</th>
                 </tr>
               </thead>
               <tbody>
@@ -84,13 +70,18 @@ function Gallery() {
                           <div>
                             <Image
                               src={item?.image}
-                              alt={item.title}
+                              alt={item.title_en}
                               className="img-fluid "
                             />
                           </div>
                         </div>
                       </td>
-                      <td className="align-middle">{item.title}</td>
+                      <td className="align-middle">{item.title_en}</td>
+                      <td className="align-middle gap-4">
+                        <button className="btn btn-danger" onClick={() => handleDelete(item?.id)}>
+                          <i className="fe fe-trash "></i>
+                        </button>
+                      </td>
                     </tr>
                   );
                 })}

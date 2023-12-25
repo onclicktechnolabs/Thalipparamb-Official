@@ -30,11 +30,25 @@ export const DashboardMenu = [
     icon: "home",
     link: "/admin",
   },
-  // {
-  //   id: uuid(),
-  //   title: "PAGES",
-  //   grouptitle: true,
-  // },
+  {
+    id: uuid(),
+    title: "Complaints",
+    icon: "mail",
+    children: [
+      { id: uuid(), link: "/admin/complaints/all", name: "Complaints" },
+      { id: uuid(), link: "/admin/complaints/new", name: "Register" },
+      { id: uuid(), link: "/admin/complaints/greetings", name: "Greetings" },
+    ],
+  },
+  {
+    id: uuid(),
+    title: "Happiness",
+    icon: "heart",
+    children: [
+      { id: uuid(), link: "/admin/happiness/all", name: "All" },
+      { id: uuid(), link: "/admin/happiness/new", name: "New" },
+    ],
+  },
   {
     id: uuid(),
     title: "Events",
@@ -42,6 +56,15 @@ export const DashboardMenu = [
     children: [
       { id: uuid(), link: "/admin/events/all", name: "All" },
       { id: uuid(), link: "/admin/events/new", name: "New" },
+    ],
+  },
+  {
+    id: uuid(),
+    title: "Entrepreneurship",
+    icon: "briefcase",
+    children: [
+      { id: uuid(), link: "/admin/entrepreneurship/all", name: "All" },
+      { id: uuid(), link: "/admin/entrepreneurship/new", name: "New" },
     ],
   },
   {
@@ -60,25 +83,6 @@ export const DashboardMenu = [
     children: [
       { id: uuid(), link: "/admin/users/all", name: "All" },
       // { id: uuid(), link: "/admin/users/new", name: "New" },
-    ],
-  },
-  {
-    id: uuid(),
-    title: "Complaints",
-    icon: "mail",
-    children: [
-      { id: uuid(), link: "/admin/complaints/all", name: "All" },
-      { id: uuid(), link: "/admin/complaints/new", name: "New" },
-      { id: uuid(), link: "/admin/complaints/greetings", name: "Greetings" },
-    ],
-  },
-  {
-    id: uuid(),
-    title: "Happiness",
-    icon: "heart",
-    children: [
-      { id: uuid(), link: "/admin/happiness/all", name: "All" },
-      { id: uuid(), link: "/admin/happiness/new", name: "New" },
     ],
   },
   {

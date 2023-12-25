@@ -1,4 +1,6 @@
 import { Col, Form, Row } from "react-bootstrap";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 function AutoFormField({
   label,
@@ -11,6 +13,7 @@ function AutoFormField({
   options,
   errors,
 }) {
+
   const handleChange = (e) => {
     onChange(e.target.value);
   };
@@ -47,6 +50,17 @@ function AutoFormField({
               </option>
             ))}
           </Form.Control>
+        ) : type === "date" ? (
+          <DatePicker
+            selected={value ? new Date(value) : new Date()}
+            onChange={(date) => onChange(date)}
+            showTimeSelect
+            timeFormat="h:mm aa"
+            timeIntervals={30}
+            dateFormat="dd-MM-yyyy h:mm aa"
+            className="form-control w-100"
+          />
+
         ) : (
           <input
             type={type}
@@ -59,6 +73,7 @@ function AutoFormField({
             onChange={handleChange}
           />
         )}
+
         {errors && errors[name] && (
           <Col md={8} xs={12}>
             <span className="col-sm-4 col-form-label form-label text-danger">

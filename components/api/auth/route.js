@@ -13,12 +13,6 @@ import {
 
 export const getAdminByEmail = async (credentials) => {
   const { email, password } = credentials;
-  console.log(
-    "🚀 ~ file: route.js:17 ~ Enter API getAdminByEmail ~ email:",
-    email,
-    password
-  );
-
   try {
     const q = query(collection(db, "admin"), where("email", "==", email));
     const querySnapshot = await getDocs(q);
@@ -47,9 +41,7 @@ export const getAdminByEmail = async (credentials) => {
 };
 
 export const userLoggin = async (data) => {
-  console.log("🚀 ~ file: route.js:50 ~ userLoggin ~ data:", data);
   try {
-    console.log("ENTER NEXT AUTH SIGNIN=======");
 
     const userRef = doc(collection(db, "users"), data.email);
     const userDoc = await getDoc(userRef);

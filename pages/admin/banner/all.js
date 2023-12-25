@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ShoppingBag, Trash2 } from "react-feather";
-import { deletebanner, getAllBanner } from "components/api/admin/banner/route";
+import { deleteBanner, getAllBanner } from "components/api/admin/banner/route";
 import Link from "next/link";
 import {
   Col,
@@ -34,7 +34,7 @@ function AllBanner() {
   const handleDelete = async (id) => {
     const confirm = window.confirm("Are you shure you wand to delete");
     if (confirm) {
-      await deletebanner(id);
+      await deleteBanner(id);
       router.refresh();
     }
   };

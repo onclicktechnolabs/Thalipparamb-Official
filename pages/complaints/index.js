@@ -7,6 +7,7 @@ import {
   createComplaint,
   uploadComplaintImages,
 } from "components/api/admin/complaint/route";
+import { toast } from "react-toastify";
 
 function Complaints() {
   const { data: session } = useSession({
@@ -16,48 +17,64 @@ function Complaints() {
     },
   });
 
-  // console.log("🚀 ~ file: index.js:14 ~ Complaints ~ session:", session);
-
   const router = useRouter();
   const defaultValues = {
-    title: "",
+    name: "",
     phone: "",
     address: "",
+    locality: "",
+    ward: "",
+    subject: "",
     description: "",
-    panchayath: "",
   };
+
   const onSubmit = async (formData) => {
-    console.log("🚀 ~ file: index.js:15 ~ onSubmit ~ formData:", formData);
+    alert("reached")
     const resImage = await uploadComplaintImages(formData.files[0]);
     if (session?.user?.role === "admin") {
       const res = await createComplaint({
-        title: formData.title,
+        name: formData.name,
         phone: formData.phone,
         address: formData.address,
+        ward: formData.ward,
+        locality: formData.locality,
+        subject: formData.subject,
         description: formData.description,
-        panchayath: formData.panchayath,
+
         createdBy: session?.user?.email,
         priority: "low",
         status: "created",
         type: formData.type,
         image: resImage,
       });
-      router.push("/admin/complaints/all");
+      // if (res.status === "ok") {
+      //   toast.success("Registration successful");
+      //   router.push("/admin/complaints/all");
+      // } else {
+      //   toast.error("Registration failed, Try again!");
+      // }
     }
     if (session?.user?.role === "User") {
       const res = await createComplaint({
-        title: formData.title,
+        name: formData.name,
         phone: formData.phone,
         address: formData.address,
+        locality: formData.locality,
+        ward: formData.ward,
+        subject: formData.subject,
         description: formData.description,
-        panchayath: formData.panchayath,
         createdBy: session?.user?.email,
         priority: "low",
         status: "created",
         type: "complaint",
         image: resImage,
       });
-      router.push("/");
+      if (res.status === "ok") {
+        toast.success("Registration successfully submitted");
+        router.push("/");
+      } else {
+        toast.error("Registration Failed, Try again");
+      }
     }
   };
   return (

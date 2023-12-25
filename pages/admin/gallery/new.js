@@ -10,14 +10,14 @@ import {
 function AddGallery() {
   const router = useRouter();
   const defaultValues = {
-    title: "",
+    title_en: "",
+    title_ml: "",
   };
   const onSubmit = async (formData) => {
-    console.log("🚀 ~ file: new.js:18 ~ onSubmit ~ formData:", formData);
     const resImage = await uploadGalleryImages(formData.files[0]);
-    console.log("🚀 ~ file: new.js:18 ~ onSubmit ~ resImage:", resImage);
     const res = await createGallery({
-      title: formData.title,
+      title_en: formData.title_en,
+      title_ml: formData.title_ml,
       image: resImage,
     });
     router.push("/admin/gallery/all");

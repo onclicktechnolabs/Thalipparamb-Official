@@ -9,16 +9,12 @@ function NewBanner() {
   const defaultValues = {
     title: "",
     description: "",
-    scheduleDate: "",
   };
   const onSubmit = async (formData) => {
-    console.log("submitted", formData);
     const resImage = await uploadImages(formData.files[0]);
-    console.log("🚀 ~ file: new.js:15 ~ onSubmit ~ resImage:", resImage);
     const res = await createBanner({
       title: formData.title,
       description: formData.description,
-      scheduleDate: formData.scheduleDate,
       image: resImage,
     });
     router.push("/admin/banner/all");

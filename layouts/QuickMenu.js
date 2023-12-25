@@ -19,7 +19,6 @@ import { useRouter } from "next/navigation";
 const QuickMenu = () => {
   const router = useRouter();
   const { data: session } = useSession();
-  console.log("🚀 ~ file: QuickMenu.js:22 ~ QuickMenu ~ session:", session);
   const hasMounted = useMounted();
 
   const isDesktop = useMediaQuery({
@@ -27,9 +26,9 @@ const QuickMenu = () => {
   });
 
   const handleLogout = async () => {
-    console.log("Logout clicked");
     await signOut();
     router.push("/api/auth/signin");
+    // router.push("/api/auth/signin");
   };
 
   const Notifications = () => {

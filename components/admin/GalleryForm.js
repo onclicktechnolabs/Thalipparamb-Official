@@ -6,18 +6,26 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DropFiles } from "widgets";
 
-const Gallerrychema = Yup.object().shape({
-  title: Yup.string().required("Title is required"),
+const GallerySchema = Yup.object().shape({
+  title_en: Yup.string().required("Please provide a english title."),
+  title_ml: Yup.string().required("Please provide a malayalam title."),
 });
 
 function GalleryForm({ onSubmit, defaultValue }) {
   const formFields = [
     {
-      label: "Title",
-      name: "title",
+      label: "Title in english",
+      name: "title_en",
       type: "text",
-      placeholder: "Enter title",
-      required: false,
+      placeholder: "Enter title in english",
+      required: true,
+    },
+    {
+      label: "Title in malayalam",
+      name: "title_ml",
+      type: "text",
+      placeholder: "Enter title in malayalam",
+      required: true,
     },
   ];
 
@@ -29,15 +37,11 @@ function GalleryForm({ onSubmit, defaultValue }) {
     setValue,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(Gallerrychema),
+    resolver: yupResolver(GallerySchema),
     defaultValues: defaultValue || {},
   });
 
   const handleFormSubmit = (formData) => {
-    console.log(
-      "🚀 ~ file: GalleryForm.js:39 ~ handleFormSubmit ~ formData:",
-      formData
-    );
     if (files.length === 0) {
       setFileError("Please select an image file");
     }
@@ -73,7 +77,7 @@ function GalleryForm({ onSubmit, defaultValue }) {
                     htmlFor="fullName"
                     className="col-sm-4 col-form-label form-label"
                   >
-                    Gallerry photo
+                    Gallery photo
                   </label>
                   <div className="col-md-8 col-12">
                     <div
@@ -89,20 +93,22 @@ function GalleryForm({ onSubmit, defaultValue }) {
                         </span>
                       </Col>
                     )}
+                  </div>
+                </Row>
+
+                <Row>
+                  <Col md={{ offset: 4, span: 8 }} xs={12} className="mt-4 d-flex justify-content-between gap-2">
                     <Button
                       variant="outline-white"
                       onClick={() => setFiles([])}
                     >
                       Clear
                     </Button>
-                  </div>
+                    <Button variant="primary" type="submit">
+                      Create
+                    </Button>
+                  </Col>
                 </Row>
-
-                <Col md={{ offset: 4, span: 8 }} xs={12} className="mt-4">
-                  <Button variant="primary" type="submit">
-                    Create
-                  </Button>
-                </Col>
               </Form>
             </div>
           </Card.Body>

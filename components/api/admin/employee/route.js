@@ -14,6 +14,7 @@ import {
   orderBy,
   where,
 } from "firebase/firestore";
+import { formatToLocalDate } from "widgets/utility/formateDate";
 
 export const checkAdminExistence = async (email) => {
   try {
@@ -41,7 +42,7 @@ export const createEmploye = async (data) => {
       password: hashedPassword,
       email,
       ...otherData,
-      createdAt: serverTimestamp(),
+      created_at: formatToLocalDate(new Date())
     };
     const docRef = await addDoc(collection(db, "admin"), employeData);
     return docRef;
@@ -52,7 +53,7 @@ export const createEmploye = async (data) => {
 };
 
 export const getAllEmployes = async () => {
-  const q = query(collection(db, "admin"), orderBy("createdAt", "desc"));
+  const q = query(collection(db, "admin"), orderBy("created_at", "desc"));
   const documents = [];
 
   try {

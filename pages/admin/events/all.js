@@ -11,33 +11,11 @@ import {
   Image,
   Dropdown,
 } from "react-bootstrap";
-import { useRouter } from "next/router";
-import { formatDate } from "widgets/utility/formateData";
+import { formatDate } from "widgets/utility/formateDate";
 
-const ActiveProjectsData = [
-  {
-    id: 1,
-    projectName: "Enterpreneurship Programme",
-    Date: "3 May, 2023",
-    staus: "Medium",
-    place: "thalipparamb",
-    brandLogo: "/images/brand/dropbox-logo.svg",
-    priorityBadgeBg: "warning",
-  },
-  {
-    id: 2,
-    projectName: "Get healthy in rural areas",
-    Date: "3 May, 2023",
-    staus: "High",
-    place: "Trichambaram",
-    brandLogo: "/images/brand/dropbox-logo.svg",
-    priorityBadgeBg: "danger",
-  },
-];
 
 function AllEvents() {
   const [data, setData] = useState([]);
-  console.log("🚀 ~ file: all.js:40 ~ AllEvents ~ data:", data);
 
   useEffect(() => {
     const getBannerData = async () => {
@@ -52,9 +30,9 @@ function AllEvents() {
     getBannerData();
   }, []);
 
-  //dlete banner
+  //delete banner
   const handleDelete = async (id) => {
-    const confirm = window.confirm("Are you shure you wand to delete");
+    const confirm = window.confirm("Are you sure you wand to delete");
     if (confirm) {
       await deleteEvent(id);
       router.refresh();
@@ -140,16 +118,16 @@ function AllEvents() {
                                 href={`/admin/events/${item?.id}`}
                                 className="text-inherit"
                               >
-                                {item?.title}
+                                {item?.title_en}
                               </Link>
                             </h5>
                           </div>
                         </div>
                       </td>
 
-                      <td className="align-middle">{item?.place}</td>
+                      <td className="align-middle">{item?.venue}</td>
                       <td className="align-middle">
-                        {formatDate(item?.scheduleDate)}
+                        {formatDate(item?.start_date)}
                       </td>
 
                       <td className="align-middle">

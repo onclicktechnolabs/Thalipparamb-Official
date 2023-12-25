@@ -19,30 +19,28 @@ import {
   ref,
   uploadBytes,
 } from "firebase/storage";
+import { formatToLocalDate } from "widgets/utility/formateDate";
 
 // const storage = getStorage();
 
 export const createHappiness = async (data) => {
   try {
-    const happinessData = { ...data, createdAt: serverTimestamp() };
+    const happinessData = { ...data, created_at: formatToLocalDate(new Date()) };
     const docRef = await addDoc(collection(db, "happiness"), happinessData);
-    console.log("Document written with ID: ", docRef.id);
     return docRef;
   } catch (e) {
     console.error("Error adding document: ", e);
   }
 };
 export const uploadHappinessImages = async (file) => {
-  const storageRef = ref(storage, "thalipparamb/happiness" + file?.name);
+  const storageRef = ref(storage, "/thalipparamb/happiness" + file?.name);
 
   try {
     // Upload the file
     const snapshot = await uploadBytes(storageRef, file);
-    console.log("Uploaded a blob or file!");
 
     // Get the download URL
     const url = await getDownloadURL(storageRef);
-    console.log("Download URL:", url);
 
     return url;
   } catch (error) {
@@ -52,14 +50,13 @@ export const uploadHappinessImages = async (file) => {
 };
 
 export const getAllHappiness = async () => {
-  const q = query(collection(db, "happiness"), orderBy("createdAt", "desc"));
-  const documents = [];
+  const q = query(collection(db, "happiness"), orderBy("created_at", "desc"));
 
   try {
     const querySnapshot = await getDocs(q);
 
-    querySnapshot.forEach((doc) => {
-      documents.push({ id: doc.id, ...doc.data() });
+    const documents = querySnapshot.docs.map((doc) => {
+      return { id: doc.id, ...doc.data() };
     });
 
     return documents;
@@ -68,7 +65,8 @@ export const getAllHappiness = async () => {
     throw error;
   }
 };
-//delete banner
+
+//delete happiness
 export const deleteHappiness = async (documentId) => {
   const documentRef = doc(db, "happiness", documentId);
 
@@ -76,6 +74,18 @@ export const deleteHappiness = async (documentId) => {
     await deleteDoc(documentRef);
   } catch (error) {
     console.error("Error deleting document:", error.message);
+    throw error;
+  }
+};
+
+//toggle happiness
+export const toggleHappiness = async (documentId, dataToUpdate) => {
+  const documentRef = doc(db, "happiness", documentId);
+
+  try {
+    await updateDoc(documentRef, dataToUpdate);
+  } catch (error) {
+    console.error("Error updating document:", error.message);
     throw error;
   }
 };
@@ -114,7 +124,6 @@ export const deleteHappinessImage = async (imageUrl) => {
   try {
     // Delete the file
     await deleteObject(imageRef);
-    console.log("Image deleted successfully");
   } catch (error) {
     console.error("Error deleting image:", error.message);
     throw error;

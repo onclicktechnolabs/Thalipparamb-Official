@@ -1,38 +1,69 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Row, Form, Card, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import AutoFormField from "sub-components/generalForm/AutoFormField";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormSelect, DropFiles } from "widgets";
+import { DropFiles } from "widgets";
 
-const Eventschema = Yup.object().shape({
-  // photo: Yup.string().required("Photo is required"),
-  title: Yup.string().required("Title is required"),
-  place: Yup.string().required("Place is required"),
-  date: Yup.date().required("Date is required"),
-  status: Yup.string().required("Status is required"),
+const eventSchema = Yup.object().shape({
+  title_en: Yup.string().required("Please provide a english title."),
+  title_ml: Yup.string().required("Please provide a malayalam title."),
+  description_en: Yup.string().required("Please provide a english description."),
+  description_ml: Yup.string().required("Please provide a malayalam description."),
+  venue: Yup.string().required("Please provide a venue."),
+  start_date: Yup.string().required("Please provide a start date."),
+  end_date: Yup.string().required("Please provide a start date."),
+  status: Yup.string().required("Please provide a status."),
 });
 
 function EventForm({ onSubmit, defaultValue }) {
   const formFields = [
     {
-      label: "Title",
-      name: "title",
+      label: "Title in english",
+      name: "title_en",
       type: "text",
-      placeholder: "Enter title",
+      placeholder: "Enter title in english",
+      required: true,
+    },
+    {
+      label: "Title in malayalam",
+      name: "title_ml",
+      type: "text",
+      placeholder: "Enter title in malayalam",
       required: false,
     },
     {
-      label: "Venu",
-      name: "place",
+      label: "Description in english",
+      name: "description_en",
       type: "text",
-      placeholder: "Enter Venu",
+      placeholder: "Enter description in english",
+      required: true,
+    },
+    {
+      label: "Description in malayalam",
+      name: "description_ml",
+      type: "text",
+      placeholder: "Enter description in malayalam",
       required: false,
     },
     {
-      label: "Date",
-      name: "date",
+      label: "venue",
+      name: "venue",
+      type: "text",
+      placeholder: "Enter venue",
+      required: false,
+    },
+    {
+      label: "Start date",
+      name: "start_date",
+      type: "date",
+      placeholder: "Select date",
+      required: false,
+    },
+    {
+      label: "End date",
+      name: "end_date",
       type: "date",
       placeholder: "Select date",
       required: false,
@@ -54,16 +85,26 @@ function EventForm({ onSubmit, defaultValue }) {
 
   const [files, setFiles] = useState([]);
   const [fileError, setFileError] = useState("");
+
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+
   const {
     handleSubmit,
     control,
     setValue,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(Eventschema),
+    resolver: yupResolver(eventSchema),
     defaultValues: defaultValue || {},
   });
-  console.log("🚀 ~ file: EventForm.js:60 ~ EventForm ~ errors:", errors);
+
+  useEffect(() => {
+    if (defaultValue) {
+      setStartDate(defaultValue?.start_date)
+      setEndDate(defaultValue?.end_date)
+    }
+  }, [defaultValue])
 
   const handleFormSubmit = (formData) => {
     if (files.length === 0) {
@@ -88,12 +129,27 @@ function EventForm({ onSubmit, defaultValue }) {
             <div>
               <Form onSubmit={handleSubmit(handleFormSubmit)}>
                 {formFields.map((field) => (
-                  <AutoFormField
-                    key={field.name}
-                    onChange={(value) => setValue(field.name, value)}
-                    errors={errors}
-                    {...field}
-                  />
+                  field.type === 'date' ?
+                    <AutoFormField
+                      key={field.name}
+                      onChange={(value) => {
+                        if (field.name === "start_date") {
+                          setStartDate(value);
+                        } else {
+                          setEndDate(value);
+                        }
+                        setValue(field.name, value);
+                      }}
+                      errors={errors}
+                      value={field.name === "start_date" ? startDate : endDate}
+                      {...field}
+                    /> :
+                    <AutoFormField
+                      key={field.name}
+                      onChange={(value) => setValue(field.name, value)}
+                      errors={errors}
+                      {...field}
+                    />
                 ))}
 
                 <Row className="mb-3">
@@ -117,19 +173,23 @@ function EventForm({ onSubmit, defaultValue }) {
                         </span>
                       </Col>
                     )}
+
+                  </div>
+                </Row>
+
+                <Row>
+                  <Col md={{ offset: 4, span: 8 }} xs={12} className="mt-4 d-flex justify-content-between gap-2">
                     <Button
                       variant="outline-white"
                       onClick={() => setFiles([])}
                     >
                       Clear
                     </Button>
-                  </div>
+                    <Button variant="primary" type="submit">
+                      Create
+                    </Button>
+                  </Col>
                 </Row>
-                <Col md={{ offset: 4, span: 8 }} xs={12} className="mt-4">
-                  <Button variant="primary" type="submit">
-                    Create
-                  </Button>
-                </Col>
               </Form>
             </div>
           </Card.Body>

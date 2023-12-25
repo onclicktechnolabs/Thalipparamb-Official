@@ -9,7 +9,6 @@ import axios from "axios";
 
 const SignUp = () => {
   const router = useRouter();
-  // Step 1: Create a single state object for form data
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -27,25 +26,13 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
 
     try {
-      // const apiRes = await axios.post(
-      //   "http://localhost:3000/api/auth/user",
-      //   formData
-      // );
-
-      // if (apiRes?.data?.success) {
       const loginRes = await signIn("credentials", {
         redirect: false,
         email: formData.email,
         password: formData.password,
       });
-      console.log(
-        "🚀 ~ file: register.js:44 ~ handleSubmit ~ loginRes:",
-        loginRes
-      );
-
       if (loginRes) {
         const form = e.target;
         form.reset();
@@ -53,9 +40,7 @@ const SignUp = () => {
       } else {
         console.log("User registration failed.");
       }
-      // } else {
-      //   console.log("User registration failed. Server response:", apiRes?.data);
-      // }
+     
     } catch (error) {
       console.error("Error during registration:", error);
     }

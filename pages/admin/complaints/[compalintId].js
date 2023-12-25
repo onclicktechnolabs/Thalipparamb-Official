@@ -119,7 +119,7 @@ function ComplaintInfo() {
           </Card>
           <Card className="mt-2 p-1 shadow">
             <Card.Title className="m-0 p-3 text-black card-head">
-              Basic Informations
+              Basic Information
             </Card.Title>
             <div className="p-4">
               <div class="row mt-4">
@@ -127,7 +127,7 @@ function ComplaintInfo() {
                   <h4>title:</h4>
                 </div>
                 <div class="col-8">
-                  <p>{data?.title}</p>
+                  <p>{data?.name}</p>
                 </div>
                 <div class="col-4 text-capitalize"></div>
               </div>
@@ -137,7 +137,7 @@ function ComplaintInfo() {
                   <h4>Date:</h4>
                 </div>
                 <div class="col-8">
-                  <p>{timestampData(data?.createdAt)}</p>
+                  <p>{timestampData(data?.created_at)}</p>
                 </div>
                 <div class="col-4 text-capitalize"></div>
               </div>
@@ -164,17 +164,7 @@ function ComplaintInfo() {
 
               <div class="row">
                 <div class="col-4 text-capitalize">
-                  <h4>panchayath:</h4>
-                </div>
-                <div class="col-8">
-                  <p>{data?.panchayath}</p>
-                </div>
-                <div class="col-4 text-capitalize"></div>
-              </div>
-
-              <div class="row">
-                <div class="col-4 text-capitalize">
-                  <h4>address:</h4>
+                  <h4>Address:</h4>
                 </div>
                 <div class="col-8">
                   <p>{data?.address}</p>
@@ -182,6 +172,43 @@ function ComplaintInfo() {
                 <div class="col-4 text-capitalize"></div>
               </div>
 
+              <div class="row">
+                <div class="col-4 text-capitalize">
+                  <h4>Ward:</h4>
+                </div>
+                <div class="col-8">
+                  <p>{data?.locality}</p>
+                </div>
+                <div class="col-4 text-capitalize"></div>
+              </div>
+
+              <div class="row">
+                <div class="col-4 text-capitalize">
+                  <h4>locality:</h4>
+                </div>
+                <div class="col-8">
+                  <p>{data?.locality}</p>
+                </div>
+                <div class="col-4 text-capitalize"></div>
+              </div>
+              <div class="row">
+                <div class="col-4 text-capitalize">
+                  <h4>Subject:</h4>
+                </div>
+                <div class="col-8">
+                  <p>{data?.subject}</p>
+                </div>
+                <div class="col-4 text-capitalize"></div>
+              </div>
+              <div class="row">
+                <div class="col-4 text-capitalize">
+                  <h4>description:</h4>
+                </div>
+                <div class="col-8">
+                  <p>{data?.description}</p>
+                </div>
+                <div class="col-4 text-capitalize"></div>
+              </div>
               <div class="row">
                 <div class="col-4 text-capitalize">
                   <h4>Type:</h4>
@@ -197,27 +224,6 @@ function ComplaintInfo() {
                 </div>
                 <div class="col-4 text-capitalize"></div>
               </div>
-
-              <div class="row">
-                <div class="col-4 text-capitalize">
-                  <h4>description:</h4>
-                </div>
-                <div class="col-8">
-                  <p>{data?.description}</p>
-                </div>
-                <div class="col-4 text-capitalize"></div>
-              </div>
-
-              <div class="row">
-                <div class="col-4 text-capitalize">
-                  <h4>Type:</h4>
-                </div>
-                <div class="col-8">
-                  <p>{data?.type}</p>
-                </div>
-                <div class="col-4 text-capitalize"></div>
-              </div>
-
               <div class="row mt-4">
                 <div class="col-4 text-capitalize">
                   <h4>Files:</h4>

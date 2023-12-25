@@ -20,30 +20,26 @@ import {
   ref,
   uploadBytes,
 } from "firebase/storage";
+import { formatToLocalDate } from "widgets/utility/formateDate";
 
 // const storage = getStorage();
 
 export const createGreetings = async (data) => {
   try {
-    const GreetingsData = { ...data, createdAt: serverTimestamp() };
+    const GreetingsData = { ...data, created_at: formatToLocalDate(new Date()) };
     const docRef = await addDoc(collection(db, "greetings"), GreetingsData);
-    console.log("Document written with ID: ", docRef.id);
     return docRef;
   } catch (e) {
     console.error("Error adding document: ", e);
   }
 };
 export const uploadGreetingsImages = async (file) => {
-  const storageRef = ref(storage, "thalipparamb/Greetings" + file?.name);
+  const storageRef = ref(storage, "thalipparamb/greetings" + file?.name);
 
   try {
-    // Upload the file
     const snapshot = await uploadBytes(storageRef, file);
-    console.log("Uploaded a blob or file!");
 
-    // Get the download URL
     const url = await getDownloadURL(storageRef);
-    console.log("Download URL:", url);
 
     return url;
   } catch (error) {
@@ -53,9 +49,8 @@ export const uploadGreetingsImages = async (file) => {
 };
 
 export const getAllGreetingss = async () => {
-  console.log("Called getAllGreetingss");
 
-  const q = query(collection(db, "greetings"), orderBy("createdAt", "desc"));
+  const q = query(collection(db, "greetings"), orderBy("created_at", "desc"));
   const documents = [];
 
   try {
@@ -108,12 +103,10 @@ export const getSingleGreetingByGreetingType = async (greetingType) => {
     const querySnapshot = await getDocs(q);
 
     if (querySnapshot.size === 0) {
-      console.log("No greetings found for the specified greetingType");
       return null;
     }
 
     const greetingData = querySnapshot.docs[0].data();
-    console.log("Single greeting found:", greetingData);
     return greetingData;
   } catch (error) {
     console.error("Error fetching greeting: ", error);

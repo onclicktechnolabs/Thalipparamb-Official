@@ -26,7 +26,7 @@ export const standard = [
 export const multisite = [
   {
     plantitle: "Multisite",
-    description: `For agile startups that want to grow their revenue with quick experiments and data-driven decision making.`,
+    description: `For agile startups that want to grow their revenuee with quick experiments and data-driven decision making.`,
     monthly: 149,
     buttonText: "Buy Multisite",
     buttonClass: "primary",
@@ -49,7 +49,7 @@ export const multisite = [
 export const extended = [
   {
     plantitle: "Extended",
-    description: `For fast-growth scaleups that want to grow by maximizing efficiencies in their revenue operations.`,
+    description: `For fast-growth scaleups that want to grow by maximizing efficiencies in their revenuee operations.`,
     monthly: 490,
     buttonText: "Buy Extended",
     buttonClass: "outline-primary",
